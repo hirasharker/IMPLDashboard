@@ -1247,7 +1247,7 @@ File: Main Css File
   }
   [data-layout=semibox] .footer {
     right: calc(var(--vz-vertical-menu-width) + var(--vz-semibox-width) + 1.5rem + 25px);
-    left: calc(var(--vz-semibox-width) + 1.5rem);
+    /*left: calc(var(--vz-semibox-width) + 1.5rem);*/
   }
   [data-layout=semibox] #page-topbar {
     right: calc(var(--vz-vertical-menu-width) + var(--vz-semibox-width) + 1.5rem + 25px);
@@ -12531,7 +12531,7 @@ span.flatpickr-weekday {
 }
 
 .auth-one-bg {
-  background-image: url("../images/auth-one-bg.jpg");
+  background-image: url("../images/impl-factory.png");
   background-position: center;
   background-size: cover;
 }
