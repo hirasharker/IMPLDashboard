@@ -117,6 +117,33 @@ namespace IMPLDashboard.DAL
             return dt;
         }
 
+        public DataTable GetNationalFocusKpiBounceRatio(string p_as_on_date)
+        {
+
+            DataTable dt = new DataTable("totalMemo");
+
+            try
+            {
+
+                OracleCommand com = GetSPCommand("PROC_IMPL_NATIONAL_FOCUS_KPI_BOUNCE_RATIO");
+                com.Parameters.Add("p_as_on_date", OracleType.VarChar).Value = p_as_on_date;
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+
+                oraData.Fill(dt);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
 
 
     }

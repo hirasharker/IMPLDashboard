@@ -83,7 +83,7 @@ namespace IMLDashboard.Controllers
             }
         }
 
-        protected string RenderPartialViewToStringQuadrapoleData(string viewName, DataTable dataTable, DataTable dataTable2, DataTable dataTable3, DataTable dataTable4)
+        protected string RenderPartialViewToStringQuadrapoleData(string viewName, DataTable dataTable, DataTable dataTable2, DataTable dataTable3, DataTable dataTable4, DataTable dataTable5)
         {
             if (string.IsNullOrEmpty(viewName))
                 viewName = ControllerContext.RouteData.GetRequiredString("action");
@@ -95,6 +95,8 @@ namespace IMLDashboard.Controllers
             ViewBag.dataTable3 = dataTable3;
 
             ViewBag.dataTable4 = dataTable4;
+
+            ViewBag.dataTable5 = dataTable5;
 
             using (StringWriter sw = new StringWriter())
             {

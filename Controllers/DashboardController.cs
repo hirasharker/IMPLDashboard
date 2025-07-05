@@ -39,9 +39,11 @@ namespace IMPLDashboard.Controllers
 
             DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date);
 
+            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
+
             tableData.AsEnumerable();
 
-            string x = RenderPartialViewToStringQuadrapoleData("NationalWiseSkuKpiPartial", tableData, tableData2, tableData3, tableData4);
+            string x = RenderPartialViewToStringQuadrapoleData("NationalWiseSkuKpiPartial", tableData, tableData2, tableData3, tableData4, tableData5);
 
             return x;
         }
