@@ -47,5 +47,45 @@ namespace IMPLDashboard.Controllers
 
             return x;
         }
+
+        [HttpGet]
+        public string OwnDbWiseSkuKpiJson(String dt)
+        {
+            String date;
+            if (dt == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = dt;
+            }
+
+            DataTable tableData = new Dashboard_DAL().GetNationalKpiWiseImsValue(date);
+
+            DataTable tableData2 = new Dashboard_DAL().GetNationalKpiWiseTotalMemo(date);
+
+            DataTable tableData3 = new Dashboard_DAL().GetNationalFocusCtnKpi(date);
+
+            DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date);
+
+            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
+
+            tableData.AsEnumerable();
+
+            string x = RenderPartialViewToStringQuadrapoleData("NationalWiseSkuKpiPartial", tableData, tableData2, tableData3, tableData4, tableData5);
+
+            return x;
+        }
+
+
+
+
+
+
+
+
+
     }
 }

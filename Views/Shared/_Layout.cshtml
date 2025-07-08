@@ -98,6 +98,26 @@
         <!-- end main content-->
 
     </div>
+
+    @*<div id="global-spinner" class="position-fixed top-50 start-50 translate-middle d-none" style="z-index: 1055;">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>*@
+
+    <!-- Global Spinner (designed for card-level use only) -->
+    <div id="global-spinner-backdrop" class="d-none" style="position:absolute; top:0; left:0; right:0; bottom:0; background-color: rgba(0,0,0,0.1); z-index: 10;"></div>
+
+    <div id="global-spinner" class="d-none" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index: 11;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
+
+
+
     <!-- END layout-wrapper -->
     <!-- JAVASCRIPT -->
 
@@ -125,5 +145,38 @@
 
     <!-- App js -->
     <script src="Content/assets/js/app.js"></script>
+    <script>
+        /*function showSpinner() {
+            $('#global-spinner').removeClass('d-none');
+        }
+
+        function hideSpinner() {
+            $('#global-spinner').addClass('d-none');
+        }*/
+
+        function showCardSpinner(containerSelector) {
+            const $container = $(containerSelector);
+            const $spinner = $('#global-spinner');
+            const $backdrop = $('#global-spinner-backdrop');
+
+            // Ensure container is position-relative
+            if (!$container.hasClass('position-relative')) {
+                $container.addClass('position-relative');
+            }
+
+            // Move spinner elements inside the container
+            $container.append($backdrop).append($spinner);
+
+            // Show them
+            $spinner.removeClass('d-none');
+            $backdrop.removeClass('d-none');
+        }
+
+        function hideCardSpinner() {
+            $('#global-spinner, #global-spinner-backdrop').addClass('d-none');
+        }
+
+
+    </script>
 </body>
 </html>
