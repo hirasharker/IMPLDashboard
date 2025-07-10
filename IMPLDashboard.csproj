@@ -2209,6 +2209,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Dashboard\NationalWiseSkuKpiPartial.cshtml" />
+    <Content Include="Views\Dashboard\DashboardHeaderPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

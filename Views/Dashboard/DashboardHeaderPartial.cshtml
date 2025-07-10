@@ -1,0 +1,151 @@
+﻿<div class="col-xl-3 col-md-6">
+    <!-- Monthly Sales Amount -->
+    <div class="card card-animate">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 overflow-hidden">
+                    <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                        Monthly Sales Amount
+                    </p>
+                </div>
+                @{
+                    if (Convert.ToDouble(ViewBag.dataTable.Rows[0]["GROWTH_PERCENTAGE"]) > 0)
+                    {
+                        <div class="flex-shrink-0">
+                            <h5 class="text-success fs-14 mb-0">
+                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                                @ViewBag.dataTable.Rows[0]["GROWTH_PERCENTAGE"]%
+                            </h5>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="flex-shrink-0">
+                            <h5 class="text-danger fs-14 mb-0">
+                                <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
+                                @ViewBag.dataTable.Rows[0]["GROWTH_PERCENTAGE"]%
+                            </h5>
+                        </div>
+                    }
+                }
+
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-4">
+                <div>
+                    <h4 class="fs-20 fw-semibold ff-secondary mb-4">
+                        ৳<span class="counter-value" data-target="0">@ViewBag.dataTable.Rows[0]["MTD_SALES_AMT"]</span>
+                    </h4>
+                    <a href="#" class="text-decoration-underline">
+                        View sales report
+                    </a>
+                </div>
+                <div class="avatar-sm flex-shrink-0">
+                    <span class="avatar-title bg-secondary-subtle rounded fs-3">
+                        <i class="bx bx-bar-chart-square text-secondary"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+    <!-- Active Retail Outlets -->
+    <div class="card card-animate">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 overflow-hidden">
+                    <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                        Active Retail Outlets
+                    </p>
+                </div>
+                @*<div class="flex-shrink-0">
+                    <h5 class="text-success fs-14 mb-0">
+                        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                        +6.32%
+                    </h5>
+                </div>*@
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-4">
+                <div>
+                    <h4 class="fs-20 fw-semibold ff-secondary mb-4">
+                        <span class="counter-value" data-target="5432">@ViewBag.dataTable.Rows[0]["TOTAL_ACTIVE_OUTLET"]</span>
+                    </h4>
+                    <a href="#" class="text-decoration-underline">View outlets</a>
+                </div>
+                <div class="avatar-sm flex-shrink-0">
+                    <span class="avatar-title bg-primary-subtle rounded fs-3">
+                        <i class="bx bx-store-alt text-primary"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+    <!-- Fast-Moving SKUs -->
+    <div class="card card-animate">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 overflow-hidden">
+                    <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                        Fast-Moving SKUs
+                    </p>
+                </div>
+                <div class="flex-shrink-0">
+                    <h5 class="text-info fs-14 mb-0">
+                        <i class="ri-flashlight-fill fs-13 align-middle"></i>
+                        Top 5
+                    </h5>
+                </div>
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-4">
+                <div>
+                    <h4 class="fs-20 fw-semibold ff-secondary mb-4">
+                        Updated Weekly
+                    </h4>
+                    <a href="#" class="text-decoration-underline">See product list</a>
+                </div>
+                <div class="avatar-sm flex-shrink-0">
+                    <span class="avatar-title bg-success-subtle rounded fs-3">
+                        <i class="bx bx-box text-success"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+    <!-- Last Month Sales Amount -->
+    <div class="card card-animate">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 overflow-hidden">
+                    <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                        Last Month Sales
+                    </p>
+                </div>
+                @*<div class="flex-shrink-0">
+                    <h5 class="text-muted fs-14 mb-0">
+                        Compared to -2.18%
+                    </h5>
+                </div>*@
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-4">
+                <div>
+                    <h4 class="fs-20 fw-semibold ff-secondary mb-4">
+                        ৳<span class="counter-value" data-target="39600">@ViewBag.dataTable.Rows[0]["LAST_MTD_SALES_AMT"]</span>
+                    </h4>
+                    <a href="#" class="text-decoration-underline">Compare with previous</a>
+                </div>
+                @*<div class="avatar-sm flex-shrink-0">
+                    <span class="avatar-title bg-warning-subtle rounded fs-3">
+                        <i class="bx bx-history text-warning"></i>
+                    </span>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,29 @@ namespace IMPLDashboard.Controllers
         }
 
         [HttpGet]
+        public string DashboardHeaderJson(String dt)
+        {
+            String date;
+            if (dt == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = dt;
+            }
+
+            DataTable tableData = new Dashboard_DAL().GetDashboardHeader(date);
+
+            tableData.AsEnumerable();
+
+            string x = RenderPartialViewToString("DashboardHeaderPartial", tableData);
+
+            return x;
+        }
+
+        [HttpGet]
         public string NationWiseSkuKpiJson(String dt)
         {
             String date;
