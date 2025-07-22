@@ -138,6 +138,50 @@ namespace IMPLDashboard.Controllers
         }
 
 
+        [HttpGet]
+        public string NationWisePrimaryVsSecondaryJson(String dt, string region_id, string area_id)
+        {
+            String date;
+            if (dt == "" || dt == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = dt;
+            }
+
+            if (region_id == "" || region_id == null)
+            {
+                region_id = "";
+            }
+
+            if (area_id == "" || area_id == null)
+            {
+                area_id = "";
+            }
+
+
+            DataTable tableData = new Dashboard_DAL().GetNationalKpiWiseImsValue(date, region_id, area_id);
+
+            DataTable tableData2 = new Dashboard_DAL().GetNationalKpiWiseTotalMemo(date, region_id, area_id);
+
+            DataTable tableData3 = new Dashboard_DAL().GetNationalFocusCtnKpi(date, region_id, area_id);
+
+            DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date, region_id, area_id);
+
+            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
+
+            tableData.AsEnumerable();
+
+            string x = RenderPartialViewToStringQuadrapoleData("NationalWisePriVsSecPartial", tableData, tableData2, tableData3, tableData4, tableData5);
+
+            return x;
+        }
+        
+
+
 
 
 

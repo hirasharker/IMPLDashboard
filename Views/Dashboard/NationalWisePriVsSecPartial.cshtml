@@ -1,0 +1,59 @@
+﻿<style>
+    #national-pri-vs-sec-tbl tr {
+        line-height: 10px !important;
+    }
+</style>
+
+<table class="table table-bordered table-centered align-middle table-nowrap mb-0" id="national-pri-vs-sec-tbl">
+    <thead class="text-muted table-light">
+        <tr>
+            <th scope="col" rowspan="2" valign="middle">Group</th>
+            <th scope="col" rowspan="2" valign="middle">Category Name</th>
+            @*<th scope="col" colspan="3" style="text-align: center;">@ViewBag.dataTable.Rows[0]["ORDER_DATE"]</th>*@
+            <th scope="col" colspan="3" style="text-align: center;">Secondary Till 20 July'25' (In Crore)</th>
+            <th scope="col" colspan="3" style="text-align: center;">Primary Till 20 July'25' (In Crore)</th>
+        </tr>
+        <tr>
+            <th scope="col" style="text-align: center;">Target Amount TP</th>
+            <th scope="col" style="text-align: center;">Sales Amount TP</th>
+            <th scope="col" style="text-align: center;">Achi. %</th>
+            <th scope="col" style="text-align: center;">Target Amount DP</th>
+            <th scope="col" style="text-align: center;">Sales Amount DP</th>
+            <th scope="col" style="text-align: center;">Achi. %</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow rows in ViewBag.dataTable3.Rows)
+        {
+            <tr>
+                <td style="text-align: center;">
+                    <span class="text-primary">National</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["FOCUS_CATEGORY_NAME"]</span>
+                </td>
+
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["LAST_MONTH_CTN_ACHIEVMENT"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["TP_TARGET"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["TODAYS_CTN_ACHIEVMENT"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["LAST_MTD_CTN_ACHIEVMENT"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["MTD_TP_TARGET"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@rows["MTD_CTN_ACHIEVMENT"]</span>
+                </td>
+
+            </tr>
+        }
+
+    </tbody><!-- end tbody -->
+</table><!-- end table -->

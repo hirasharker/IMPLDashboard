@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "IMPL Dashboard";
-    var dt = DateTime.Now;
+    var dt = DateTime.Now.AddDays(-1);
 }
 
 <div class="page-content">
@@ -25,7 +25,7 @@
                                             <div class="col-sm-auto">
                                                 <div class="input-group">
                                                     <input type="date"
-                                                           class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM-dd")" id="dashboard-header-date"/>
+                                                           class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM-dd")" id="dashboard-header-date" />
                                                 </div>
                                             </div>
                                             <!--end col-->
@@ -40,7 +40,7 @@
                     <!--end row-->
 
                     <div class="row" id="dashboard-header">
-                        
+
 
 
                     </div>
@@ -54,8 +54,8 @@
                                         <div class="input-group">
                                             <select id="national-sku-kpi-region" class="form-control border-0 shadow">
                                                 <option value="">Select Region</option>
-                                                @{ 
-                                                    foreach(System.Data.DataRow row in ViewBag.region.Rows)
+                                                @{
+                                                    foreach (System.Data.DataRow row in ViewBag.region.Rows)
                                                     {
                                                         <option value="@row["REGION_ID"]">@row["REGION_NAME"]</option>
                                                     }
@@ -105,6 +105,51 @@
 
                                 <div class="card-body position-relative" style="min-height: 300px;">
                                     <div class="table-responsive table-card" id="owndb-wise-sku-kpi">
+                                        <!-- Data loads here -->
+                                    </div>
+                                </div>
+
+                            </div> <!-- .card-->
+                        </div> <!-- .col-->
+                    </div> <!-- end row-->
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Nation Wise MTD Secondaray Sales Vs Primary Sales in Crore</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="nation-wise-mtd-pri-vs-sec-region" class="form-control border-0 shadow">
+                                                <option value="">Select Region</option>
+                                                @{
+                                                    foreach (System.Data.DataRow row in ViewBag.region.Rows)
+                                                    {
+                                                        <option value="@row["REGION_ID"]">@row["REGION_NAME"]</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="nation-wise-mtd-pri-vs-sec-area" class="form-control border-0 shadow">
+                                                <option value="">Select Area</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-shrink-0">
+                                        <div class="input-group">
+                                            <input type="date" id="nation-wise-sec-vs-primary-dt"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM-dd")" />
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
+
+                                <div class="card-body position-relative" style="min-height: 300px;">
+                                    <div class="table-responsive table-card" id="nation-wise-mtd-pri-vs-sec-sales">
                                         <!-- Data loads here -->
                                     </div>
                                 </div>
@@ -1296,15 +1341,15 @@
     <script>
         $(document).ready(function () {
 
-            alert('loaded')
+            /*alert('loaded')*/
 
-            var dt = "";
+            var dt = '@dt.ToString("yyyy-MM-dd")';
 
             var regionId = "";
 
             var areaId = "";
 
-            
+
 
 
             /*Dashboard Header start*/
@@ -1370,7 +1415,7 @@
 
             $('#nation-wise-sku-kpi-date').change(function () {
 
-                
+
                 dt = $(this).val();
 
                 regionId = $('#national-sku-kpi-region').val()
@@ -1471,6 +1516,100 @@
             })
 
             /*owndb wise sku kpi ends*/
+
+
+            /*mtd primary vs secondary sales start*/
+            var nationWisePriVsSecRegionId, nationWisePriVsSecAreaId = ""
+
+            function nationWisemtdPrimaryVsSecondary(pDate, regionId, areaId) {
+                $.ajax({
+                    url: "/Dashboard/NationWisePrimaryVsSecondaryJson",
+                    data: { dt: pDate, region_id: regionId, area_id: areaId },
+                    beforeSend: function () {
+                        showCardSpinner('.card:has(#nation-wise-mtd-pri-vs-sec-sales) .card-body');
+                    },
+                    success: function (result) {
+                        $("#nation-wise-mtd-pri-vs-sec-sales").html(result);
+                    },
+                    error: function () {
+                        $("#nation-wise-mtd-pri-vs-sec-sales").html('<div class="text-danger text-center py-4">Failed to load data.</div>');
+                    },
+                    complete: function () {
+                        hideCardSpinner();
+                    }
+                });
+            }
+
+
+            nationWisemtdPrimaryVsSecondary(dt, nationWisePriVsSecRegionId, nationWisePriVsSecAreaId);
+
+            $('#nation-wise-sec-vs-primary-dt').change(function () {
+
+
+                dt = $(this).val();
+
+                nationWisePriVsSecRegionId = $('#nation-wise-mtd-pri-vs-sec-region').val()
+
+                nationWisePriVsSec = $('#nation-wise-mtd-pri-vs-sec-area').val()
+
+                nationWisemtdPrimaryVsSecondary(dt, nationWisePriVsSecRegionId, nationWisePriVsSec);
+
+                alert(dt)
+
+            })
+
+            // Populate area dropdown on region change
+            $('#nation-wise-mtd-pri-vs-sec-region').change(function () {
+                var regionId = $(this).val();
+
+                var areaId = '';
+
+                alert(areaId)
+
+                if (regionId && regionId !== "") {
+                    $.ajax({
+                        url: '/Dashboard/GetAreaByRegion', // Controller Action
+                        type: 'GET',
+                        data: { region_id: regionId },
+                        success: function (data) {
+                            var areaDropdown = $('#nation-wise-mtd-pri-vs-sec-area');
+                            areaDropdown.empty();
+                            areaDropdown.append('<option value="">Select Area</option>');
+
+                            nationWisemtdPrimaryVsSecondary(dt, regionId, areaId);
+
+                            if (data && data.length > 0) {
+                                $.each(data, function (i, item) {
+                                    console.log(item)
+                                    areaDropdown.append(`<option value="${item.AREA_ID}">${item.AREA_NAME}</option>`);
+                                });
+                            } else {
+                                areaDropdown.append('<option disabled>No areas found</option>');
+                            }
+                        },
+                        error: function () {
+                            alert('Failed to load areas.');
+                        }
+                    });
+                } else {
+                    $('#nation-wise-mtd-pri-vs-sec-area').html('<option>Select Area</option>');
+                }
+            });
+
+
+            // Populate area dropdown on region change
+            $('#nation-wise-mtd-pri-vs-sec-area').change(function () {
+                var regionId = $('#nation-wise-mtd-pri-vs-sec-region').val();
+
+                var areaId = $(this).val();
+
+                alert(areaId)
+
+                nationWisemtdPrimaryVsSecondary(dt, regionId, areaId);
+            });
+
+
+            /*nation wise sku kpi ends*/
 
 
 
