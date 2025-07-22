@@ -50,6 +50,28 @@
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">National Focus SKU KPI Update</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="national-sku-kpi-region" class="form-control border-0 shadow">
+                                                <option value="">Select Region</option>
+                                                @{ 
+                                                    foreach(System.Data.DataRow row in ViewBag.region.Rows)
+                                                    {
+                                                        <option value="@row["REGION_ID"]">@row["REGION_NAME"]</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="national-sku-kpi-area" class="form-control border-0 shadow">
+                                                <option value="">Select Area</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="flex-shrink-0">
                                         <div class="input-group">
                                             <input type="date" id="nation-wise-sku-kpi-date"
@@ -1276,7 +1298,13 @@
 
             alert('loaded')
 
-            var dt;
+            var dt = "";
+
+            var regionId = "";
+
+            var areaId = "";
+
+            
 
 
             /*Dashboard Header start*/
@@ -1318,10 +1346,10 @@
 
             /*nation wise sku kpi start*/
 
-            function nationWiseSkuKpi(pDate) {
+            function nationWiseSkuKpi(pDate, regionId, areaId) {
                 $.ajax({
                     url: "/Dashboard/NationWiseSkuKpiJson",
-                    data: { dt: pDate },
+                    data: { dt: pDate, region_id : regionId, area_id : areaId },
                     beforeSend: function () {
                         showCardSpinner('.card:has(#nation-wise-sku-kpi) .card-body');
                     },
@@ -1338,18 +1366,73 @@
             }
 
 
-            nationWiseSkuKpi(dt);
+            nationWiseSkuKpi(dt, regionId, areaId);
 
             $('#nation-wise-sku-kpi-date').change(function () {
 
                 
                 dt = $(this).val();
 
-                nationWiseSkuKpi(dt);
+                regionId = $('#national-sku-kpi-region').val()
+
+                areaId = $('#national-sku-kpi-area').val()
+
+                nationWiseSkuKpi(dt, regionId, areaId);
 
                 alert(dt)
 
             })
+
+            // Populate area dropdown on region change
+            $('#national-sku-kpi-region').change(function () {
+                var regionId = $(this).val();
+
+                var areaId = '';
+
+                alert(areaId)
+
+                if (regionId && regionId !== "") {
+                    $.ajax({
+                        url: '/Dashboard/GetAreaByRegion', // Controller Action
+                        type: 'GET',
+                        data: { region_id: regionId },
+                        success: function (data) {
+                            var areaDropdown = $('#national-sku-kpi-area');
+                            areaDropdown.empty();
+                            areaDropdown.append('<option value="">Select Area</option>');
+
+                            nationWiseSkuKpi(dt, regionId, areaId);
+
+                            if (data && data.length > 0) {
+                                $.each(data, function (i, item) {
+                                    console.log(item)
+                                    areaDropdown.append(`<option value="${item.AREA_ID}">${item.AREA_NAME}</option>`);
+                                });
+                            } else {
+                                areaDropdown.append('<option disabled>No areas found</option>');
+                            }
+                        },
+                        error: function () {
+                            alert('Failed to load areas.');
+                        }
+                    });
+                } else {
+                    $('#national-sku-kpi-area').html('<option>Select Area</option>');
+                }
+            });
+
+
+            // Populate area dropdown on region change
+            $('#national-sku-kpi-area').change(function () {
+                var regionId = $('#national-sku-kpi-region').val();
+
+                var areaId = $(this).val();
+
+                alert(areaId)
+
+                nationWiseSkuKpi(dt, regionId, areaId);
+            });
+
 
             /*nation wise sku kpi ends*/
 
