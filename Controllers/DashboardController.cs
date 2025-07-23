@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using IMPLDashboard.Models;
+
 namespace IMPLDashboard.Controllers
 {
     public class DashboardController : BaseController
@@ -182,6 +184,14 @@ namespace IMPLDashboard.Controllers
             string x = RenderPartialViewToStringMultipleData("NationalWisePriVsSecPartial", tableData, tableData2);
 
             return x;
+        }
+
+        [HttpGet]
+        public ActionResult ProductSalesComparison(string p_date_to, string region_id, string area_id, string category_id, string focus_category_id)
+        {
+            DataTable dt = new Dashboard_DAL().GetProductSalesM2MComparison(p_date_to, region_id, area_id, category_id, focus_category_id);
+            ViewBag.ProductSalesM2MComparison = dt;
+            return View();
         }
 
 

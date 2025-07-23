@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "ProductSalesM2MComparison";
+}
+
+<h2>ProductSalesM2MComparison</h2>
+
+@{
+    var dt = ViewBag.ProductSalesM2MComparison as System.Data.DataTable;
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="card card-animate">
+            <div class="card-body">
+                @if (dt != null && dt.Rows.Count > 0)
+                {
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                @foreach (System.Data.DataColumn column in dt.Columns)
+                                {
+                                    <th>@column.ColumnName.Replace("_", " ").ToUpper()</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (System.Data.DataRow row in dt.Rows)
+                            {
+                                <tr>
+                                    @foreach (var item in row.ItemArray)
+                                    {
+                                        <td>@item</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No data available.</p>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
