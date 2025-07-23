@@ -1,0 +1,365 @@
+﻿
+@{
+    ViewBag.Title = "OutletInMap";
+
+}
+
+@section css{
+    <!-- Link to Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Link to Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.1/dist/MarkerCluster.Default.css" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-content, .container-fluid {
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 700px;
+        }
+
+        .tree ul {
+            list-style-type: none;
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 1px dotted #ccc;
+        }
+
+        .tree li {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+            .tree li span {
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .tree li.collapsed > ul {
+                display: none;
+            }
+    </style>
+}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div id="tree-container"></div>
+            </div>
+            <div class="col-md-9">
+                <div id="map"></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section Scripts{
+    <!-- Link to Leaflet JS-->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.1/dist/leaflet.markercluster.js"></script>
+
+    <script>
+
+
+
+        var jsonString = '@Html.Raw(ViewBag.tableOutletCount)';
+
+        // Replace illegal control characters (not safe for complex JSON)
+        var cleanedJsonString = jsonString.replace(/[\u0000-\u001F]+/g, '');
+        var flatData = JSON.parse(cleanedJsonString);
+
+        console.log(flatData);
+
+    //    document.getElementById('jsonOutput').textContent = cleanedJsonString;// JSON.stringify(flatData, null, 2);
+
+    function createTree2(data) {
+        function createList(item, level) {
+            const ul = document.createElement('ul');
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            let children = [];
+
+            if (level === 'REGION') {
+                span.textContent = `${item.REGION_NAME} (${item.OUTLET_COUNT})`;
+                children = item.AREAS || [];
+                li.appendChild(span);
+                if (children.length > 0) {
+                    li.appendChild(document.createElement('ul'));
+                    children.forEach(child => {
+                        li.lastChild.appendChild(createList(child, 'AREA'));
+                    });
+                    li.classList.add('collapsed');
+                    span.addEventListener('click', () => li.classList.toggle('collapsed'));
+                }
+            } else if (level === 'AREA') {
+                span.textContent = `${item.AREA_NAME} (${item.OUTLET_COUNT})`;
+                children = item.TERITORIES || [];
+                li.appendChild(span);
+                if (children.length > 0) {
+                    li.appendChild(document.createElement('ul'));
+                    children.forEach(child => {
+                        li.lastChild.appendChild(createList(child, 'TERITORY'));
+                    });
+                    li.classList.add('collapsed');
+                    span.addEventListener('click', () => li.classList.toggle('collapsed'));
+                }
+            } else if (level === 'TERITORY') {
+                span.textContent = `${item.TERITORRY_NAME} (${item.OUTLET_COUNT})`;
+                children = item.TOWNS || [];
+                li.appendChild(span);
+                if (children.length > 0) {
+                    li.appendChild(document.createElement('ul'));
+                    children.forEach(child => {
+                        li.lastChild.appendChild(createList(child, 'TOWN'));
+                    });
+                    li.classList.add('collapsed');
+                    span.addEventListener('click', () => li.classList.toggle('collapsed'));
+                }
+            } else if (level === 'TOWN') {
+                span.textContent = `${item.TOWN_NAME} (${item.OUTLET_COUNT})`;
+                children = item.DEALERS || [];
+                li.appendChild(span);
+                if (children.length > 0) {
+                    li.appendChild(document.createElement('ul'));
+                    children.forEach(child => {
+                        li.lastChild.appendChild(createList(child, 'DEALER'));
+                    });
+                    li.classList.add('collapsed');
+                    span.addEventListener('click', () => li.classList.toggle('collapsed'));
+                }
+            } else if (level === 'DEALER') {
+                span.textContent = `${item.DEALER_NAME} (${item.OUTLET_COUNT})`;
+                children = item.ROUTES || [];
+                li.appendChild(span);
+                if (children.length > 0) {
+                    li.appendChild(document.createElement('ul'));
+                    children.forEach(child => {
+                        li.lastChild.appendChild(createList(child, 'ROUTE'));
+                    });
+                    li.classList.add('collapsed');
+                    span.addEventListener('click', () => li.classList.toggle('collapsed'));
+                }
+            } else if (level === 'ROUTE') {
+                li.textContent = `${item.ROUTE_NAME} (${item.OUTLET_COUNT})`;
+                return li; // No further children
+            }
+
+            ul.appendChild(li);
+            return ul;
+        }
+
+        return createList(data, 'REGION');
+    }
+
+        function createTree(data) {
+            function createList(items, level) {
+                const ul = document.createElement('ul');
+
+                items.forEach(item => {
+                    const li = document.createElement('li');
+                    let outletCount = item.OUTLET_COUNT || 0;
+
+                    if (level === 'REGION') {
+                        li.innerHTML = `<span class="region" id="region_${item.REGION_ID}">${item.REGION_NAME} (${outletCount})</span>`;
+                        const areaUl = createList(item.AREAS, 'AREA');
+                        if (areaUl) {
+                            li.appendChild(areaUl);
+                            li.classList.add('collapsed');
+                        }
+                    } else if (level === 'AREA') {
+                        li.innerHTML = `<span class="area" id="area_${item.AREA_ID}">${item.AREA_NAME} (${outletCount})</span>`;
+                        const terUl = createList(item.TERITORIES, 'TERITORRY');
+                        if (terUl) {
+                            li.appendChild(terUl);
+                            li.classList.add('collapsed');
+                        }
+                    } else if (level === 'TERITORRY') {
+                        // sum outlet count from TOWNS
+                        outletCount = item.TOWNS?.reduce((sum, town) => {
+                            return sum + (town.OUTLET_COUNT || 0);
+                        }, 0);
+
+                        li.innerHTML = `<span class="teritorry" id="teritorry_${item.TERITORRY_ID}"><i class="ri-map-line"></i> ${item.TERITORRY_NAME} (${outletCount})</span>`;
+                        const townUl = createList(item.TOWNS, 'TOWN');
+                        if (townUl) {
+                            li.appendChild(townUl);
+                            li.classList.add('collapsed');
+                        }
+                    } else if (level === 'TOWN') {
+                        outletCount = item.DEALERS?.reduce((sum, dealer) => {
+                            return sum + (dealer.OUTLET_COUNT || 0);
+                        }, 0);
+
+                        li.innerHTML = `<span class="town" id="town_${item.TOWN_ID}">${item.TOWN_NAME} (${outletCount})</span>`;
+                        const dealerUl = createList(item.DEALERS, 'DEALER');
+                        if (dealerUl) {
+                            li.appendChild(dealerUl);
+                            li.classList.add('collapsed');
+                        }
+                    } else if (level === 'DEALER') {
+                        outletCount = item.ROUTES?.reduce((sum, route) => {
+                            return sum + (route.OUTLET_COUNT || 0);
+                        }, 0) || item.OUTLET_COUNT;
+
+                        li.innerHTML = `<span class="dealer" id="dealer_${item.DEALER_ID}">${item.DEALER_NAME} (${outletCount})</span>`;
+                        const routeUl = createList(item.ROUTES, 'ROUTE');
+                        if (routeUl) {
+                            li.appendChild(routeUl);
+                            li.classList.add('collapsed');
+                        }
+                    } else if (level === 'ROUTE') {
+                        li.innerHTML = `<span class="route" id="route_${item.ROUTE_ID}">${item.ROUTE_NAME} (${item.OUTLET_COUNT || 0})</span>`;
+                    }
+
+                    ul.appendChild(li);
+                });
+
+                return ul;
+            }
+
+            return createList(Array.isArray(data) ? data : [data], 'REGION');
+        }
+
+        var region_id, area_id, territory_id, dealer_id;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const treeContainer = document.getElementById('tree-container');
+
+            flatData.forEach(region => {
+                const tree = createTree(region);
+                tree.classList.add('tree');
+                treeContainer.appendChild(tree);
+            });
+
+
+            treeContainer.addEventListener('click', function (e) {
+                if (e.target.tagName === 'SPAN') {
+                    const li = e.target.closest('li');
+                    if (li && li.querySelector('ul')) {
+                        li.classList.toggle('collapsed');
+                        li.classList.toggle('expanded');
+                    }
+
+                    const span = e.target;
+                    const idParts = span.id.split('_');
+                    const level = idParts[0]; // region, area, teritorry, etc.
+                    const value = idParts[1]; // the actual ID number
+
+                    // Reset all variables
+                    region_id = area_id = territory_id = dealer_id = null;
+
+                    switch (level) {
+                        case 'region':
+                            region_id = value;
+                            console.log('Selected REGION_ID:', region_id);
+                            break;
+                        case 'area':
+                            area_id = value;
+                            console.log('Selected AREA_ID:', area_id);
+                            break;
+                        case 'teritorry':
+                            territory_id = value;
+                            console.log('Selected TERITORRY_ID:', territory_id);
+                            load_territory_map_data(territory_id);
+                            break;
+                        case 'dealer':
+                            dealer_id = value;
+                            console.log('Selected DEALER_ID:', dealer_id);
+                            break;
+                        case 'town':
+                            console.log('Selected TOWN_ID:', value);
+                            break;
+                        case 'route':
+                            console.log('Selected ROUTE_ID:', value);
+                            break;
+                    }
+                }
+            });
+
+        });
+
+
+        function load_territory_map_data(territory_id) {
+            fetch(`OutletInfo?territory_id=${encodeURIComponent(territory_id)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // assuming the server returns JSON
+                })
+                .then(result => {
+
+                    if (result != null) {
+                        outletMap(result);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching outlet info:', error);
+                });
+        }
+
+
+
+        function resizeMap() {
+        const windowHeight = window.innerHeight;
+        const mapElement = document.getElementById('map');
+
+        // Example: subtract 100px if you have a header or margin
+        const adjustedHeight = windowHeight - 100;
+
+        mapElement.style.height = adjustedHeight + 'px';
+        }
+
+        // Resize load and on window resize
+        // window.addEventListener('load', resizeMap);
+        // window.addEventListener('resize', resizeMap);
+            let map;
+            let markers;
+            outletMap([]);
+
+        function outletMap(data) {
+    if (!map) {
+        map = L.map('map').setView([23.685, 90.307], 7); // Initialize once
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    }
+
+    if (markers) {
+        map.removeLayer(markers); // Remove old markers
+    }
+
+    markers = L.markerClusterGroup();
+
+    data.forEach(function (item) {
+        var marker = L.marker([item.LATI, item.LONGI])
+            .bindPopup('<b>' + item.OUTLET_NAME + '</b><br>' + item.MOBILE + '<br>' + item.ADDRESS + '<br>Dealer: ' + item.DEALER_NAME);
+        markers.addLayer(marker);
+    });
+
+    map.addLayer(markers);
+
+    // Optional: auto-fit map to marker bounds
+    if (data.length > 0) {
+        const bounds = markers.getBounds();
+        map.fitBounds(bounds, { padding: [50, 50] });
+    }
+}
+
+
+    </script>
+}
+

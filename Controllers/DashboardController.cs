@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 
 using IMPLDashboard.Models;
+using Newtonsoft.Json;
+/*using System.Drawing;*/
 
 namespace IMPLDashboard.Controllers
 {
@@ -192,6 +194,129 @@ namespace IMPLDashboard.Controllers
             DataTable dt = new Dashboard_DAL().GetProductSalesM2MComparison(p_date_to, region_id, area_id, category_id, focus_category_id);
             ViewBag.ProductSalesM2MComparison = dt;
             return View();
+        }
+
+
+        public List<NationWiseKpiRegion> NestOutletData(System.Data.DataTable table)
+        {
+            var regionMap = new Dictionary<int, NationWiseKpiRegion>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                int regionId = Convert.ToInt32(row["REGION_ID"]);
+                string regionName = row["REGION_NAME"].ToString();
+                int areaId = Convert.ToInt32(row["AREA_ID"]);
+                string areaName = row["AREA_NAME"].ToString();
+                int terId = Convert.ToInt32(row["TERITORRY_ID"]);
+                string terName = row["TERITORRY_NAME"].ToString();
+                int townId = Convert.ToInt32(row["TOWN_ID"]);
+                string townName = row["TOWN_NAME"].ToString();
+                int dealerId = Convert.ToInt32(row["DEALER_ID"]);
+                string dealerName = row["DEALER_NAME"].ToString();
+                int routeId = Convert.ToInt32(row["ROUTE_ID"]);
+                string routeName = row["ROUTE_NAME"].ToString();
+                int outletCount = Convert.ToInt32(row["OUTLET_COUNT"]);
+
+                // REGION
+                if (!regionMap.TryGetValue(regionId, out var region))
+                {
+                    region = new NationWiseKpiRegion
+                    {
+                        REGION_ID = regionId,
+                        REGION_NAME = regionName
+                    };
+                    regionMap[regionId] = region;
+                }
+                region.OUTLET_COUNT += outletCount;
+
+                // AREA
+                var area = region.AREAS.FirstOrDefault(a => a.AREA_ID == areaId);
+                if (area == null)
+                {
+                    area = new Area
+                    {
+                        AREA_ID = areaId,
+                        AREA_NAME = areaName
+                    };
+                    region.AREAS.Add(area);
+                }
+                area.OUTLET_COUNT += outletCount;
+
+                // TERITORRY
+                var ter = area.TERITORIES.FirstOrDefault(t => t.TERITORRY_ID == terId);
+                if (ter == null)
+                {
+                    ter = new Teritorry
+                    {
+                        TERITORRY_ID = terId,
+                        TERITORRY_NAME = terName
+                    };
+                    area.TERITORIES.Add(ter);
+                }
+                ter.OUTLET_COUNT += outletCount;
+                // TOWN
+                var town = ter.TOWNS.FirstOrDefault(t => t.TOWN_ID == townId);
+                if (town == null)
+                {
+                    town = new Town
+                    {
+                        TOWN_ID = townId,
+                        TOWN_NAME = townName
+                    };
+                    ter.TOWNS.Add(town);
+                }
+                town.OUTLET_COUNT += outletCount;
+
+                // DEALER
+                var dealer = town.DEALERS.FirstOrDefault(d => d.DEALER_ID == dealerId);
+                if (dealer == null)
+                {
+                    dealer = new Dealer
+                    {
+                        DEALER_ID = dealerId,
+                        DEALER_NAME = dealerName
+                    };
+                    town.DEALERS.Add(dealer);
+                }
+                dealer.OUTLET_COUNT += outletCount;
+
+                // ROUTE (under dealer)
+                var route = dealer.ROUTES.FirstOrDefault(r => r.ROUTE_ID == routeId);
+                if (route == null)
+                {
+                    route = new Route
+                    {
+                        ROUTE_ID = routeId,
+                        ROUTE_NAME = routeName
+                    };
+                    dealer.ROUTES.Add(route);
+                }
+                route.OUTLET_COUNT += outletCount;
+            }
+
+            return regionMap.Values.ToList();
+        }
+
+
+        public ActionResult OutletInMap()
+        {
+            // System.Data.DataTable tableData = new Dashboard_DAL().GetOutletInfo();
+            System.Data.DataTable tableOutletCount = new Dashboard_DAL().GetOutletCount();
+
+            string json = JsonConvert.SerializeObject(NestOutletData(tableOutletCount));
+
+            ViewBag.tableOutletCount = json;
+            ViewBag.data = ""; //OutletInfo();
+            return View();
+        }
+
+        [HttpGet]
+        public String OutletInfo(string region_id, string area_id, string territory_id, string dealer_id)
+        {
+
+            DataTable tableData = new Dashboard_DAL().GetOutletInfo(p_region_id: region_id, p_area_id: area_id, p_teritorry_id: territory_id, p_dealer_id: dealer_id);
+            string json = JsonConvert.SerializeObject(tableData);
+            return json;
         }
 
 

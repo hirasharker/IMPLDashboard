@@ -46,7 +46,7 @@ namespace IMPLDashboard.Models
         public List<Teritorry> TERITORIES { get; set; } = new List<Teritorry>();
     }
 
-    public class Region
+    public class NationWiseKpiRegion
     {
         public int REGION_ID { get; set; }
         public string REGION_NAME { get; set; }
