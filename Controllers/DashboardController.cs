@@ -107,10 +107,10 @@ namespace IMPLDashboard.Controllers
         }
 
         [HttpGet]
-        public string OwnDbWiseSkuKpiJson(String dt)
+        public string OwnDbWiseSkuKpiJson(String dt, string region_id, string area_id)
         {
             String date;
-            if (dt == null)
+            if (dt == "" || dt == null)
             {
                 DateTime dateTime = DateTime.Now;
                 date = dateTime.ToString("yyyy-MM-dd");
@@ -120,9 +120,19 @@ namespace IMPLDashboard.Controllers
                 date = dt;
             }
 
+            if (region_id == "" || region_id == null)
+            {
+                region_id = "";
+            }
+
+            if (area_id == "" || area_id == null)
+            {
+                area_id = "";
+            }
+
             DataTable tableData = new Dashboard_DAL().GetOwnDbKpiWiseImsValue(date);
 
-            DataTable tableData2 = new Dashboard_DAL().GetOwnDbKpiWiseTotalMemo(date);
+            DataTable tableData2 = new Dashboard_DAL().GetOwnDbKpiWiseTotalMemo(date, region_id, area_id);
 
             DataTable tableData3 = new Dashboard_DAL().GetOwnDbFocusCtnKpi(date);
 
@@ -163,29 +173,16 @@ namespace IMPLDashboard.Controllers
             }
 
 
-            DataTable tableData = new Dashboard_DAL().GetNationalKpiWiseImsValue(date, region_id, area_id);
+            DataTable tableData = new Dashboard_DAL().GetNationWisePrimaryVsSecondaryData(date, region_id, area_id);
 
-            DataTable tableData2 = new Dashboard_DAL().GetNationalKpiWiseTotalMemo(date, region_id, area_id);
-
-            DataTable tableData3 = new Dashboard_DAL().GetNationalFocusCtnKpi(date, region_id, area_id);
-
-            DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date, region_id, area_id);
-
-            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
+            DataTable tableData2 = new DataTable();
 
             tableData.AsEnumerable();
 
-            string x = RenderPartialViewToStringQuadrapoleData("NationalWisePriVsSecPartial", tableData, tableData2, tableData3, tableData4, tableData5);
+            string x = RenderPartialViewToStringMultipleData("NationalWisePriVsSecPartial", tableData, tableData2);
 
             return x;
         }
-        
-
-
-
-
-
-
 
 
 

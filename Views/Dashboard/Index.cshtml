@@ -101,6 +101,28 @@
                                                    class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM-dd")" />
                                         </div>
                                     </div>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="own-db-sku-kpi-region" class="form-control border-0 shadow">
+                                                <option value="">Select Region</option>
+                                                @{
+                                                    foreach (System.Data.DataRow row in ViewBag.region.Rows)
+                                                    {
+                                                        <option value="@row["REGION_ID"]">@row["REGION_NAME"]</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="own-db-sku-kpi-area" class="form-control border-0 shadow">
+                                                <option value="">Select Area</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div><!-- end card header -->
 
                                 <div class="card-body position-relative" style="min-height: 300px;">
@@ -1483,10 +1505,18 @@
 
             /*own db wise sku kpi start*/
 
-            function owndbWiseSkuKpi(pDate) {
+
+
+            var ownDbDt = '@dt.ToString("yyyy-MM-dd")';
+
+            var ownDbRegionId = "";
+
+            var ownDbAreaId = "";
+
+            function owndbWiseSkuKpi(pDate, region, area) {
                 $.ajax({
                     url: "/Dashboard/OwnDbWiseSkuKpiJson",
-                    data: { dt: pDate },
+                    data: { dt: pDate, region_id: regionId, area_id: areaId },
                     beforeSend: function () {
                         showCardSpinner('.card:has(#owndb-wise-sku-kpi) .card-body');
                     },
@@ -1502,16 +1532,13 @@
                 });
             }
 
-            owndbWiseSkuKpi(dt);
+            owndbWiseSkuKpi(ownDbDt, ownDbRegionId, ownDbAreaId);
 
             $('#owndb-wise-sku-kpi-date').change(function () {
 
+                ownDbDt = $(this).val();
 
-                dt = $(this).val();
-
-                owndbWiseSkuKpi(dt);
-
-                alert(dt)
+                owndbWiseSkuKpi(ownDbDt, ownDbRegionId, ownDbAreaId);
 
             })
 

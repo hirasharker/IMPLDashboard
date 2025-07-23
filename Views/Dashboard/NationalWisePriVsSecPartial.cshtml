@@ -23,33 +23,33 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (System.Data.DataRow rows in ViewBag.dataTable3.Rows)
+        @foreach (System.Data.DataRow rows in ViewBag.dataTable.Rows)
         {
             <tr>
                 <td style="text-align: center;">
                     <span class="text-primary">National</span>
                 </td>
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["FOCUS_CATEGORY_NAME"]</span>
+                    <span class="text-primary">@rows["CATEGORY_NAME"]</span>
                 </td>
 
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["LAST_MONTH_CTN_ACHIEVMENT"]</span>
+                    <span class="text-primary">@rows["SEC_TP_TARGET"]</span>
                 </td>
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["TP_TARGET"]</span>
+                    <span class="text-primary">@rows["SEC_SALES_TP"]</span>
                 </td>
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["TODAYS_CTN_ACHIEVMENT"]</span>
+                    <span class="text-primary">@rows["SEC_ACHI"]</span>
                 </td>
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["LAST_MTD_CTN_ACHIEVMENT"]</span>
+                    <span class="text-primary">@rows["PRI_DP_TARGET"]</span>
                 </td>
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["MTD_TP_TARGET"]</span>
+                    <span class="text-primary">@rows["PRI_SALES_DP"]</span>
                 </td>
                 <td style="text-align: center;">
-                    <span class="text-primary">@rows["MTD_CTN_ACHIEVMENT"]</span>
+                    <span class="text-primary">@rows["PRI_ACHI"]</span>
                 </td>
 
             </tr>
