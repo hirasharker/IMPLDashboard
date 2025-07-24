@@ -92,8 +92,16 @@ namespace IMPLDashboard.Controllers
                 area_id = "";
             }
 
+            DataSet ds = new Dashboard_DAL().GetNationalFocusKpi(date, region_id, area_id);
 
-            DataTable tableData = new Dashboard_DAL().GetNationalKpiWiseImsValue(date, region_id, area_id);
+
+            DataTable tableData = ds.Tables[0];
+            DataTable tableData2 = ds.Tables[1];
+            DataTable tableData3 = ds.Tables[2];
+            DataTable tableData4 = ds.Tables[3];
+            DataTable tableData5 = ds.Tables[4];
+
+            /*DataTable tableData = new Dashboard_DAL().GetNationalKpiWiseImsValue(date, region_id, area_id);
 
             DataTable tableData2 = new Dashboard_DAL().GetNationalKpiWiseTotalMemo(date, region_id, area_id);
 
@@ -101,9 +109,9 @@ namespace IMPLDashboard.Controllers
 
             DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date, region_id, area_id);
 
-            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
+            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);*/
 
-            tableData.AsEnumerable();
+            /*tableData.AsEnumerable();*/
 
             string x = RenderPartialViewToStringQuadrapoleData("NationalWiseSkuKpiPartial", tableData, tableData2, tableData3, tableData4, tableData5);
 
@@ -197,7 +205,7 @@ namespace IMPLDashboard.Controllers
         }
 
 
-        public List<NationWiseKpiRegion> NestOutletData(System.Data.DataTable table)
+        public List<NationWiseKpiRegion> NestOutletData(DataTable table)
         {
             var regionMap = new Dictionary<int, NationWiseKpiRegion>();
 
