@@ -410,6 +410,7 @@ namespace IMPLDashboard.DAL
 
                 OracleCommand com = GetSPCommand("PROC_IMPL_PRIMARY_SECONDARY_SALES_TARGET");
                 com.Parameters.Add("p_as_on_date", OracleType.VarChar).Value = date;
+                com.Parameters.Add("p_division", OracleType.VarChar).Value = region_id;
                 com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
                 OracleDataAdapter oraData = new OracleDataAdapter(com);
 

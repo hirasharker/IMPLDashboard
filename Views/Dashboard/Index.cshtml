@@ -142,28 +142,17 @@
                         <div class="col-xl-12">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Nation Wise MTD Secondaray Sales Vs Primary Sales in Crore</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">MTD Secondaray Sales Vs Primary Sales in Crore</h4>
                                     <div class="flex-shrink-0" style="margin-right: 2em">
                                         <div class="input-group">
                                             <select id="nation-wise-mtd-pri-vs-sec-region" class="form-control border-0 shadow">
-                                                <option value="">Select Region</option>
-                                                @{
-                                                    foreach (System.Data.DataRow row in ViewBag.region.Rows)
-                                                    {
-                                                        <option value="@row["REGION_ID"]">@row["REGION_NAME"]</option>
-                                                    }
-                                                }
+                                                <option value="">National</option>
+                                                <option value="GT">GT</option>
+                                                <option value="MT">MT</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="flex-shrink-0" style="margin-right: 2em">
-                                        <div class="input-group">
-                                            <select id="nation-wise-mtd-pri-vs-sec-area" class="form-control border-0 shadow">
-                                                <option value="">Select Area</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
                                     <div class="flex-shrink-0">
                                         <div class="input-group">
@@ -1607,54 +1596,15 @@
             $('#nation-wise-mtd-pri-vs-sec-region').change(function () {
                 var regionId = $(this).val();
 
-                var areaId = '';
-
-                alert(areaId)
-
-                if (regionId && regionId !== "") {
-                    $.ajax({
-                        url: '/Dashboard/GetAreaByRegion', // Controller Action
-                        type: 'GET',
-                        data: { region_id: regionId },
-                        success: function (data) {
-                            var areaDropdown = $('#nation-wise-mtd-pri-vs-sec-area');
-                            areaDropdown.empty();
-                            areaDropdown.append('<option value="">Select Area</option>');
-
-                            nationWisemtdPrimaryVsSecondary(dt, regionId, areaId);
-
-                            if (data && data.length > 0) {
-                                $.each(data, function (i, item) {
-                                    console.log(item)
-                                    areaDropdown.append(`<option value="${item.AREA_ID}">${item.AREA_NAME}</option>`);
-                                });
-                            } else {
-                                areaDropdown.append('<option disabled>No areas found</option>');
-                            }
-                        },
-                        error: function () {
-                            alert('Failed to load areas.');
-                        }
-                    });
-                } else {
-                    $('#nation-wise-mtd-pri-vs-sec-area').html('<option>Select Area</option>');
-                }
-            });
-
-
-            // Populate area dropdown on region change
-            $('#nation-wise-mtd-pri-vs-sec-area').change(function () {
-                var regionId = $('#nation-wise-mtd-pri-vs-sec-region').val();
-
-                var areaId = $(this).val();
-
-                alert(areaId)
+                var areaId = "";
 
                 nationWisemtdPrimaryVsSecondary(dt, regionId, areaId);
+
             });
 
 
-            /*nation wise sku kpi ends*/
+
+            /*mtd primary vs secondary sales ends*/
 
 
 
