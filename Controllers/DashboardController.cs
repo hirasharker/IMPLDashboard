@@ -99,7 +99,7 @@ namespace IMPLDashboard.Controllers
             DataTable tableData2 = ds.Tables[1];
             DataTable tableData3 = ds.Tables[2];
             DataTable tableData4 = ds.Tables[3];
-            DataTable tableData5 = ds.Tables[4];
+            /*DataTable tableData5 = ds.Tables[4];*/
 
             /*DataTable tableData = new Dashboard_DAL().GetNationalKpiWiseImsValue(date, region_id, area_id);
 
@@ -107,11 +107,11 @@ namespace IMPLDashboard.Controllers
 
             DataTable tableData3 = new Dashboard_DAL().GetNationalFocusCtnKpi(date, region_id, area_id);
 
-            DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date, region_id, area_id);
-
-            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);*/
+            DataTable tableData4 = new Dashboard_DAL().GetNationalFocusMemoKpi(date, region_id, area_id);*/
 
             /*tableData.AsEnumerable();*/
+
+            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
 
             string x = RenderPartialViewToStringQuadrapoleData("NationalWiseSkuKpiPartial", tableData, tableData2, tableData3, tableData4, tableData5);
 
@@ -161,7 +161,7 @@ namespace IMPLDashboard.Controllers
 
 
         [HttpGet]
-        public string NationWisePrimaryVsSecondaryJson(String dt, string region_id, string area_id)
+        public string NationWisePrimaryVsSecondaryJson(String dt, string channel, string area_id)
         {
             String date;
             if (dt == "" || dt == null)
@@ -174,9 +174,9 @@ namespace IMPLDashboard.Controllers
                 date = dt;
             }
 
-            if (region_id == "" || region_id == null)
+            if (channel == "" || channel == null)
             {
-                region_id = "";
+                channel = "";
             }
 
             if (area_id == "" || area_id == null)
@@ -185,7 +185,7 @@ namespace IMPLDashboard.Controllers
             }
 
 
-            DataTable tableData = new Dashboard_DAL().GetNationWisePrimaryVsSecondaryData(date, region_id, area_id);
+            DataTable tableData = new Dashboard_DAL().GetNationWisePrimaryVsSecondaryData(date, channel, area_id);
 
             DataTable tableData2 = new DataTable();
 
@@ -196,16 +196,43 @@ namespace IMPLDashboard.Controllers
             return x;
         }
 
-        [HttpGet]
-        public ActionResult ProductSalesComparison(string p_date_to, string region_id, string area_id, string category_id, string focus_category_id)
+
+        public ActionResult OutletInMap()
         {
-            DataTable dt = new Dashboard_DAL().GetProductSalesM2MComparison(p_date_to, region_id, area_id, category_id, focus_category_id);
-            ViewBag.ProductSalesM2MComparison = dt;
+            // System.Data.DataTable tableData = new Dashboard_DAL().GetOutletInfo();
+            System.Data.DataTable tableOutletCount = new Dashboard_DAL().GetOutletCount();
+
+            string json = JsonConvert.SerializeObject(NestOutletData(tableOutletCount));
+
+            ViewBag.tableOutletCount = json;
+            ViewBag.data = ""; //OutletInfo();
             return View();
         }
 
+        [HttpGet]
+        public String OutletInfo(string region_id, string area_id, string territory_id, string dealer_id)
+        {
 
-        public List<NationWiseKpiRegion> NestOutletData(DataTable table)
+            DataTable tableData = new Dashboard_DAL().GetOutletInfo(p_region_id: region_id, p_area_id: area_id, p_teritorry_id: territory_id, p_dealer_id: dealer_id);
+            string json = JsonConvert.SerializeObject(tableData);
+            return json;
+        }
+
+        [HttpGet]
+        public String ProductSalesComparison(string p_date_to, string region_id, string area_id, string territory_id, string dealer_id, string outlet_id, string category_id, string focus_category_id)
+        {
+            DataTable dt = new Dashboard_DAL().GetProductSalesM2MComparison(p_date_to, region_id, area_id, territory_id, dealer_id, outlet_id, category_id, focus_category_id);
+
+            DataTable tableData2 = new DataTable();
+
+            dt.AsEnumerable();
+
+            string x = RenderPartialViewToStringMultipleData("NationalWisePriVsSecPartial", dt, tableData2);
+            return x;
+        }
+
+
+        public List<NationWiseKpiRegion> NestOutletData(System.Data.DataTable table)
         {
             var regionMap = new Dictionary<int, NationWiseKpiRegion>();
 
@@ -306,26 +333,364 @@ namespace IMPLDashboard.Controllers
         }
 
 
-        public ActionResult OutletInMap()
+        
+
+        [HttpGet]
+        public String OutletInfo(string region_id, string area_id, string territory_id, string dealer_id, string town_id, string route_id)
         {
-            // System.Data.DataTable tableData = new Dashboard_DAL().GetOutletInfo();
-            System.Data.DataTable tableOutletCount = new Dashboard_DAL().GetOutletCount();
 
-            string json = JsonConvert.SerializeObject(NestOutletData(tableOutletCount));
+            DataTable tableData = new Dashboard_DAL().GetOutletInfo(p_region_id: region_id, p_area_id: area_id, p_teritorry_id: territory_id, p_dealer_id: dealer_id, p_town_id: town_id, p_route_id: route_id);
+            string json = JsonConvert.SerializeObject(tableData);
+            return json;
+        }
 
-            ViewBag.tableOutletCount = json;
+
+
+        public ActionResult FieldStructureSalesInTP(string dt, string region_id, string area_id)
+        {
+            string date;
+            if (dt == "" || dt == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = dt;
+            }
+
+            if (region_id == "" || region_id == null)
+            {
+                region_id = "";
+            }
+
+            if (area_id == "" || area_id == null)
+            {
+                area_id = "";
+            }
+            DataTable tableOutletCount = new Dashboard_DAL().GetFieldStructureSalesInTP(p_date_to: date, region_id: region_id, area_id: area_id);
+
+            string json = JsonConvert.SerializeObject(tableOutletCount);
+
+            ViewBag.tableFieldStructureSalesInTP = json;
             ViewBag.data = ""; //OutletInfo();
             return View();
         }
 
-        [HttpGet]
-        public String OutletInfo(string region_id, string area_id, string territory_id, string dealer_id)
-        {
 
-            DataTable tableData = new Dashboard_DAL().GetOutletInfo(p_region_id: region_id, p_area_id: area_id, p_teritorry_id: territory_id, p_dealer_id: dealer_id);
-            string json = JsonConvert.SerializeObject(tableData);
-            return json;
+        [HttpGet]
+        public JsonResult getMoMBusinessProgress(string p_date_to, string mom_channel, string p_no_months, string p_cd = "")
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            string p_mom_channel;
+            if (mom_channel == "" || mom_channel == null)
+            {
+                p_mom_channel = "";
+            }
+            else
+            {
+                p_mom_channel = mom_channel;
+            }
+            string no_months;
+            if (p_no_months == "" || p_no_months == null)
+            {
+                no_months = "12";
+            }
+            else
+            {
+                no_months = p_no_months;
+            }
+
+            var dt = new Dashboard_DAL().getMoMBusinessProgress(date, p_mom_channel, no_months, p_cd);
+
+            // convert DataTable to JSON object, example using Newtonsoft:
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult getMoMFocusCatBusinessProgress(string p_date_to, string mom_channel, string p_no_months)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            string p_mom_channel;
+            if (mom_channel == "" || mom_channel == null)
+            {
+                p_mom_channel = "";
+            }
+            else
+            {
+                p_mom_channel = mom_channel;
+            }
+            string no_months;
+            if (p_no_months == "" || p_no_months == null)
+            {
+                no_months = "12";
+            }
+            else
+            {
+                no_months = p_no_months;
+            }
+
+            var dt = new Dashboard_DAL().getMoMFocusCatBusinessProgress(date, p_mom_channel, no_months);
+
+            // convert DataTable to JSON object, example using Newtonsoft:
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult getMoMEcoMemoBusinessProgress(string p_date_to, string mom_channel, string p_no_months)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            string p_mom_channel;
+            if (mom_channel == "" || mom_channel == null)
+            {
+                p_mom_channel = "";
+            }
+            else
+            {
+                p_mom_channel = mom_channel;
+            }
+            string no_months;
+            if (p_no_months == "" || p_no_months == null)
+            {
+                no_months = "12";
+            }
+            else
+            {
+                no_months = p_no_months;
+            }
+
+            var dt = new Dashboard_DAL().getMoMEcoMemoBusinessProgress(date, p_mom_channel, no_months);
+
+            // convert DataTable to JSON object, example using Newtonsoft:
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult getMoMRegionEcoMemoBusinessProgress(string p_date_to, string mom_channel, string p_no_months)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            string p_mom_channel;
+            if (mom_channel == "" || mom_channel == null)
+            {
+                p_mom_channel = "";
+            }
+            else
+            {
+                p_mom_channel = mom_channel;
+            }
+            string no_months;
+            if (p_no_months == "" || p_no_months == null)
+            {
+                no_months = "12";
+            }
+            else
+            {
+                no_months = p_no_months;
+            }
+
+            var dt = new Dashboard_DAL().getMoMRegionEcoMemoBusinessProgress(date, p_mom_channel, no_months);
+
+            // convert DataTable to JSON object, example using Newtonsoft:
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getQuarterlyBusinessTrend(string p_date_to, string mom_channel, string p_no_months)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            string p_mom_channel;
+            if (mom_channel == "" || mom_channel == null)
+            {
+                p_mom_channel = "";
+            }
+            else
+            {
+                p_mom_channel = mom_channel;
+            }
+            string no_months;
+            if (p_no_months == "" || p_no_months == null)
+            {
+                no_months = "12";
+            }
+            else
+            {
+                no_months = p_no_months;
+            }
+
+            var dt = new Dashboard_DAL().getQuarterlyBusinessTrend(date, p_mom_channel, no_months);
+
+            // convert DataTable to JSON object, example using Newtonsoft:
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getFieldStructureSalesInTP(string dt, string region_id, string area_id)
+        {
+            string date;
+            if (dt == "" || dt == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = dt;
+            }
+
+            if (region_id == "" || region_id == null)
+            {
+                region_id = "";
+            }
+
+            if (area_id == "" || area_id == null)
+            {
+                area_id = "";
+            }
+            DataTable tableOutletCount = new Dashboard_DAL().GetFieldStructureSalesInTP(p_date_to: date, region_id: region_id, area_id: area_id);
+
+            var result = JsonConvert.SerializeObject(tableOutletCount);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getSalesStatusRouteWise(string p_date_to, string mom_channel, string p_no_months, string dealer_id, string limit)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            string p_mom_channel;
+            if (mom_channel == "" || mom_channel == null)
+            {
+                p_mom_channel = "";
+            }
+            else
+            {
+                p_mom_channel = mom_channel;
+            }
+            string no_months;
+            if (p_no_months == "" || p_no_months == null)
+            {
+                no_months = "12";
+            }
+            else
+            {
+                no_months = p_no_months;
+            }
+
+            string p_dealer_id;
+            if (dealer_id == "" || dealer_id == null)
+            {
+                p_dealer_id = "0";
+            }
+            else
+            {
+                p_dealer_id = dealer_id;
+            }
+
+            string p_limit;
+            if (limit == "" || limit == null)
+            {
+                p_limit = "0";
+            }
+            else
+            {
+                p_limit = limit;
+            }
+
+            var dt = new Dashboard_DAL().getSalesStatusRouteWise(date, p_mom_channel, no_months, p_dealer_id, limit);
+
+            // convert DataTable to JSON object, example using Newtonsoft:
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getRegionSalesTargetAchieve(string p_date_to)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+
+
+            var dt = new Dashboard_DAL().getRegionSalesTargetAchieve(date);
+
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
 
 

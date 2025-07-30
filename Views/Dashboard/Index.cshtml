@@ -3,6 +3,45 @@
     var dt = DateTime.Now.AddDays(-1);
 }
 
+@section css{
+    <style>
+        #field_strudcture_wise_sales table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            #field_strudcture_wise_sales table th, td {
+                border: 1px solid #ccc;
+                padding: 6px;
+            }
+
+        #field_strudcture_wise_sales .group-header {
+            background-color: #dfeeff;
+            font-weight: bold;
+        }
+
+        #field_strudcture_wise_sales .subgroup-header {
+            background-color: #f1faff;
+        }
+
+        #field_strudcture_wise_sales .toggle-icon {
+            display: inline-block;
+            width: 1em;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        #field_strudcture_wise_sales .hidden {
+            display: none;
+        }
+
+        #field_strudcture_wise_sales table tr td a {
+            /* text-decoration: none;*/
+            color: #007bff;
+        }
+    </style>
+}
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -15,9 +54,9 @@
                             <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                 <div class="flex-grow-1">
                                     @*<h4 class="fs-16 mb-1">Welcome, Hira!</h4>
-                        <p class="text-muted mb-0">
-                            Here's what's happening with Ifad Multi Products Ltd.
-                        </p>*@
+                                        <p class="text-muted mb-0">
+                                            Here's what's happening with Ifad Multi Products Ltd.
+                                        </p>*@
                                 </div>
                                 <div class="mt-3 mt-lg-0">
                                     <form action="javascript:void(0);">
@@ -145,7 +184,7 @@
                                     <h4 class="card-title mb-0 flex-grow-1">MTD Secondaray Sales Vs Primary Sales in Crore</h4>
                                     <div class="flex-shrink-0" style="margin-right: 2em">
                                         <div class="input-group">
-                                            <select id="nation-wise-mtd-pri-vs-sec-region" class="form-control border-0 shadow">
+                                            <select id="nation-wise-mtd-pri-vs-sec-channel" class="form-control border-0 shadow">
                                                 <option value="">National</option>
                                                 <option value="GT">GT</option>
                                                 <option value="MT">MT</option>
@@ -172,6 +211,471 @@
                         </div> <!-- .col-->
                     </div> <!-- end row-->
 
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="card">
+                                <div class="card-header border-0 align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">MoM Business Progress</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <input type="month" id="mom-business-progress-date"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="flex-shrink-0" style="margin-right: 2em">
+                                            <div class="input-group">
+                                                <select class="form-control border-0 shadow" id="mom-business-channel">
+                                                    <option value="">National</option>
+                                                    <option value="GT">GT</option>
+                                                    <option value="MT">Modern Trade</option>
+                                                    <option value="INSTITUTION">Institution</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="flex-shrink-0" style="margin-right: 2em">
+                                            <div class="flex-shrink-0" style="margin-right: 2em">
+                                                <div class="input-group">
+                                                    <select class="form-control border-0 shadow" id="mom-no-months">
+                                                        <option value="12">12</option>
+                                                        <option value="18">18</option>
+                                                        <option value="24">24</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+
+                                </div><!-- end card header -->
+
+
+
+                                <div class="card-body p-0 pb-2">
+                                    @*<div class="w-100">
+                                            <div id="customer_impression_charts"
+                                                 data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                                                 class="apex-charts" dir="ltr"></div>
+                                        </div>*@
+                                    <div class="w-100">
+                                        <div id="mom_business_progress" style="height:400px"
+                                             data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
+                                             class="apex-charts" dir="ltr"></div>
+                                    </div>
+
+
+
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+
+                        <div class="col-xl-4">
+                            <!-- card -->
+                            <div class="card card-height-100">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Sales by Locations</h4>
+                                    <div class="flex-shrink-0">
+                                        <button type="button" class="btn btn-soft-primary btn-sm">
+                                            Export Report
+                                        </button>
+                                    </div>
+                                </div><!-- end card header -->
+                                <!-- card body -->
+                                <div class="card-body">
+
+                                    @*<div id="sales-by-locations"
+                                        data-colors='["--vz-light", "--vz-success", "--vz-primary"]'
+                                        style="height: 269px" dir="ltr"></div>*@
+
+                                    <div class="px-2 py-2 mt-1">
+                                        <p class="mb-1">Canada <span class="float-end">75%</span></p>
+                                        <div class="progress mt-2" style="height: 6px;">
+                                            <div class="progress-bar progress-bar-striped bg-primary"
+                                                 role="progressbar" style="width: 75%" aria-valuenow="75"
+                                                 aria-valuemin="0" aria-valuemax="75"></div>
+                                        </div>
+
+                                        <p class="mt-3 mb-1">
+                                            Greenland <span class="float-end">47%</span>
+                                        </p>
+                                        <div class="progress mt-2" style="height: 6px;">
+                                            <div class="progress-bar progress-bar-striped bg-primary"
+                                                 role="progressbar" style="width: 47%" aria-valuenow="47"
+                                                 aria-valuemin="0" aria-valuemax="47"></div>
+                                        </div>
+
+                                        <p class="mt-3 mb-1">Russia <span class="float-end">82%</span></p>
+                                        <div class="progress mt-2" style="height: 6px;">
+                                            <div class="progress-bar progress-bar-striped bg-primary"
+                                                 role="progressbar" style="width: 82%" aria-valuenow="82"
+                                                 aria-valuemin="0" aria-valuemax="82"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+
+
+
+
+                    <div class="row">
+
+
+                        <!-- end col -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header border-0 align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">MoM Focus Category Business Progress</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <input type="month" id="mom-focus-cat-business-progress-date"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="flex-shrink-0" style="margin-right: 2em">
+                                            <div class="input-group">
+                                                <select class="form-control border-0 shadow" id="mom-focus-cat-business-channel">
+                                                    <option value="">National</option>
+                                                    <option value="GT">GT</option>
+                                                    <option value="MT">Modern Trade</option>
+                                                    <option value="INSTITUTION">Institution</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div><!-- end card header -->
+
+
+
+                                <div class="card-body p-0 pb-2">
+
+
+                                    <div class="w-100">
+                                        <div id="mom_focus_cat_business_progress" style="height:400"
+                                             data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
+                                             class="apex-charts" dir="ltr"></div>
+                                    </div>
+
+
+
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+
+
+
+                            <div class="card">
+                                <div class="card-header border-0 align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">MoM Focus Category Business Progress</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <input type="month" id="mom-eco-memo-business-progress-date"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="flex-shrink-0" style="margin-right: 2em">
+                                            <div class="input-group">
+                                                <select class="form-control border-0 shadow" id="mom-eco-memo-business-channel">
+                                                    <option value="">National</option>
+                                                    <option value="GT">GT</option>
+                                                    <option value="MT">Modern Trade</option>
+                                                    <option value="INSTITUTION">Institution</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div><!-- end card header -->
+
+
+
+                                <div class="card-body p-0 pb-2">
+
+
+                                    <div class="w-100">
+                                        <div id="mom_eco_memo_business_progress" style="height:400"
+                                             data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
+                                             class="apex-charts" dir="ltr"></div>
+                                    </div>
+
+
+
+
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+
+
+
+
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="card">
+                                        <div class="card-header border-0 align-items-center d-flex">
+                                            <h4 class="card-title mb-0 flex-grow-1">Commission Dealer (CD)  MoM Business Progress</h4>
+                                            <div class="flex-shrink-0" style="margin-right: 2em">
+                                                <div class="input-group">
+                                                    <input type="month" id="mom-business-progress-date"
+                                                           class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0" style="margin-right: 2em">
+                                                <div class="flex-shrink-0" style="margin-right: 2em">
+                                                    <div class="input-group">
+                                                        <select class="form-control border-0 shadow" id="mom-business-channel">
+                                                            <option value="">National</option>
+                                                            <option value="GT">GT</option>
+                                                            <option value="MT">Modern Trade</option>
+                                                            <option value="INSTITUTION">Institution</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="flex-shrink-0" style="margin-right: 2em">
+                                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                                        <div class="input-group">
+                                                            <select class="form-control border-0 shadow" id="mom-no-months">
+                                                                <option value="12">12</option>
+                                                                <option value="18">18</option>
+                                                                <option value="24">24</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+
+
+                                        </div><!-- end card header -->
+
+
+
+                                        <div class="card-body p-0 pb-2">
+                                            @*<div class="w-100">
+                                                    <div id="customer_impression_charts"
+                                                         data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                                                         class="apex-charts" dir="ltr"></div>
+                                                </div>*@
+                                            <div class="w-100">
+                                                <div id="cd_mom_business_progress" style="height:400px"
+                                                     data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
+                                                     class="apex-charts" dir="ltr"></div>
+                                            </div>
+
+
+
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+                                </div><!-- end col -->
+
+                                <div class="col-xl-4">
+                                    <!-- card -->
+                                    <div class="card card-height-100">
+                                        <div class="card-header align-items-center d-flex">
+                                            <h4 class="card-title mb-0 flex-grow-1">Sales Acheive by Region</h4>
+                                            <div class="flex-shrink-0" style="margin-right: 2em">
+                                                <div class="input-group">
+                                                    <input type="month" id="RegionSalesTargetAchieve_date"
+                                                           class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                                </div>
+                                            </div>
+
+                                        </div><!-- end card header -->
+                                        <!-- card body -->
+                                        <div class="card-body">
+
+
+
+                                            <div class="px-2 py-2 mt-1" id="RegionSalesTargetAchieve">
+
+                                            </div>
+                                        </div>
+                                        <!-- end card body -->
+                                    </div>
+                                    <!-- end card -->
+                                </div>
+                                <!-- end col -->
+                            </div>
+
+
+
+
+                            <div class="card">
+                                <div class="card-header border-0 align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">MoM Region ECO Business Progress</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <input type="month" id="mom-region-eco-memo-business-progress-date"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="flex-shrink-0" style="margin-right: 2em">
+                                            <div class="input-group">
+                                                <select class="form-control border-0 shadow" id="mom-region-eco-memo-business-channel">
+                                                    <option value="">National</option>
+                                                    <option value="GT">GT</option>
+                                                    <option value="MT">Modern Trade</option>
+                                                    <option value="INSTITUTION">Institution</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div><!-- end card header -->
+
+
+
+                                <div class="card-body p-0 pb-2">
+
+                                    <div class="w-100">
+
+
+                                        <div id="mom_region_eco_memo_business_progress" style="height:400"
+                                             data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
+                                             class="apex-charts" dir="ltr">
+
+                                        </div>
+
+                                        <div id="quarterly_business_trend" style="height:400"
+                                             data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
+                                             class="apex-charts" dir="ltr"></div>
+
+                                    </div>
+
+
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+
+
+                        </div><!-- end col -->
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Field Structure wise Sales</h4>
+                                    <div class="flex-shrink-0">
+                                        <div class="dropdown card-header-dropdown">
+                                            <a class="text-reset dropdown-btn" href="#"
+                                               data-bs-toggle="dropdown" aria-haspopup="true"
+                                               aria-expanded="false">
+                                                <span class="fw-semibold text-uppercase fs-12">
+                                                    Sort by:
+                                                </span><span class="text-muted">
+                                                    Today<i class="mdi mdi-chevron-down ms-1"></i>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Today</a>
+                                                <a class="dropdown-item" href="#">Yesterday</a>
+                                                <a class="dropdown-item" href="#">Last 7 Days</a>
+                                                <a class="dropdown-item" href="#">Last 30 Days</a>
+                                                <a class="dropdown-item" href="#">This Month</a>
+                                                <a class="dropdown-item" href="#">Last Month</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
+
+                                <div class="card-body">
+                                    <div class="table-responsive table-card">
+
+                                        <table id="field_strudcture_wise_sales" class="table table-bordered table-centered align-middle table-nowrap mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Region</th>
+                                                    <th>
+                                                        Area
+                                                    </th>
+                                                    <th>Territory</th>
+                                                    <th>Dealer</th>
+                                                    <th>Sales Amount[TP]</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="field_strudcture_wise_sales_table_body">
+                                                <!-- Dynamic content goes here -->
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Route wise Outlet wise Sales [<span id="dealer_info"></span>]</h4>
+
+                                    <div class="flex-shrink-0">
+                                        <div class="dropdown card-header-dropdown">
+                                            <a class="text-reset dropdown-btn" href="#"
+                                               data-bs-toggle="dropdown" aria-haspopup="true"
+                                               aria-expanded="false">
+                                                <span class="fw-semibold text-uppercase fs-12">
+                                                    Sort by:
+                                                </span><span class="text-muted">
+                                                    Today<i class="mdi mdi-chevron-down ms-1"></i>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Today</a>
+                                                <a class="dropdown-item" href="#">Yesterday</a>
+                                                <a class="dropdown-item" href="#">Last 7 Days</a>
+                                                <a class="dropdown-item" href="#">Last 30 Days</a>
+                                                <a class="dropdown-item" href="#">This Month</a>
+                                                <a class="dropdown-item" href="#">Last Month</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end card header -->
+
+                                <div class="card-body">
+                                    <div class="table-responsive table-card">
+
+                                        <table id="routeSalesStatusTable" class="table table-hover table-centered align-middle table-nowrap mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ROUTE</th>
+                                                    <th>Outlet</th>
+                                                    <th>Total TP Sales</th>
+                                                    <th>Total Memo</th>
+                                                    <th>Sales Months</th>
+                                                    <th>Average / Month</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div> <!-- end row-->
 
 
                     <div class="row">
@@ -1553,12 +2057,12 @@
 
 
             /*mtd primary vs secondary sales start*/
-            var nationWisePriVsSecRegionId, nationWisePriVsSecAreaId = ""
+            var nationWisePriVsSecChannel, nationWisePriVsSecAreaId = ""
 
-            function nationWisemtdPrimaryVsSecondary(pDate, regionId, areaId) {
+            function nationWisemtdPrimaryVsSecondary(pDate, channel, areaId) {
                 $.ajax({
                     url: "/Dashboard/NationWisePrimaryVsSecondaryJson",
-                    data: { dt: pDate, region_id: regionId, area_id: areaId },
+                    data: { dt: pDate, channel: channel, area_id: areaId },
                     beforeSend: function () {
                         showCardSpinner('.card:has(#nation-wise-mtd-pri-vs-sec-sales) .card-body');
                     },
@@ -1575,36 +2079,1352 @@
             }
 
 
-            nationWisemtdPrimaryVsSecondary(dt, nationWisePriVsSecRegionId, nationWisePriVsSecAreaId);
+            nationWisemtdPrimaryVsSecondary(dt, nationWisePriVsSecChannel, nationWisePriVsSecAreaId);
 
             $('#nation-wise-sec-vs-primary-dt').change(function () {
 
 
                 dt = $(this).val();
 
-                nationWisePriVsSecRegionId = $('#nation-wise-mtd-pri-vs-sec-region').val()
+                nationWisePriVsSecChannel = $('#nation-wise-mtd-pri-vs-sec-channel').val()
 
                 nationWisePriVsSec = $('#nation-wise-mtd-pri-vs-sec-area').val()
 
-                nationWisemtdPrimaryVsSecondary(dt, nationWisePriVsSecRegionId, nationWisePriVsSec);
+                nationWisemtdPrimaryVsSecondary(dt, nationWisePriVsSecChannel, nationWisePriVsSec);
 
                 alert(dt)
 
             })
 
             // Populate area dropdown on region change
-            $('#nation-wise-mtd-pri-vs-sec-region').change(function () {
-                var regionId = $(this).val();
+            $('#nation-wise-mtd-pri-vs-sec-channel').change(function () {
+                var channel = $(this).val();
 
                 var areaId = "";
 
-                nationWisemtdPrimaryVsSecondary(dt, regionId, areaId);
+                nationWisemtdPrimaryVsSecondary(dt, channel, areaId);
 
             });
 
 
 
             /*mtd primary vs secondary sales ends*/
+
+
+            /* MoM Sales bar chart */
+
+            $("#mom-business-progress-date").change(function () {
+                mom_business_progress_data();
+
+            });
+
+            $("#mom-business-channel").change(function () {
+                mom_business_progress_data();
+
+            });
+
+            var rawData = [];
+
+
+            mom_business_progress_data();
+
+            function mom_business_progress_data() {
+
+                var mom_date = $("#mom-business-progress-date").val();
+                var mom_channel = $("#mom-business-channel").val();
+                var mom_no_months = $("#mom-no-months").val();
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getMoMBusinessProgress',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#mom-business-progress-date) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                success: function (result) {
+
+                    if (result != null) {
+                        rawData = JSON.parse(result);
+                        console.log(rawData);
+                        mom_business_progress();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+
+
+            function getChartColorsArray(e) {
+                if (null !== document.getElementById(e)) {
+                    var t = document.getElementById(e).getAttribute("data-colors");
+                    if (t) return (t = JSON.parse(t)).map(function (e) {
+                        var t = e.replace(" ", "");
+                        return -1 === t.indexOf(",") ? getComputedStyle(document.documentElement).getPropertyValue(t) || t : 2 == (e = e.split(",")).length ? "rgba(" + getComputedStyle(document.documentElement).getPropertyValue(e[0]) + "," + e[1] + ")" : t
+                    });
+                    console.warn("data-colors atributes not found on", e)
+                }
+            }
+
+
+
+            var momChart = null;
+
+            function mom_business_progress() {
+                var mom_chart_color = getChartColorsArray("mom_business_progress");
+
+                const categories = rawData.map(item => {
+                    const d = new Date(item.SALES_MONTH);
+                    const month = d.toLocaleString('default', { month: 'short' });
+                    const year = d.getFullYear().toString().substr(2);
+                    return `${month} ${year}`;
+                });
+
+                const salesData = rawData.map(item => item.SALES_IN_TP);
+
+                const options = {
+                    chart: {
+                        type: 'bar',
+                        height: 400
+                    },
+                    title: {
+                        text: 'Month-wise Sales in TP',
+                        align: 'center'
+                    },
+                    series: [{
+                        name: 'Sales (TP)',
+                        data: salesData
+                    }],
+                    xaxis: {
+                        categories: categories,
+                        title: {
+                            text: 'Month'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Sales (TP in Crore)'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true
+                    },
+                    colors: mom_chart_color,
+                    grid: {
+                        show: true,
+                        xaxis: {
+                            lines: {
+                                show: true
+                            }
+                        },
+                        yaxis: {
+                            lines: {
+                                show: false
+                            }
+                        },
+                        padding: {
+                            top: 0,
+                            right: -2,
+                            bottom: 15,
+                            left: 10
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        horizontalAlign: "center",
+                        offsetX: 0,
+                        offsetY: -5,
+                        markers: {
+                            width: 9,
+                            height: 9,
+                            radius: 6
+                        },
+                        itemMargin: {
+                            horizontal: 10,
+                            vertical: 0
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: "30%",
+                            barHeight: "70%"
+                        }
+                    }
+                };
+
+                // Destroy existing chart before rendering new one
+                if (momChart !== null) {
+                    momChart.destroy();
+                }
+
+                momChart = new ApexCharts(document.querySelector("#mom_business_progress"), options);
+                momChart.render();
+            }
+
+            /* MoM Sales bar chart END */
+
+
+
+            /** MoM Focus Category Business Progress **/
+
+
+
+            $("#mom-focus-cat-business-progress-date").change(function () {
+
+                mom_focus_cat_business_progress_data();
+            });
+
+            $("#mom-focus-cat-business-channel").change(function () {
+
+                mom_focus_cat_business_progress_data();
+            });
+
+
+            mom_focus_cat_business_progress_data();
+
+            function mom_focus_cat_business_progress_data() {
+
+                var mom_date = $("#mom-focus-cat-business-progress-date").val();
+                var mom_channel = $("#mom-focus-cat-business-channel").val();
+                var mom_no_months = "";
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getMoMFocusCatBusinessProgress',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#mom-focus-cat-business-progress-date) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                success: function (result) {
+
+                    if (result != null) {
+                        focusCatBusinessTPData = JSON.parse(result);
+                        //console.log("Focus Category Business Progress")
+                        //console.log(focusCatBusinessTPData);
+                        mom_focus_cat_business_progress(focusCatBusinessTPData);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+        }
+
+
+            var momCatChart = null;
+
+            function mom_focus_cat_business_progress(focusCatBusinessTPData) {
+                var mom_chart_color = getChartColorsArray("mom_focus_cat_business_progress");
+
+                // Assume this is your JSON response
+
+                // Step 1: Get all unique months
+                const uniqueMonths = [...new Set(focusCatBusinessTPData.map(item => item.SALES_MONTH))]
+                    .sort()
+                    .map(dateStr => {
+                        const d = new Date(dateStr);
+                        const month = d.toLocaleString('default', { month: 'short' });
+                        const year = d.getFullYear().toString().substr(2);
+                        return `${month} '${year}`;
+                    });
+
+                // Step 2: Group by category
+                const categories = [...new Set(focusCatBusinessTPData.map(item => item.FOCUS_CATEGORY_NAME))];
+
+                const grouped = {};
+                categories.forEach(cat => {
+                    grouped[cat] = new Array(uniqueMonths.length).fill(0);
+                });
+
+                focusCatBusinessTPData.forEach(item => {
+                    const date = new Date(item.SALES_MONTH);
+                    const monthLabel = `${date.toLocaleString('default', { month: 'short' })} '${date.getFullYear().toString().substr(2)}`;
+                    const index = uniqueMonths.indexOf(monthLabel);
+                    grouped[item.FOCUS_CATEGORY_NAME][index] = item.SALES_IN_TP;
+                });
+
+                // Step 3: Build Apex series
+                const series = categories.map(cat => ({
+                    name: cat,
+                    data: grouped[cat]
+                }));
+
+                // Step 4: Create the Apex Line Chart
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 400,
+                        toolbar: {
+                            show: true
+                        }
+                    },
+                    series: series,
+                    xaxis: {
+                        categories: uniqueMonths,
+                        title: {
+                            text: "Month"
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: "Sales (in TP)"
+                        }
+                    },
+                    title: {
+                        text: 'Category-wise Sales Trend',
+                        align: 'center'
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                      //  curve: 'smooth',
+                        width: 2
+                    },
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        shared: true,
+                        intersect: false
+                    }
+                };
+
+                momCatChart = new ApexCharts(document.querySelector("#mom_focus_cat_business_progress"), options);
+                momCatChart.render();
+
+            }
+
+
+            /** MoM Focus Category Business Progress END **/
+
+
+
+            /** MoM Eco Memo Business Progress **/
+
+            mom_eco_memo_business_progress_data();
+
+            function mom_eco_memo_business_progress_data() {
+
+                var mom_date = $("#mom-eco-memo-business-progress-date").val();
+                var mom_channel = $("#mom-eco-memo-business-channel").val();
+                var mom_no_months = "";
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getMoMEcoMemoBusinessProgress',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#mom-focus-cat-business-progress-date) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                success: function (result) {
+
+                    if (result != null) {
+                      var  momEcoMemoData = JSON.parse(result);
+                        console.log("Eco Memo Business Progress")
+                        console.log(momEcoMemoData);
+                        //mom_business_progress();
+                        mom_eco_memo_business_progress(momEcoMemoData);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+
+
+
+            var momFocusCatChart = null;
+
+
+            function mom_eco_memo_business_progress(rawStats) {
+                var mom_chart_color = getChartColorsArray("mom_business_progress");
+
+                const months = rawStats.map(item => {
+                    const d = new Date(item.SALES_MONTH);
+                    return `${d.toLocaleString('default', { month: 'short' })} '${d.getFullYear().toString().substr(2)}`;
+                });
+
+                // Series data
+                const ecoData = rawStats.map(item => item.ECO);
+                const memoData = rawStats.map(item => item.MEMO);
+                const salesTPData = rawStats.map(item => item.SALES_TP_IN_CR);
+                const salesPerMemoData = rawStats.map(item => item.SALES_PER_MEMO);
+
+                // Chart config
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 400,
+                        toolbar: {
+                            show: true
+                        }
+                    },
+                    title: {
+                        text: "Monthly Performance Metrics",
+                        align: 'center'
+                    },
+                    xaxis: {
+                        categories: months,
+                        title: { text: "Month" }
+                    },
+                    yaxis: {
+                        title: { text: "Values" },
+                        labels: {
+                            formatter: function (val) {
+                                return val.toFixed(0);
+                            }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    tooltip: {
+                        shared: true,
+                        intersect: false
+                    },
+                    legend: {
+                        position: 'bottom'
+                    },
+                    series: [
+                        { name: "ECO", data: ecoData },
+                        { name: "MEMO", data: memoData },
+                        { name: "Sales TP (Cr)", data: salesTPData },
+                        { name: "Sales/ Memo", data: salesPerMemoData }
+                    ]
+                };
+
+
+                // Destroy existing chart before rendering new one
+                if (momFocusCatChart !== null) {
+                    momFocusCatChart.destroy();
+                }
+
+                momFocusCatChart = new ApexCharts(document.querySelector("#mom_eco_memo_business_progress"), options);
+                momFocusCatChart.render();
+            }
+
+
+
+            /** MoM Eco Memo Business Progress End **/
+
+
+
+            /* CD MoM Sales bar chart */
+
+            $("#cd-mom-business-progress-date").change(function () {
+                mom_business_progress_data();
+
+            });
+
+            $("#cd-mom-business-channel").change(function () {
+                mom_business_progress_data();
+
+            });
+
+            var rawData = [];
+
+
+            cd_mom_business_progress_data();
+
+            function cd_mom_business_progress_data() {
+
+                var mom_date = $("#mom-business-progress-date").val();
+                var mom_channel = $("#mom-business-channel").val();
+                var mom_no_months = $("#mom-no-months").val();
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getMoMBusinessProgress',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#mom-business-progress-date) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, p_cd:'1015' },
+                success: function (result) {
+
+                    if (result != null) {
+                        rawData = JSON.parse(result);
+                        console.log(rawData);
+                        cd_mom_business_progress();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+
+
+            function getChartColorsArray(e) {
+                if (null !== document.getElementById(e)) {
+                    var t = document.getElementById(e).getAttribute("data-colors");
+                    if (t) return (t = JSON.parse(t)).map(function (e) {
+                        var t = e.replace(" ", "");
+                        return -1 === t.indexOf(",") ? getComputedStyle(document.documentElement).getPropertyValue(t) || t : 2 == (e = e.split(",")).length ? "rgba(" + getComputedStyle(document.documentElement).getPropertyValue(e[0]) + "," + e[1] + ")" : t
+                    });
+                    console.warn("data-colors atributes not found on", e)
+                }
+            }
+
+
+
+            var cdMomChart = null;
+
+            function cd_mom_business_progress() {
+                var cd_mom_chart_color = getChartColorsArray("cd_mom_business_progress");
+
+                const categories = rawData.map(item => {
+                    const d = new Date(item.SALES_MONTH);
+                    const month = d.toLocaleString('default', { month: 'short' });
+                    const year = d.getFullYear().toString().substr(2);
+                    return `${month} ${year}`;
+                });
+
+                const salesData = rawData.map(item => item.SALES_IN_TP);
+
+                const options = {
+                    chart: {
+                        type: 'bar',
+                        height: 400
+                    },
+                    title: {
+                        text: 'Commission Dealer (CD) Month-wise Sales in TP',
+                        align: 'center'
+                    },
+                    series: [{
+                        name: 'Sales (TP)',
+                        data: salesData
+                    }],
+                    xaxis: {
+                        categories: categories,
+                        title: {
+                            text: 'Month'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Sales (TP in Crore)'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true
+                    },
+                    colors: cd_mom_chart_color,
+                    grid: {
+                        show: true,
+                        xaxis: {
+                            lines: {
+                                show: true
+                            }
+                        },
+                        yaxis: {
+                            lines: {
+                                show: false
+                            }
+                        },
+                        padding: {
+                            top: 0,
+                            right: -2,
+                            bottom: 15,
+                            left: 10
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        horizontalAlign: "center",
+                        offsetX: 0,
+                        offsetY: -5,
+                        markers: {
+                            width: 9,
+                            height: 9,
+                            radius: 6
+                        },
+                        itemMargin: {
+                            horizontal: 10,
+                            vertical: 0
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: "30%",
+                            barHeight: "70%"
+                        }
+                    }
+                };
+
+                // Destroy existing chart before rendering new one
+                if (cdMomChart !== null) {
+                   cdMomChart.destroy();
+                }
+
+                cdMomChart = new ApexCharts(document.querySelector("#cd_mom_business_progress"), options);
+                cdMomChart.render();
+            }
+
+            /* CD MoM Sales bar chart END */
+
+
+
+                /** MoM Eco Memo Business Progress **/
+
+            mom_region_eco_memo_business_progress_data();
+
+            function mom_region_eco_memo_business_progress_data() {
+
+                var mom_date = $("#mom-region-echo-memo-business-progress-date").val();
+                var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
+                var mom_no_months = "";
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getMoMRegionEcoMemoBusinessProgress',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#mom-region-echo-memo-business-progress-date) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                success: function (result) {
+
+                    if (result != null) {
+                      var  momRegionEcoMemoData = JSON.parse(result);
+                        console.log("Eco Region Memo Business Progress")
+                        console.log(momRegionEcoMemoData);
+                        //mom_business_progress();
+                        mom_region_eco_memo_business_progress(momRegionEcoMemoData);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+
+
+
+            var momRegionEcoMemoChart = null;
+
+
+            function mom_region_eco_memo_business_progress(rawData) {
+                var mom_chart_color = getChartColorsArray("mom_business_progress");
+
+
+
+
+                // Get unique sorted months
+                const months = [...new Set(rawData.map(item => {
+                    const d = new Date(item.SALES_MONTH);
+                    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+                }))].sort();
+
+                // Get unique regions
+                const regions = [...new Set(rawData.map(item => item.REGION_NAME))];
+
+                // Choose the metric to plot (e.g., "ECO", "MEMO", "SALES_TP_IN_CR", etc.)
+                const metric = "ECO";
+
+                // Build series per region
+                const series = regions.map(region => {
+                    const dataForRegion = rawData.filter(item => item.REGION_NAME === region);
+                    const data = months.map(month => {
+                        const match = dataForRegion.find(item => {
+                            const d = new Date(item.SALES_MONTH);
+                            const itemMonth = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+                            return itemMonth === month;
+                        });
+                        return match ? match[metric] : 0;
+                    });
+
+                    return {
+                        name: region,
+                        data: data
+                    };
+                });
+
+                console.log({ categories: months, series });
+
+
+
+
+
+                // Chart config
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 400,
+                        toolbar: {
+                            show: true
+                        }
+                    },
+                    title: {
+                        text: "Monthly Performance Metrics",
+                        align: 'center'
+                    },
+                    xaxis: {
+                        categories: months,
+                        title: { text: "Month" }
+                    },
+                    yaxis: {
+                        title: { text: "Region wise " + metric  },
+                        labels: {
+                            formatter: function (val) {
+                                return val.toFixed(0);
+                            }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    tooltip: {
+                        shared: true,
+                        intersect: false
+                    },
+                    legend: {
+                        position: 'bottom'
+                    },
+                    series: series
+                };
+
+
+                // Destroy existing chart before rendering new one
+                if (momRegionEcoMemoChart !== null) {
+                    momRegionEcoMemoChart.destroy();
+                }
+
+                momRegionEcoMemoChart = new ApexCharts(document.querySelector("#mom_region_eco_memo_business_progress"), options);
+                momRegionEcoMemoChart.render();
+            }
+
+
+
+            /** MoM Eco Memo Business Progress End **/
+
+            /** MoM Eco Memo Business Progress **/
+
+            quarterly_business_trend_data();
+
+            function quarterly_business_trend_data() {
+
+                var mom_date = $("#quarterly-business-trend-progress-date").val();
+                var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
+                var mom_no_months = "";
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getQuarterlyBusinessTrend',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#quarterly-business-trend-progress-date) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                success: function (result) {
+
+                    if (result != null) {
+                      var  qbtData = JSON.parse(result);
+                        console.log("Quarterly Business Trend")
+                        console.log(qbtData);
+                        //mom_business_progress();
+                        quarterly_business_trend(qbtData);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+
+
+
+            var qbtChart = null;
+
+
+            function quarterly_business_trend(rawData) {
+                var mom_chart_color = getChartColorsArray("mom_business_progress");
+
+                const categories = rawData.map(item => item.QUARTER);
+                const memoData = rawData.map(item => item.MEMO);
+                const ecoData = rawData.map(item => item.ECO);
+                const salesData = rawData.map(item => item.SALES_IN_TP);
+
+                    const options = {
+                        chart: {
+                            type: 'bar',
+                            height: 400
+                        },
+                        title: {
+                            text: 'Month-wise Sales in TP',
+                            align: 'center'
+                        },
+                        series: [{
+                            name: 'Sales (TP)',
+                            data: salesData
+                        },
+                            {
+                                name: 'MEMO',
+                                data: memoData
+                            }, {
+                                name: 'ECO',
+                                data: ecoData
+                            }],
+                        xaxis: {
+                            categories: categories,
+                            title: {
+                                text: 'Quarter'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Sales (TP in Crore) | Memo | ECO'
+                            }
+                        },
+                        dataLabels: {
+                            enabled: true
+                        },
+                       // colors: mom_chart_color,
+                        grid: {
+                            show: true,
+                            xaxis: {
+                                lines: {
+                                    show: true
+                                }
+                            },
+                            yaxis: {
+                                lines: {
+                                    show: false
+                                }
+                            },
+                            padding: {
+                                top: 0,
+                                right: -2,
+                                bottom: 15,
+                                left: 10
+                            }
+                        },
+                        legend: {
+                            show: true,
+                            horizontalAlign: "center",
+                            offsetX: 0,
+                            offsetY: -5,
+                            markers: {
+                                width: 9,
+                                height: 9,
+                                radius: 6
+                            },
+                            itemMargin: {
+                                horizontal: 10,
+                                vertical: 0
+                            }
+                        },
+                        //plotOptions: {
+                        //    bar: {
+                        //        columnWidth: "30%",
+                        //        barHeight: "70%"
+                        //    }
+                        //}
+                    };
+
+
+
+
+                // Destroy existing chart before rendering new one
+                if (qbtChart !== null) {
+                    qbtChart.destroy();
+                }
+
+                qbtChart = new ApexCharts(document.querySelector("#quarterly_business_trend"), options);
+                qbtChart.render();
+            }
+
+            /** MoM Eco Memo Business Progress End **/
+
+
+
+
+
+        /************************************************************/
+
+
+        /* field Stracture wise sales */
+
+            // Helper to sanitize keys for CSS use
+            function sanitizeClassName(str) {
+                return str.replace(/\s+/g, '_').replace(/[^\w\-]/g, '');
+            }
+
+
+
+            getFieldStructureSalesInTP_data();
+
+            function getFieldStructureSalesInTP_data() {
+
+                var mom_date = $("#quarterly-business-trend-progress-date").val();
+                var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
+                var mom_no_months = "";
+                var dealer_id = "18";
+                var limit = "0";
+                //getSalesStatusRouteWise(string p_date_to, string mom_channel, string p_no_months, string dealer_id, string limit)
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getFieldStructureSalesInTP',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#field_strudcture_wise_sales) .card-body');
+                },
+                //data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, dealer_id:dealer_id, limit:limit },
+                success: function (result) {
+                    console.log("fieldStructureSalesInTPData");
+                    console.log(result);
+                    if (result != null) {
+                        var  fieldStructureSalesInTPData = JSON.parse(result);
+                        console.log(fieldStructureSalesInTPData);
+
+                        renderTableFieldStructureSalesInTP(fieldStructureSalesInTPData);
+
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+            const field_strudcture_wise_sales_table_tbody = document.getElementById("field_strudcture_wise_sales_table_body");
+            const routeSalesStatusTable = document.getElementById("routeSalesStatusTable");
+
+            function sanitizeClassName(name) {
+                return name.replace(/\s+/g, "_").replace(/[^\w-]/g, "");
+            }
+
+            function fssToggleGroup(groupClass) {
+                const rows = document.querySelectorAll(`tr[data-parent^="${groupClass}"]`);
+                const icon = document.getElementById(`icon-${groupClass}`);
+                const shouldExpand = icon.textContent === "▶";
+
+                // Toggle visibility
+                rows.forEach(row => {
+                    const direct = row.dataset.parent === groupClass;
+                    if (direct) {
+                        row.classList.toggle("hidden", !shouldExpand);
+                    }
+
+                    // Always collapse deeper children when collapsing
+                    if (!shouldExpand) {
+                        row.classList.add("hidden");
+                        const rowClass = row.dataset.key;
+                        const rowIcon = document.getElementById(`icon-${rowClass}`);
+                        if (rowIcon) rowIcon.textContent = "▶";
+                    }
+                });
+
+                icon.textContent = shouldExpand ? "▼" : "▶";
+            }
+
+            function renderTableFieldStructureSalesInTP(data) {
+
+                if (field_strudcture_wise_sales_table_tbody)
+                    field_strudcture_wise_sales_table_tbody.innerHTML = "";
+
+                const grouped = {};
+
+                // Group the data
+                data.forEach(item => {
+                    const { REGION_NAME, AREA_NAME, TERITORRY_NAME } = item;
+
+                    if (!grouped[REGION_NAME]) grouped[REGION_NAME] = {};
+                    if (!grouped[REGION_NAME][AREA_NAME]) grouped[REGION_NAME][AREA_NAME] = {};
+                    if (!grouped[REGION_NAME][AREA_NAME][TERITORRY_NAME]) {
+                        grouped[REGION_NAME][AREA_NAME][TERITORRY_NAME] = [];
+                    }
+
+                    grouped[REGION_NAME][AREA_NAME][TERITORRY_NAME].push(item);
+                });
+
+                // Render rows
+                Object.keys(grouped).forEach(region => {
+                    const regionKey = sanitizeClassName(region);
+                    let regionSum = 0;
+
+                    const regionRow = document.createElement("tr");
+                    regionRow.className = `group-header`;
+                    regionRow.dataset.key = regionKey;
+                    regionRow.onclick = () => fssToggleGroup(regionKey);
+                    regionRow.innerHTML = `
+        <td colspan="4">
+          <span class="toggle-icon" id="icon-${regionKey}">▶</span>${region}
+        </td>
+        <td><span id="sum-${regionKey}">0</span></td>
+      `;
+                    field_strudcture_wise_sales_table_tbody.appendChild(regionRow);
+
+                    Object.keys(grouped[region]).forEach(area => {
+                        const areaKey = sanitizeClassName(`${region}_${area}`);
+                        let areaSum = 0;
+
+                        const areaRow = document.createElement("tr");
+                        areaRow.className = `subgroup-header hidden`;
+                        areaRow.dataset.parent = regionKey;
+                        areaRow.dataset.key = areaKey;
+                        areaRow.onclick = () => fssToggleGroup(areaKey);
+                        areaRow.innerHTML = `
+          <td></td>
+          <td colspan="3">
+            <span class="toggle-icon" id="icon-${areaKey}">▶</span>${area}
+          </td>
+
+          <td><span id="sum-${areaKey}">0</span></td>
+        `;
+                        field_strudcture_wise_sales_table_tbody.appendChild(areaRow);
+
+                        Object.keys(grouped[region][area]).forEach(territory => {
+                            const territoryKey = sanitizeClassName(`${region}_${area}_${territory}`);
+                            const items = grouped[region][area][territory];
+                            const territorySum = items.reduce((sum, i) => sum + i.SALES_IN_TP, 0);
+                            areaSum += territorySum;
+
+                            const territoryRow = document.createElement("tr");
+                            territoryRow.className = `subgroup-header hidden`;
+                            territoryRow.dataset.parent = areaKey;
+                            territoryRow.dataset.key = territoryKey;
+                            territoryRow.onclick = () => fssToggleGroup(territoryKey);
+                            territoryRow.innerHTML = `
+            <td></td>
+            <td></td>
+            <td colspan=2>
+              <span class="toggle-icon" id="icon-${territoryKey}">▶</span>${territory}
+            </td>
+
+            <td>${territorySum.toFixed(2)}</td>
+          `;
+                            field_strudcture_wise_sales_table_tbody.appendChild(territoryRow);
+
+                            items.forEach(item => {
+                                const dealerRow = document.createElement("tr");
+                                dealerRow.className = `hidden`;
+                                dealerRow.dataset.parent = territoryKey;
+                                dealerRow.innerHTML = `
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><button class="btn btn-link dealer" id="${item.DEALER_ID}">${item.DEALER_NAME}</button></td>
+              <td>${item.SALES_IN_TP.toFixed(2)}</td>
+            `;
+                                field_strudcture_wise_sales_table_tbody.appendChild(dealerRow);
+                            });
+                        });
+
+                        document.getElementById(`sum-${areaKey}`).textContent = areaSum.toFixed(2);
+                        regionSum += areaSum;
+                    });
+
+                    document.getElementById(`sum-${regionKey}`).textContent = regionSum.toFixed(2);
+                });
+            }
+
+            $("body").on("click", ".dealer", function () {
+                var dealerId = $(this).attr('id');
+                var dealerName = $(this).html();
+
+                getSalesStatusRouteWise_data(dealerId);
+                $("#dealer_info").html ( `Dealer : ${dealerName}`);
+
+            })
+
+
+
+
+        //getSalesStatusRouteWise_data("18");
+
+            function getSalesStatusRouteWise_data(dealer_id, limit="0") {
+
+                var mom_date = $("#quarterly-business-trend-progress-date").val();
+                var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
+                var mom_no_months = "";
+               // var dealer_id = "18";
+               // var limit = "0";
+                //getSalesStatusRouteWise(string p_date_to, string mom_channel, string p_no_months, string dealer_id, string limit)
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getSalesStatusRouteWise',
+                type: 'GET',
+                beforeSend: function () {
+                    showCardSpinner('.card:has(#routeSalesStatusTable) .card-body');
+                },
+                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, dealer_id:dealer_id, limit:limit },
+                success: function (result) {
+                    console.log(result);
+                    if (result != null) {
+                      var  routeSalesData = JSON.parse(result);
+                        console.log("getSalesStatusRouteWise")
+
+
+                        renderGroupedData(routeSalesData);
+
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+
+            }
+
+
+
+
+
+            //function renderGroupedData3(data) {
+
+            //    $("#routeSalesStatusTable tbody").empty();
+
+            //    let grouped = {};
+
+            //    // Group by ROUTE
+            //    data.forEach(row => {
+            //        if (!grouped[row.ROUTE]) grouped[row.ROUTE] = [];
+            //        grouped[row.ROUTE].push(row);
+            //    });
+
+            //    // Inject rows: group -> child1 -> child2 ...
+            //    Object.keys(grouped).forEach((groupKey, index) => {
+            //        const groupRows = grouped[groupKey];
+
+            //        // Compute totals
+            //        const totalTP = groupRows.reduce((sum, r) => sum + parseFloat(r.TOTAL_SALES_IN_TP || 0), 0);
+            //        const totalMemo = groupRows.reduce((sum, r) => sum + parseInt(r.TOTAL_MEMO || 0), 0);
+            //        const sr_name = groupRows[index]['SO_NAME'];
+
+            //        // Create group row with unique ID
+            //        const groupId = `group-${index}`;
+            //        const $groupRow = $(`
+            //                <tr class="group collapsed" data-group="${groupId}" style="cursor:pointer; background:#dfefff; font-weight:bold;">
+            //                    <td colspan="2"><span class="toggle-icon">▶</span> ${groupKey}-[${sr_name}]</td>
+            //                    <td>${totalTP.toFixed(2)}</td>
+            //                    <td>${totalMemo}</td>
+            //                    <td colspan="2"></td>
+            //                </tr>
+            //            `);
+
+            //        // Insert group row manually into DOM
+            //        $("#routeSalesStatusTable tbody").append($groupRow);
+
+            //        // Add child rows but keep them hidden initially
+            //        groupRows.forEach(r => {
+            //            const $childRow = $(`
+            //    <tr class="child-row child-of-${groupId}" style="display:none;">
+            //        <td></td>
+            //        <td>${r.OUTLET_NAME}</td>
+            //        <td>${r.TOTAL_SALES_IN_TP}</td>
+            //        <td>${r.TOTAL_MEMO}</td>
+            //        <td>${r.NO_OF_SALES_MONTH}</td>
+            //        <td>${r.AVG_SALES_PER_MONTH}</td>
+            //    </tr>
+            //`);
+            //            $("#routeSalesStatusTable tbody").append($childRow);
+            //        });
+            //    });
+
+            //    // Toggle logic
+            //    $('.group').off('click').on('click', function () {
+            //        const groupId = $(this).data('group');
+            //        const isCollapsed = $(this).hasClass('collapsed');
+            //        $(this).toggleClass('collapsed');
+            //        $(this).find('.toggle-icon').text(isCollapsed ? '▼' : '▶');
+
+            //        $(`.child-of-${groupId}`).toggle(isCollapsed);
+            //    });
+            //}
+
+
+            function renderGroupedData(data) {
+                // Clear existing rows correctly
+                $("#routeSalesStatusTable tbody").empty();
+
+                let grouped = {};
+
+                // Group by ROUTE
+                data.forEach(row => {
+                    if (!grouped[row.ROUTE]) grouped[row.ROUTE] = [];
+                    grouped[row.ROUTE].push(row);
+                });
+
+                // Inject rows: group -> child1 -> child2 ...
+                Object.keys(grouped).forEach((groupKey, index) => {
+                    const groupRows = grouped[groupKey];
+
+                    // Compute totals
+                    const totalTP = groupRows.reduce((sum, r) => sum + parseFloat(r.TOTAL_SALES_IN_TP || 0), 0);
+                    const totalMemo = groupRows.reduce((sum, r) => sum + parseInt(r.TOTAL_MEMO || 0), 0);
+                    const noMonths = groupRows.reduce((max, r) => max > parseInt(r.NO_OF_SALES_MONTH || 0) ? max : parseInt(r.NO_OF_SALES_MONTH || 0) , 0);
+                    const sr_name = groupRows[0]['SO_NAME']; // use first row, not index
+                    const avgMonthSales = (totalTP / noMonths).toFixed(2);
+
+                    // Create group row with unique ID
+                    const groupId = `group-${index}`;
+                    const $groupRow = $(`
+            <tr class="group collapsed" data-group="${groupId}" style="cursor:pointer; background:#dfefff; font-weight:bold;">
+                <td colspan="2"><span class="toggle-icon">▶</span> ${groupKey} [${sr_name}]</td>
+                <td>${totalTP.toFixed(2)}</td>
+                <td>${totalMemo}</td>
+                <td>${noMonths}</td>
+                <td>${avgMonthSales}</td>
+            </tr>
+        `);
+
+                    // Insert group row manually into DOM
+                    $("#routeSalesStatusTable tbody").append($groupRow);
+
+                    // Add child rows (hidden by default)
+                    groupRows.forEach(r => {
+                        const $childRow = $(`
+                <tr class="child-row child-of-${groupId}" style="display:none;">
+                    <td></td>
+                    <td>${r.OUTLET_NAME}</td>
+                    <td>${r.TOTAL_SALES_IN_TP}</td>
+                    <td>${r.TOTAL_MEMO}</td>
+                    <td>${r.NO_OF_SALES_MONTH}</td>
+                    <td>${r.AVG_SALES_PER_MONTH}</td>
+                </tr>
+            `);
+                        $("#routeSalesStatusTable tbody").append($childRow);
+                    });
+                });
+
+                // Toggle logic
+                $('.group').off('click').on('click', function () {
+                    const groupId = $(this).data('group');
+                    const isCollapsed = $(this).hasClass('collapsed');
+                    $(this).toggleClass('collapsed');
+                    $(this).find('.toggle-icon').text(isCollapsed ? '▼' : '▶');
+                    $(`.child-of-${groupId}`).toggle(isCollapsed);
+                });
+            }
+
+            /* field Stracture wise sales end */
+
+            $("body").on("change", "#RegionSalesTargetAchieve_date", function () {
+                getRegionSalesTargetAchieveData();
+            })
+
+            getRegionSalesTargetAchieveData();
+
+            function getRegionSalesTargetAchieveData() {
+
+                var mom_date = $("#RegionSalesTargetAchieve_date").val();
+
+            var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/getRegionSalesTargetAchieve',
+                type: 'GET',
+                beforeSend: function () {
+                    $("#RegionSalesTargetAchieve").empty();
+
+                    showCardSpinner('.card:has(#RegionSalesTargetAchieve) .card-body');
+                },
+                data: { p_date_to: mom_date },
+                success: function (result) {
+                    console.log(result);
+                    if (result != null) {
+                      var  regionSalesData = JSON.parse(result);
+                        console.log("RegionSalesTargetAchieve")
+
+
+                        var achieveData
+                        regionSalesData.forEach(row => {
+
+                            $("#RegionSalesTargetAchieve").append(` <p class="mt-3 mb-1">
+                                                    ${row.REGION_NAME} <span class="float-end">${row.ACHIEVE}%</span>
+                                                </p>
+                                                <div class="progress mt-2" style="height: 6px;">
+                                                    <div class="progress-bar progress-bar-striped bg-primary"
+                                                         role="progressbar" style="width: ${row.ACHIEVE}%" aria-valuenow="${row.ACHIEVE}"
+                                                         aria-valuemin="0" aria-valuemax="47"></div>
+                                                </div>`);
+
+                        });
+
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+            }
+
+
+
 
 
 

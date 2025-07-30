@@ -4,14 +4,23 @@
     }
 </style>
 
+@{
+    double sec_tp_target = 0;
+    double sec_tp_sales = 0;
+    double sec_achi = 0;
+
+    double pri_dp_target = 0;
+    double pri_dp_sales = 0;
+    double pri_achi = 0;
+}
 <table class="table table-bordered table-centered align-middle table-nowrap mb-0" id="national-pri-vs-sec-tbl">
     <thead class="text-muted table-light">
         <tr>
             @*<th scope="col" rowspan="2" valign="middle">Group</th>*@
             <th scope="col" rowspan="2" valign="middle" style="text-align: center;">Category Name</th>
             @*<th scope="col" colspan="3" style="text-align: center;">@ViewBag.dataTable.Rows[0]["ORDER_DATE"]</th>*@
-            <th scope="col" colspan="3" style="text-align: center;">Secondary Till 20 July'25' (In Crore)</th>
-            <th scope="col" colspan="3" style="text-align: center;">Primary Till 20 July'25' (In Crore)</th>
+            <th scope="col" colspan="3" style="text-align: center;">Secondary Till @ViewBag.dataTable.Rows[0]["TILL_DATE"] (In Crore)</th>
+            <th scope="col" colspan="3" style="text-align: center;">Primary Till @ViewBag.dataTable.Rows[0]["TILL_DATE"] (In Crore)</th>
         </tr>
         <tr>
             <th scope="col" style="text-align: center;">Target Amount TP</th>
@@ -53,7 +62,48 @@
                 </td>
 
             </tr>
+
+            sec_tp_target += Convert.ToDouble(rows["SEC_TP_TARGET"]);
+            sec_tp_sales += Convert.ToDouble(rows["SEC_SALES_TP"]);
+
+            pri_dp_target += Convert.ToDouble(rows["PRI_DP_TARGET"]);
+            pri_dp_sales += Convert.ToDouble(rows["PRI_SALES_DP"]);
+
         }
 
+        @{
+            sec_achi = Math.Ceiling(sec_tp_sales / sec_tp_target * 100);
+            pri_achi = Math.Ceiling(pri_dp_sales / pri_dp_target * 100);
+        }
+
+        
+
     </tbody><!-- end tbody -->
+    <tfoot>
+        <tr>
+            <th style="text-align: center;">
+                <span class="text-primary" style="font-weight: bold;">Grand Total</span>
+            </th>
+
+            <th style="text-align: center;">
+                <span class="text-primary">@sec_tp_target</span>
+            </th>
+            <th style="text-align: center;">
+                <span class="text-primary">@sec_tp_sales</span>
+            </th>
+            <th style="text-align: center;">
+                <span class="text-primary">@sec_achi</span>
+            </th>
+            <th style="text-align: center;">
+                <span class="text-primary">@pri_dp_target</span>
+            </th>
+            <th style="text-align: center;">
+                <span class="text-primary">@pri_dp_sales</span>
+            </th>
+            <th style="text-align: center;">
+                <span class="text-primary">@pri_achi</span>
+            </th>
+
+        </tr>
+    </tfoot>
 </table><!-- end table -->
