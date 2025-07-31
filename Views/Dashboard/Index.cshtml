@@ -4,7 +4,12 @@
 }
 
 @section css{
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet">
     <style>
+        #field_strudcture_wise_sales table th, td {
+            font-family: 'Noto Sans Bengali', 'SolaimanLipi', sans-serif;
+        }
+
         #field_strudcture_wise_sales table {
             width: 100%;
             border-collapse: collapse;
@@ -39,8 +44,22 @@
             /* text-decoration: none;*/
             color: #007bff;
         }
+
+        .styled-link {
+            color: blue; /* Link color */
+            text-decoration: underline; /* Underline like a link */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+            .styled-link:hover {
+                color: darkblue; /* Change color on hover */
+                text-decoration: none; /* Optional: Remove underline on hover */
+            }
     </style>
 }
+
+
+
 
 <div class="page-content">
     <div class="container-fluid">
@@ -54,9 +73,9 @@
                             <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                 <div class="flex-grow-1">
                                     @*<h4 class="fs-16 mb-1">Welcome, Hira!</h4>
-                                        <p class="text-muted mb-0">
-                                            Here's what's happening with Ifad Multi Products Ltd.
-                                        </p>*@
+                                    <p class="text-muted mb-0">
+                                        Here's what's happening with Ifad Multi Products Ltd.
+                                    </p>*@
                                 </div>
                                 <div class="mt-3 mt-lg-0">
                                     <form action="javascript:void(0);">
@@ -237,17 +256,17 @@
                                     </div>
 
                                     @*<div class="flex-shrink-0" style="margin-right: 2em">
-                                            <div class="flex-shrink-0" style="margin-right: 2em">
-                                                <div class="input-group">
-                                                    <select class="form-control border-0 shadow" id="mom-no-months">
-                                                        <option value="12">12</option>
-                                                        <option value="18">18</option>
-                                                        <option value="24">24</option>
+                                        <div class="flex-shrink-0" style="margin-right: 2em">
+                                            <div class="input-group">
+                                                <select class="form-control border-0 shadow" id="mom-no-months">
+                                                    <option value="12">12</option>
+                                                    <option value="18">18</option>
+                                                    <option value="24">24</option>
 
-                                                    </select>
-                                                </div>
+                                                </select>
                                             </div>
-                                        </div>*@
+                                        </div>
+                                    </div>*@
 
 
                                 </div><!-- end card header -->
@@ -256,10 +275,10 @@
 
                                 <div class="card-body p-0 pb-2">
                                     @*<div class="w-100">
-                                            <div id="customer_impression_charts"
-                                                 data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                                 class="apex-charts" dir="ltr"></div>
-                                        </div>*@
+                                        <div id="customer_impression_charts"
+                                             data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                                             class="apex-charts" dir="ltr"></div>
+                                    </div>*@
                                     <div class="w-100">
                                         <div id="mom_business_progress" style="height:400px"
                                              data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
@@ -287,8 +306,8 @@
                                 <div class="card-body">
 
                                     @*<div id="sales-by-locations"
-                                        data-colors='["--vz-light", "--vz-success", "--vz-primary"]'
-                                        style="height: 269px" dir="ltr"></div>*@
+                                    data-colors='["--vz-light", "--vz-success", "--vz-primary"]'
+                                    style="height: 269px" dir="ltr"></div>*@
 
                                     <div class="px-2 py-2 mt-1">
                                         <p class="mb-1">Canada <span class="float-end">75%</span></p>
@@ -447,17 +466,17 @@
                                             </div>
 
                                             @*<div class="flex-shrink-0" style="margin-right: 2em">
-                                                    <div class="flex-shrink-0" style="margin-right: 2em">
-                                                        <div class="input-group">
-                                                            <select class="form-control border-0 shadow" id="mom-no-months">
-                                                                <option value="12">12</option>
-                                                                <option value="18">18</option>
-                                                                <option value="24">24</option>
+                                                <div class="flex-shrink-0" style="margin-right: 2em">
+                                                    <div class="input-group">
+                                                        <select class="form-control border-0 shadow" id="mom-no-months">
+                                                            <option value="12">12</option>
+                                                            <option value="18">18</option>
+                                                            <option value="24">24</option>
 
-                                                            </select>
-                                                        </div>
+                                                        </select>
                                                     </div>
-                                                </div>*@
+                                                </div>
+                                            </div>*@
 
 
                                         </div><!-- end card header -->
@@ -466,10 +485,10 @@
 
                                         <div class="card-body p-0 pb-2">
                                             @*<div class="w-100">
-                                                    <div id="customer_impression_charts"
-                                                         data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                                         class="apex-charts" dir="ltr"></div>
-                                                </div>*@
+                                                <div id="customer_impression_charts"
+                                                     data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                                                     class="apex-charts" dir="ltr"></div>
+                                            </div>*@
                                             <div class="w-100">
                                                 <div id="cd_mom_business_progress" style="height:400px"
                                                      data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
@@ -1841,6 +1860,23 @@
             </div> <!-- end col -->
         </div>
 
+        <div id="productDeatilModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-xl" role="document">
+                <!-- 🔸 modal-xl here -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Product Sales Detail</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <!-- Table or content goes here -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <!-- container-fluid -->
 </div>
@@ -2124,7 +2160,7 @@
                 url: baseUrl + 'dashboard/getMoMBusinessProgress',
                 type: 'GET',
                 beforeSend: function () {
-                    showCardSpinner('.card:has(#mom-business-progress-date) .card-body');
+                    showCardSpinner('.card:has(#mom_business_progress) .card-body');
                 },
                 data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
                 success: function (result) {
@@ -2287,7 +2323,7 @@
                 url: baseUrl + 'dashboard/getMoMFocusCatBusinessProgress',
                 type: 'GET',
                 beforeSend: function () {
-                    showCardSpinner('.card:has(#mom-focus-cat-business-progress-date) .card-body');
+                    showCardSpinner('.card:has(#mom_focus_cat_business_progress) .card-body');
                 },
                 data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
                 success: function (result) {
@@ -2416,7 +2452,7 @@
                 url: baseUrl + 'dashboard/getMoMEcoMemoBusinessProgress',
                 type: 'GET',
                 beforeSend: function () {
-                    showCardSpinner('.card:has(#mom-focus-cat-business-progress-date) .card-body');
+                    showCardSpinner('.card:has(#mom_eco_memo_business_progress) .card-body');
                 },
                 data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
                 success: function (result) {
@@ -2552,7 +2588,7 @@
                 url: baseUrl + 'dashboard/getMoMBusinessProgress',
                 type: 'GET',
                 beforeSend: function () {
-                    showCardSpinner('.card:has(#mom-business-progress-date) .card-body');
+                    showCardSpinner('.card:has(#cd_mom_business_progress) .card-body');
                 },
                 data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, p_cd:'1015' },
                 success: function (result) {
@@ -2702,7 +2738,7 @@
                 url: baseUrl + 'dashboard/getMoMRegionEcoMemoBusinessProgress',
                 type: 'GET',
                 beforeSend: function () {
-                    showCardSpinner('.card:has(#mom-region-echo-memo-business-progress-date) .card-body');
+                    showCardSpinner('.card:has(#mom_region_eco_memo_business_progress) .card-body');
                 },
                 data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
                 success: function (result) {
@@ -3151,7 +3187,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <td><button class="btn btn-link dealer" id="${item.DEALER_ID}">${item.DEALER_NAME}</button></td>
+              <td><span class="styled-link dealer" id="${item.DEALER_ID}">${item.DEALER_NAME}</span></td>
               <td>${item.SALES_IN_TP.toFixed(2)}</td>
             `;
                                 field_strudcture_wise_sales_table_tbody.appendChild(dealerRow);
@@ -3221,72 +3257,6 @@
             }
 
 
-
-
-
-            //function renderGroupedData3(data) {
-
-            //    $("#routeSalesStatusTable tbody").empty();
-
-            //    let grouped = {};
-
-            //    // Group by ROUTE
-            //    data.forEach(row => {
-            //        if (!grouped[row.ROUTE]) grouped[row.ROUTE] = [];
-            //        grouped[row.ROUTE].push(row);
-            //    });
-
-            //    // Inject rows: group -> child1 -> child2 ...
-            //    Object.keys(grouped).forEach((groupKey, index) => {
-            //        const groupRows = grouped[groupKey];
-
-            //        // Compute totals
-            //        const totalTP = groupRows.reduce((sum, r) => sum + parseFloat(r.TOTAL_SALES_IN_TP || 0), 0);
-            //        const totalMemo = groupRows.reduce((sum, r) => sum + parseInt(r.TOTAL_MEMO || 0), 0);
-            //        const sr_name = groupRows[index]['SO_NAME'];
-
-            //        // Create group row with unique ID
-            //        const groupId = `group-${index}`;
-            //        const $groupRow = $(`
-            //                <tr class="group collapsed" data-group="${groupId}" style="cursor:pointer; background:#dfefff; font-weight:bold;">
-            //                    <td colspan="2"><span class="toggle-icon">▶</span> ${groupKey}-[${sr_name}]</td>
-            //                    <td>${totalTP.toFixed(2)}</td>
-            //                    <td>${totalMemo}</td>
-            //                    <td colspan="2"></td>
-            //                </tr>
-            //            `);
-
-            //        // Insert group row manually into DOM
-            //        $("#routeSalesStatusTable tbody").append($groupRow);
-
-            //        // Add child rows but keep them hidden initially
-            //        groupRows.forEach(r => {
-            //            const $childRow = $(`
-            //    <tr class="child-row child-of-${groupId}" style="display:none;">
-            //        <td></td>
-            //        <td>${r.OUTLET_NAME}</td>
-            //        <td>${r.TOTAL_SALES_IN_TP}</td>
-            //        <td>${r.TOTAL_MEMO}</td>
-            //        <td>${r.NO_OF_SALES_MONTH}</td>
-            //        <td>${r.AVG_SALES_PER_MONTH}</td>
-            //    </tr>
-            //`);
-            //            $("#routeSalesStatusTable tbody").append($childRow);
-            //        });
-            //    });
-
-            //    // Toggle logic
-            //    $('.group').off('click').on('click', function () {
-            //        const groupId = $(this).data('group');
-            //        const isCollapsed = $(this).hasClass('collapsed');
-            //        $(this).toggleClass('collapsed');
-            //        $(this).find('.toggle-icon').text(isCollapsed ? '▼' : '▶');
-
-            //        $(`.child-of-${groupId}`).toggle(isCollapsed);
-            //    });
-            //}
-
-
             function renderGroupedData(data) {
                 // Clear existing rows correctly
                 $("#routeSalesStatusTable tbody").empty();
@@ -3330,7 +3300,7 @@
                         const $childRow = $(`
                 <tr class="child-row child-of-${groupId}" style="display:none;">
                     <td></td>
-                    <td>${r.OUTLET_NAME}</td>
+                    <td ><span class="styled-link outlet_for_proudct_detail" id="${r.OUTLET_ID}" title="View detail Product Sales Comair"> ${fixMojibake(r.OUTLET_NAME)}</span></td>
                     <td>${r.TOTAL_SALES_IN_TP}</td>
                     <td>${r.TOTAL_MEMO}</td>
                     <td>${r.NO_OF_SALES_MONTH}</td>
@@ -3351,7 +3321,77 @@
                 });
             }
 
+            function fixMojibake(text) {
+                try {
+                    return decodeURIComponent(escape(text));
+                } catch (e) {
+                    return text; // fallback
+                }
+            }
+
+            $("body").on("click", ".outlet_for_proudct_detail", function () {
+                var outletId = $(this).attr("id");
+                var outletName = $(this).html();
+
+                var focusCategoryId = $(this).attr("id");
+
+                regionId = $('#national-sku-kpi-region').val()
+
+                areaId = $('#national-sku-kpi-area').val()
+
+
+              var baseUrl = '@Url.Content("~/")';
+            $.ajax({
+                url: baseUrl + 'dashboard/ProductSalesComparison',
+                type: 'GET',
+                data: {
+                    p_date_to: "2025-07-30",
+                    region_id: "",
+                    area_id: "",
+                    territory_id: "",
+                    dealer_id:"",
+                    outlet_id: outletId,
+                    category_id: "",
+                    focus_category_id:""
+                },
+                beforeSend: function () {
+                    $('#productDeatilModal').modal('show');
+                    $('#productDeatilModal .modal-title').html(`Product Sales detail - Outlet :[${outletName}]`);
+                    $('#productDeatilModal .modal-body').empty();
+                    showCardSpinner('#productDeatilModal .modal-body');
+                },
+
+                success: function (result) {
+                    console.log("proudct detial data");
+                    console.log(result);
+
+
+                    if (result != null) {
+
+                        $('#productDeatilModal .modal-title').html(`Product Sales detail - Outlet :[${outletName}]`);
+                        $('#productDeatilModal .modal-body').html(result);
+                        // show modal
+                        $('#productDeatilModal').modal('show');
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch business progress data.");
+                },
+                complete: function () {
+                    hideCardSpinner();
+                }
+            });
+
+            })
+
+
             /* field Stracture wise sales end */
+
+
+
+            /* Region wise Target vs Achievement bar progress bar */
 
             $("body").on("change", "#RegionSalesTargetAchieve_date", function () {
                 getRegionSalesTargetAchieveData();
@@ -3407,6 +3447,9 @@
             });
 
             }
+
+
+            /* Region wise Target vs Achievement bar progress bar END*/
 
 
 

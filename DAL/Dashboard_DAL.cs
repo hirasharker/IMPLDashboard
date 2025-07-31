@@ -540,14 +540,14 @@ namespace IMPLDashboard.DAL
             {
 
                 OracleCommand com = GetSPCommand("PROC_IMPL_PRODUCT_SALES_M2M_COMPARISON");
-                com.Parameters.Add("p_as_on_date", OracleType.VarChar).Value = as_on_date;
-                com.Parameters.Add("p_region_id", OracleType.VarChar).Value = region_id;
-                com.Parameters.Add("p_area_id", OracleType.VarChar).Value = area_id;
-                com.Parameters.Add("p_territory_id", OracleType.VarChar).Value = territory_id;
-                com.Parameters.Add("p_dealer_id", OracleType.VarChar).Value = dealer_id;
-                com.Parameters.Add("p_outlet_id", OracleType.VarChar).Value = outlet_id;
-                com.Parameters.Add("p_category_id", OracleType.VarChar).Value = category_id;
-                com.Parameters.Add("p_focus_category_id", OracleType.VarChar).Value = focus_category_id;
+                com.Parameters.Add("P_AS_ON_DATE", OracleType.VarChar).Value = as_on_date;
+                com.Parameters.Add("P_REGION_ID", OracleType.VarChar).Value = region_id;
+                com.Parameters.Add("P_AREA_ID", OracleType.VarChar).Value = area_id;
+                com.Parameters.Add("P_TERRITORY_ID", OracleType.VarChar).Value = territory_id;
+                com.Parameters.Add("P_DEALER_ID", OracleType.VarChar).Value = dealer_id;
+                com.Parameters.Add("P_OUTLET_ID", OracleType.VarChar).Value = outlet_id;
+                com.Parameters.Add("P_CATEGORY_ID", OracleType.VarChar).Value = category_id;
+                com.Parameters.Add("P_FOCUS_CATEGORY_ID", OracleType.VarChar).Value = focus_category_id;
                 com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
                 OracleDataAdapter oraData = new OracleDataAdapter(com);
                 oraData.Fill(dt);

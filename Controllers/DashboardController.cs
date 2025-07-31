@@ -269,13 +269,13 @@ namespace IMPLDashboard.Controllers
         [HttpGet]
         public String ProductSalesComparison(string p_date_to, string region_id, string area_id, string territory_id, string dealer_id, string outlet_id, string category_id, string focus_category_id)
         {
-            DataTable dt = new Dashboard_DAL().GetProductSalesM2MComparison(p_date_to, region_id, area_id, territory_id, dealer_id, outlet_id, category_id, focus_category_id);
+            DataTable tableData = new Dashboard_DAL().GetProductSalesM2MComparison(p_date_to, region_id, area_id, territory_id, dealer_id, outlet_id, category_id, focus_category_id);
 
             DataTable tableData2 = new DataTable();
 
-            dt.AsEnumerable();
+            tableData.AsEnumerable();
 
-            string x = RenderPartialViewToStringMultipleData("NationalWisePriVsSecPartial", dt, tableData2);
+            string x = RenderPartialViewToStringMultipleData("ProductSalesComparisonPartial", tableData, tableData2);
             return x;
         }
 

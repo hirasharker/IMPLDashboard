@@ -2213,7 +2213,7 @@
     <Content Include="Views\Dashboard\DashboardHeaderPartial.cshtml" />
     <Content Include="Views\Dashboard\OwnDbWiseSkuKpiPartial.cshtml" />
     <Content Include="Views\Dashboard\NationalWisePriVsSecPartial.cshtml" />
-    <Content Include="Views\Dashboard\ProductSalesComparison.cshtml" />
+    <Content Include="Views\Dashboard\ProductSalesComparisonPartial.cshtml" />
     <Content Include="Views\Dashboard\OutletInMap.cshtml" />
     <Content Include="Views\Dashboard\RegionWiseSkuKpi.cshtml" />
   </ItemGroup>
