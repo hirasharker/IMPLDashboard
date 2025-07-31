@@ -1996,21 +1996,6 @@
                 nationWiseSkuKpi(dt, regionId, areaId);
             });
 
-            $("body").on("click", ".focus-category", function () {
-
-                var focusCategoryId = $(this).attr("id");
-
-                regionId = $('#national-sku-kpi-region').val()
-
-                areaId = $('#national-sku-kpi-area').val()
-
-                // Construct the full URL with parameters
-                const url = `/dashboard/ProductSalesComparison?p_date_to=${encodeURIComponent(dt)}&region_id=${encodeURIComponent(regionId)}&area_id=${encodeURIComponent(areaId)}&category_id=&focus_category_id=${encodeURIComponent(focusCategoryId)}`;
-
-                // Open the constructed URL in a new tab
-                window.open(url, '_blank');
-            });
-
 
             /*nation wise sku kpi ends*/
 

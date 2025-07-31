@@ -2215,6 +2215,7 @@
     <Content Include="Views\Dashboard\NationalWisePriVsSecPartial.cshtml" />
     <Content Include="Views\Dashboard\ProductSalesComparison.cshtml" />
     <Content Include="Views\Dashboard\OutletInMap.cshtml" />
+    <Content Include="Views\Dashboard\RegionWiseSkuKpi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

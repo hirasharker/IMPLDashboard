@@ -120,6 +120,40 @@ namespace IMPLDashboard.DAL
             return ds;
         }
 
+        public DataSet GetRegionFocusKpi(string p_as_on_date, string region_id, string area_id, string focus_category_id)
+        {
+
+            DataSet ds = new DataSet();
+
+            try
+            {
+                // IMPLDB.PROC_IMPL_NATIONAL_FOCUS_KPI ( P_AS_ON_DATE, P_REGION_ID, P_AREA_ID, PCURSOR_TOTAL_IMS_VALUE, PCURSOR_TOTAL_MEMO, PCURSOR_CTN_KPI, PCURSOR_MEMO_KPI, PCURSOR_BOUNCE_RATIO );
+                OracleCommand com = GetSPCommand("PROC_IMPL_REGION_FOCUS_KPI");
+                com.Parameters.Add("p_as_on_date", OracleType.VarChar).Value = p_as_on_date;
+                com.Parameters.Add("p_region_id", OracleType.VarChar).Value = region_id;
+                com.Parameters.Add("p_area_id", OracleType.VarChar).Value = area_id;
+                com.Parameters.Add("p_focus_category_id", OracleType.VarChar).Value = focus_category_id;
+                com.Parameters.Add("PCURSOR_TOTAL_IMS_VALUE", OracleType.Cursor).Direction = ParameterDirection.Output;
+                com.Parameters.Add("PCURSOR_TOTAL_MEMO", OracleType.Cursor).Direction = ParameterDirection.Output;
+                com.Parameters.Add("PCURSOR_CTN_KPI", OracleType.Cursor).Direction = ParameterDirection.Output;
+                com.Parameters.Add("PCURSOR_MEMO_KPI", OracleType.Cursor).Direction = ParameterDirection.Output;
+                com.Parameters.Add("PCURSOR_BOUNCE_RATIO", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+
+                oraData.Fill(ds);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return ds;
+        }
+
 
         public DataTable GetNationalKpiWiseImsValue(string p_as_on_date, string region_id, string area_id)
         {

@@ -1,0 +1,291 @@
+﻿
+@{
+    ViewBag.Title = "RegionWiseSkuKpi";
+}
+
+
+@{
+    ViewBag.Title = "IMPL Dashboard";
+    var dt = DateTime.Now.AddDays(-1);
+}
+
+@section css{
+    <style>
+        #field_strudcture_wise_sales table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            #field_strudcture_wise_sales table th, td {
+                border: 1px solid #ccc;
+                padding: 6px;
+            }
+
+        #field_strudcture_wise_sales .group-header {
+            background-color: #dfeeff;
+            font-weight: bold;
+        }
+
+        #field_strudcture_wise_sales .subgroup-header {
+            background-color: #f1faff;
+        }
+
+        #field_strudcture_wise_sales .toggle-icon {
+            display: inline-block;
+            width: 1em;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        #field_strudcture_wise_sales .hidden {
+            display: none;
+        }
+
+        #field_strudcture_wise_sales table tr td a {
+            /* text-decoration: none;*/
+            color: #007bff;
+        }
+    </style>
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col">
+
+                <div class="h-100">
+                    
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Region Wise Focus SKU KPI Update for @ViewBag.dataTable3.Rows[0]["FOCUS_CATEGORY_NAME"]</h4>
+                                    @*<div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="national-sku-kpi-region" class="form-control border-0 shadow">
+                                                <option value="">Select Region</option>
+                                                @{
+                                                    foreach (System.Data.DataRow row in ViewBag.region.Rows)
+                                                    {
+                                                        <option value="@row["REGION_ID"]">@row["REGION_NAME"]</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select id="national-sku-kpi-area" class="form-control border-0 shadow">
+                                                <option value="">Select Area</option>
+                                            </select>
+                                        </div>
+                                    </div>*@
+
+                                    @*<div class="flex-shrink-0">
+                                        <div class="input-group">
+                                            <input type="date" id="nation-wise-sku-kpi-date"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM-dd")" />
+                                        </div>
+                                    </div>*@
+                                </div><!-- end card header -->
+
+                                <div class="card-body position-relative" style="min-height: 300px;">
+                                    <div class="table-responsive table-card" id="nation-wise-sku-kpi">
+                                        <table class="table table-bordered table-centered align-middle table-nowrap mb-0" id="national-sku-kpi-tbl">
+                                            <thead class="text-muted table-light">
+                                                <tr>
+                                                    <th scope="col" rowspan="2" valign="middle">Region</th>
+                                                    <th scope="col" colspan="3" style="text-align: center;">@ViewBag.dataTable.Rows[0]["ORDER_DATE"]</th>
+                                                    <th scope="col" colspan="3" style="text-align: center;">Month to Date</th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" style="text-align: center;">Last Month Ach.</th>
+                                                    <th scope="col" style="text-align: center;">Today's Target'</th>
+                                                    <th scope="col" style="text-align: center;">Today's Ach.</th>
+                                                    <th scope="col" style="text-align: center;">Last MTD Ach.</th>
+                                                    <th scope="col" style="text-align: center;">This Month MTD Tar.</th>
+                                                    <th scope="col" style="text-align: center;">This Month MTD Ach.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                           class="fw-medium text-reset">Total IMS Value in LAC</a>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable.Rows[0]["LAST_MONTH_ACHIEVMENT"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable.Rows[0]["TP_TARGET"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable.Rows[0]["TODAYS_ACHIEVMENT"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable.Rows[0]["last_mtd_achievment"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable.Rows[0]["MTD_TP_TARGET"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable.Rows[0]["MTD_ACHIEVMENT"]</span>
+                                                    </td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                           class="fw-medium text-reset">Total Memo</a>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable2.Rows[0]["LAST_MONTH_MEMO_ACHIEVMENT"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable2.Rows[0]["MEMO_TARGET"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable2.Rows[0]["MEMO_ACHIEVMENT"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable2.Rows[0]["last_mtd_memo_achievment"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable2.Rows[0]["MTD_MEMO_TARGET"]</span>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="text-primary">@ViewBag.dataTable2.Rows[0]["MTD_MEMO_ACHIEVMENT"]</span>
+                                                    </td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <td>
+                                                        <a href="#"
+                                                           class="fw-medium text-reset">Focus Category IMS in Ctn.</a>
+                                                    </td>
+
+                                                </tr><!-- end tr -->
+                                                @foreach (System.Data.DataRow rows in ViewBag.dataTable3.Rows)
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: center;">
+                                                            <a href="#">
+                                                                <span class="text-primary focus-category">
+                                                                    @rows["REGION_NAME"]
+                                                                </span>
+                                                            </a>
+                                                        </td>
+
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["LAST_MONTH_ACH"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["TODAYS_TARGET"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["TODAYS_ACH"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["LAST_MTD_ACH"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["THIS_MTD_TARGET"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["THIS_MTD_ACH"]</span>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td>
+                                                        <a href="#"
+                                                           class="fw-medium text-reset">Focus Category Memo</a>
+                                                    </td>
+
+                                                </tr><!-- end tr -->
+                                                @foreach (System.Data.DataRow rows in ViewBag.dataTable4.Rows)
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["REGION_NAME"]</span>
+                                                        </td>
+
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["LAST_MONTH_MEMO_ACHIEVMENT"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["MEMO_TARGET"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["MEMO_ACHIEVMENT"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["LAST_MTD_MEMO_ACHIEVMENT"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["MTD_MEMO_TARGET"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["MTD_MEMO_ACHIEVMENT"]</span>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td>
+                                                        <a href="#"
+                                                           class="fw-medium text-reset">Hygiene</a>
+                                                    </td>
+
+                                                </tr><!-- end tr -->
+                                                @foreach (System.Data.DataRow rows in ViewBag.dataTable5.Rows)
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">Delivery Bounce Percentage %</span>
+                                                        </td>
+
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["LAST_MONTH_ACH"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["TODAYS_TARGET"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["TODAYS_ACH"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["LAST_MTD_ACH"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["THIS_MONTH_MTD_TARGET"]</span>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span class="text-primary">@rows["THIS_MONTH_MTD_ACH"]</span>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+
+                                            </tbody><!-- end tbody -->
+                                        </table><!-- end table -->
+                                    </div>
+                                </div>
+
+                            </div> <!-- .card-->
+                        </div> <!-- .col-->
+                    </div> <!-- end row-->
+
+
+                </div> <!-- end .h-100-->
+
+            </div> <!-- end col -->
+        
+        </div>
+
+    </div>
+    <!-- container-fluid -->
+</div>
+
+

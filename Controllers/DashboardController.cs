@@ -68,6 +68,54 @@ namespace IMPLDashboard.Controllers
             return x;
         }
 
+
+        public ActionResult RegionWiseSkuKpi(String dt, string region_id, string area_id, string focus_category_id)
+        {
+            String date;
+            if (dt == "" || dt == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = dt;
+            }
+
+            if (region_id == "" || region_id == null)
+            {
+                region_id = "";
+            }
+
+            if (area_id == "" || area_id == null)
+            {
+                area_id = "";
+            }
+
+            DataSet ds = new Dashboard_DAL().GetRegionFocusKpi(date, region_id, area_id, focus_category_id);
+
+
+            DataTable tableData = ds.Tables[0];
+            DataTable tableData2 = ds.Tables[1];
+            DataTable tableData3 = ds.Tables[2];
+            DataTable tableData4 = ds.Tables[3];
+
+            DataTable tableData5 = new Dashboard_DAL().GetNationalFocusKpiBounceRatio(date);
+
+            DataTable region = new Dashboard_DAL().GetRegion(region_id);
+
+            ViewBag.region = region;
+
+            ViewBag.dataTable = tableData;
+            ViewBag.dataTable2 = tableData2;
+            ViewBag.dataTable3 = tableData3;
+            ViewBag.dataTable4 = tableData4;
+            ViewBag.dataTable5 = tableData5;
+
+            return View();
+        }
+
+
         [HttpGet]
         public string NationWiseSkuKpiJson(String dt, string region_id, string area_id)
         {
