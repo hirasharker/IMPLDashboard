@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace IMPLDashboard.Controllers
 {
+    [Filters.AuthorizedUser]
     public class DashboardController : BaseController
     {
         // GET: Dashboard

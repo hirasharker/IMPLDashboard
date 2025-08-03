@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "SalesReport";
+}
+
+<h2>SalesReport</h2>
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Sales Report (MTD)</h4>
+                    </div><!-- end card header -->
+                    <div class="card-body">
+                        <div class="live-preview">
+                            <form id="salesReportForm">
+                                <div class="row gy-4">
+                                    <div class="col-md-8">
+                                        <input type="date" class="form-control" name="p_as_on_date" required>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <select class="form-control" id="reportType" required>
+                                            <option value="">Select Report Type</option>
+                                            <option value="MTD">MTD Report</option>
+                                            <option value="Daily">Daily Report</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <input class="btn btn-info" type="submit" value="Export to Excel">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.getElementById('salesReportForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var reportType = document.getElementById('reportType').value;
+
+        if (reportType === "") {
+            alert("Please select a report type.");
+            return;
+        }
+
+        var actionUrl = '';
+        if (reportType === "MTD") {
+            actionUrl = '@Url.Action("ExportMtdSalesReport", "SalesReport")';
+        }
+        else if (reportType === "Daily") {
+            actionUrl = '@Url.Action("ExportDailySalesReport", "SalesReport")';
+        }
+
+        this.action = actionUrl;
+        this.submit();
+    });
+</script>

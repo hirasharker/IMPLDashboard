@@ -245,9 +245,11 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SalesReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\BaseDataAccessLayer.cs" />
     <Compile Include="DAL\Dashboard_DAL.cs" />
+    <Compile Include="DAL\SalesReport_DAL.cs" />
     <Compile Include="DAL\User_DAL.cs" />
     <Compile Include="Filters\AccessControl.cs" />
     <Compile Include="Filters\AuthorizedUser.cs" />
@@ -2216,6 +2218,7 @@
     <Content Include="Views\Dashboard\ProductSalesComparisonPartial.cshtml" />
     <Content Include="Views\Dashboard\OutletInMap.cshtml" />
     <Content Include="Views\Dashboard\RegionWiseSkuKpi.cshtml" />
+    <Content Include="Views\SalesReport\SalesReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace IMPLDashboard.Controllers
 {
+    
     public class UserController : Controller
     {
 
@@ -146,7 +147,7 @@ namespace IMPLDashboard.Controllers
                 Session["menuAccess"] = menuAccess;
 
                 string ctrl = "Dashboard";
-                string func = "Home";
+                string func = "Dashboard";
 
                 string[] routes = Convert.ToString(dr["DEFAULT_ROUTE"]).Split('/');
 
@@ -161,7 +162,7 @@ namespace IMPLDashboard.Controllers
                 }
 
 
-                return RedirectToAction(func, ctrl, new { action = "Index" });
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {
