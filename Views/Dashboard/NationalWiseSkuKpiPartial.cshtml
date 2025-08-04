@@ -72,8 +72,7 @@
         </tr><!-- end tr -->
         <tr>
             <td>
-                <a href="#"
-                   class="fw-medium text-reset">Focus Category IMS in Ctn.</a>
+                   <p class="fw-medium text-reset">Focus Category IMS in Ctn.</p>
             </td>
 
         </tr><!-- end tr -->
@@ -82,10 +81,9 @@
         {
             <tr>
                 <td style="text-align: center;">
-                    <a href="~/Dashboard/RegionWiseSkuKpi?dt=@rows["P_AS_ON_DATE"]&region_id=&area_id=&focus_category_id=@rows["FOCUS_CATEGORY_ID"]" target="_blank">
-                        <span class="text-primary focus-category" id="@rows["FOCUS_CATEGORY_ID"]">
+                    <a href="~/Dashboard/RegionWiseSkuKpi?dt=@rows["P_AS_ON_DATE"]&region_id=&area_id=&focus_category_id=@rows["FOCUS_CATEGORY_ID"]" 
+                       class="text-decoration-underline" target="_blank" id="@rows["FOCUS_CATEGORY_ID"]">
                             @rows["FOCUS_CATEGORY_NAME"]
-                        </span>
                     </a>
                 </td>
 
@@ -112,8 +110,8 @@
         }
         <tr>
             <td>
-                <a href="#"
-                   class="fw-medium text-reset">Focus Category Memo</a>
+                <p 
+                   class="fw-medium text-reset">Focus Category Memo</p>
             </td>
 
         </tr><!-- end tr -->
@@ -121,8 +119,9 @@
         {
             <tr>
                 <td style="text-align: center;">
-                    <a href="~/Dashboard/RegionWiseSkuKpi?dt=@rows["P_AS_ON_DATE"]&region_id=&area_id=&focus_category_id=@rows["FOCUS_CATEGORY_ID"]" target="_blank">
-                        <span class="text-primary">@rows["FOCUS_CATEGORY_NAME"]</span>
+                    <a href="~/Dashboard/RegionWiseSkuKpi?dt=@rows["P_AS_ON_DATE"]&region_id=&area_id=&focus_category_id=@rows["FOCUS_CATEGORY_ID"]" 
+                       class="text-decoration-underline" target="_blank">
+                        @rows["FOCUS_CATEGORY_NAME"]
                     </a>
                 </td>
 
@@ -149,8 +148,8 @@
         }
         <tr>
             <td>
-                <a href="#"
-                   class="fw-medium text-reset">Hygiene</a>
+                <p
+                   class="fw-medium text-reset">Hygiene</p>
             </td>
 
         </tr><!-- end tr -->

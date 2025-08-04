@@ -5,7 +5,7 @@
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 overflow-hidden">
                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                        Monthly Sales Amount (In Lac)
+                        Monthly Sales (In Lac)
                     </p>
                 </div>
                 @{
@@ -105,7 +105,7 @@
                     <h4 class="fs-20 fw-semibold ff-secondary mb-4">
                         Updated Weekly
                     </h4>
-                    <a href="#" class="text-decoration-underline">See product list</a>
+                    <a href="~/SalesReport/BestSellingProducts" class="text-decoration-underline" target="_blank">See product list</a>
                 </div>
                 <div class="avatar-sm flex-shrink-0">
                     <span class="avatar-title bg-success-subtle rounded fs-3">
@@ -138,7 +138,7 @@
                     <h4 class="fs-20 fw-semibold ff-secondary mb-4">
                         ৳<span class="counter-value" data-target="39600">@ViewBag.dataTable.Rows[0]["LAST_MTD_SALES_AMT"]</span>
                     </h4>
-                    <a href="#" class="text-decoration-underline">Compare with previous</a>
+                    <a href="~/SalesReport/SalesReportMOM" class="text-decoration-underline" target="_blank">Compare with previous</a>
                 </div>
                 @*<div class="avatar-sm flex-shrink-0">
                     <span class="avatar-title bg-warning-subtle rounded fs-3">

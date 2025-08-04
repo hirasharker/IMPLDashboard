@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using IMLDashboard.Controllers;
 using IMPLDashboard.DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -67,6 +68,61 @@ namespace IMPLDashboard.Controllers
                 }
             }
         }
+
+
+        public ActionResult SalesReportMOM()
+        {
+            return View();
+        }
+
+        public FileResult ExportMOMSalesReport(string p_as_on_date)
+        {
+
+            DataTable dt = new SalesReport_DAL().GetMOMSalesReport(p_as_on_date);
+            var rows = dt.Rows.Count;
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var ws = wb.Worksheets.Add(dt);
+                ws.SetAutoFilter(false);
+                ws.Table(0).ShowAutoFilter = false;
+                ws.Table(0).Theme = XLTableTheme.None;
+                /*wb.Worksheets.Add(dt);*/
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sales_mom_" + p_as_on_date + ".xlsx");
+                }
+            }
+        }
+
+        public ActionResult BestSellingProducts()
+        {
+            return View();
+        }
+
+        public FileResult ExportBestSellingProducts(string p_as_on_date)
+        {
+
+            DataTable dt = new SalesReport_DAL().GetBestSellingProducts(p_as_on_date);
+            var rows = dt.Rows.Count;
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var ws = wb.Worksheets.Add(dt);
+                ws.SetAutoFilter(false);
+                ws.Table(0).ShowAutoFilter = false;
+                ws.Table(0).Theme = XLTableTheme.None;
+                /*wb.Worksheets.Add(dt);*/
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sales_" + p_as_on_date + ".xlsx");
+                }
+            }
+        }
+
+
 
 
 

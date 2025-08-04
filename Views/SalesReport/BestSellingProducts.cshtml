@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "SalesReport";
+}
+
+<h2>SalesReport</h2>
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Best Selling Products</h4>
+                    </div><!-- end card header -->
+                    <div class="card-body">
+                        <div class="live-preview">
+                            <form id="salesReportForm" action="~/SalesReport/ExportBestSellingProducts">
+                                <div class="row gy-4">
+                                    <div class="col-md-12">
+                                        <input type="date" class="form-control" name="p_as_on_date" required>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <input class="btn btn-info" type="submit" value="Export to Excel">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
