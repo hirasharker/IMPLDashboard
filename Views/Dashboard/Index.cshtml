@@ -73,9 +73,9 @@
                             <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                 <div class="flex-grow-1">
                                     @*<h4 class="fs-16 mb-1">Welcome, Hira!</h4>
-                                    <p class="text-muted mb-0">
-                                        Here's what's happening with Ifad Multi Products Ltd.
-                                    </p>*@
+                        <p class="text-muted mb-0">
+                            Here's what's happening with Ifad Multi Products Ltd.
+                        </p>*@
                                 </div>
                                 <div class="mt-3 mt-lg-0">
                                     <form action="javascript:void(0);">
@@ -96,11 +96,14 @@
                         <!--end col-->
                     </div>
                     <!--end row-->
+                    @*<div class="row" id="dashboard-header">
 
-                    <div class="row" id="dashboard-header">
+        </div>*@
 
-
-
+                    <div class="dashboard-header-wrapper position-relative">
+                        <div class="row" id="dashboard-header">
+                            <!-- Cards go here -->
+                        </div>
                     </div>
 
                     <div class="row">
@@ -256,17 +259,17 @@
                                     </div>
 
                                     @*<div class="flex-shrink-0" style="margin-right: 2em">
-                                        <div class="flex-shrink-0" style="margin-right: 2em">
-                                            <div class="input-group">
-                                                <select class="form-control border-0 shadow" id="mom-no-months">
-                                                    <option value="12">12</option>
-                                                    <option value="18">18</option>
-                                                    <option value="24">24</option>
+                            <div class="flex-shrink-0" style="margin-right: 2em">
+                                <div class="input-group">
+                                    <select class="form-control border-0 shadow" id="mom-no-months">
+                                        <option value="12">12</option>
+                                        <option value="18">18</option>
+                                        <option value="24">24</option>
 
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>*@
+                                    </select>
+                                </div>
+                            </div>
+                        </div>*@
 
 
                                 </div><!-- end card header -->
@@ -275,10 +278,10 @@
 
                                 <div class="card-body p-0 pb-2">
                                     @*<div class="w-100">
-                                        <div id="customer_impression_charts"
-                                             data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                             class="apex-charts" dir="ltr"></div>
-                                    </div>*@
+                            <div id="customer_impression_charts"
+                                 data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                                 class="apex-charts" dir="ltr"></div>
+                        </div>*@
                                     <div class="w-100">
                                         <div id="mom_business_progress" style="height:400px"
                                              data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
@@ -290,7 +293,6 @@
                                 </div><!-- end card body -->
                             </div><!-- end card -->
                         </div><!-- end col -->
-
                         <!-- end col -->
                     </div>
 
@@ -419,17 +421,17 @@
                                             </div>
 
                                             @*<div class="flex-shrink-0" style="margin-right: 2em">
-                                                <div class="flex-shrink-0" style="margin-right: 2em">
-                                                    <div class="input-group">
-                                                        <select class="form-control border-0 shadow" id="mom-no-months">
-                                                            <option value="12">12</option>
-                                                            <option value="18">18</option>
-                                                            <option value="24">24</option>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <select class="form-control border-0 shadow" id="mom-no-months">
+                                                <option value="12">12</option>
+                                                <option value="18">18</option>
+                                                <option value="24">24</option>
 
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>*@
 
 
                                         </div><!-- end card header -->
@@ -438,10 +440,10 @@
 
                                         <div class="card-body p-0 pb-2">
                                             @*<div class="w-100">
-                                                <div id="customer_impression_charts"
-                                                     data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                                     class="apex-charts" dir="ltr"></div>
-                                            </div>*@
+                                    <div id="customer_impression_charts"
+                                         data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                                         class="apex-charts" dir="ltr"></div>
+                                </div>*@
                                             <div class="w-100">
                                                 <div id="cd_mom_business_progress" style="height:400px"
                                                      data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
@@ -650,7 +652,7 @@
                     </div> <!-- end row-->
 
 
-                    
+
 
                 </div> <!-- end .h-100-->
 
@@ -693,6 +695,43 @@
     <script>
         $(document).ready(function () {
 
+            function showCardSpinner(containerSelector) {
+                const $container = $(containerSelector);
+
+                // Ensure container is position-relative
+                if (!$container.hasClass('position-relative')) {
+                    $container.addClass('position-relative');
+                }
+
+                // Clone the global spinner and backdrop
+                const $spinnerClone = $('#global-spinner').clone().removeAttr('id').removeClass('d-none');
+                const $backdropClone = $('#global-spinner-backdrop').clone().removeAttr('id').removeClass('d-none');
+
+                // Append clones inside the card
+                $container.append($backdropClone).append($spinnerClone);
+
+                // Store references on the container for removal
+                $container.data('spinnerClone', $spinnerClone);
+                $container.data('backdropClone', $backdropClone);
+            }
+
+
+            function hideCardSpinner(containerSelector) {
+                const $container = $(containerSelector);
+
+                const $spinnerClone = $container.data('spinnerClone');
+                const $backdropClone = $container.data('backdropClone');
+
+                if ($spinnerClone) $spinnerClone.remove();
+                if ($backdropClone) $backdropClone.remove();
+
+                // Clear stored references
+                $container.removeData('spinnerClone');
+                $container.removeData('backdropClone');
+            }
+
+
+
             /*alert('loaded')*/
 
             var dt = '@dt.ToString("yyyy-MM-dd")';
@@ -707,11 +746,12 @@
             /*Dashboard Header start*/
 
             function dashboardHeader(pDate) {
+                const containerSelector = '#dashboard-header-wrapper';
                 $.ajax({
                     url: "/Dashboard/DashboardHeaderJson",
                     data: { dt: pDate },
                     beforeSend: function () {
-                        showCardSpinner('.card:has(#dashboard-header) .card-body');
+                        showCardSpinner(containerSelector);
                     },
                     success: function (result) {
                         $("#dashboard-header").html(result);
@@ -720,7 +760,7 @@
                         $("#dashboard-header").html('<div class="text-danger text-center py-4">Failed to load data.</div>');
                     },
                     complete: function () {
-                        hideCardSpinner();
+                        hideCardSpinner(containerSelector);
                     }
                 });
             }
@@ -743,12 +783,15 @@
 
             /*nation wise sku kpi start*/
 
+
             function nationWiseSkuKpi(pDate, regionId, areaId) {
+                const containerSelector = '.card:has(#nation-wise-sku-kpi) .card-body';
+
                 $.ajax({
                     url: "/Dashboard/NationWiseSkuKpiJson",
                     data: { dt: pDate, region_id : regionId, area_id : areaId },
                     beforeSend: function () {
-                        showCardSpinner('.card:has(#nation-wise-sku-kpi) .card-body');
+                        showCardSpinner(containerSelector);
                     },
                     success: function (result) {
                         $("#nation-wise-sku-kpi").html(result);
@@ -757,7 +800,7 @@
                         $("#nation-wise-sku-kpi").html('<div class="text-danger text-center py-4">Failed to load data.</div>');
                     },
                     complete: function () {
-                        hideCardSpinner();
+                        hideCardSpinner(containerSelector);
                     }
                 });
             }
@@ -844,11 +887,13 @@
             var ownDbAreaId = "";
 
             function owndbWiseSkuKpi(pDate, region, area) {
+                const containerSelector = '.card:has(#owndb-wise-sku-kpi) .card-body';
+
                 $.ajax({
                     url: "/Dashboard/OwnDbWiseSkuKpiJson",
                     data: { dt: pDate, region_id: regionId, area_id: areaId },
                     beforeSend: function () {
-                        showCardSpinner('.card:has(#owndb-wise-sku-kpi) .card-body');
+                        showCardSpinner(containerSelector);
                     },
                     success: function (result) {
                         $("#owndb-wise-sku-kpi").html(result);
@@ -857,7 +902,7 @@
                         $("#owndb-wise-sku-kpi").html('<div class="text-danger text-center py-4">Failed to load data.</div>');
                     },
                     complete: function () {
-                        hideCardSpinner();
+                        hideCardSpinner(containerSelector);
                     }
                 });
             }
@@ -879,11 +924,13 @@
             var nationWisePriVsSecChannel, nationWisePriVsSecAreaId = ""
 
             function nationWisemtdPrimaryVsSecondary(pDate, channel, areaId) {
+                const containerSelector = '.card:has(#nation-wise-mtd-pri-vs-sec-sales) .card-body';
+
                 $.ajax({
                     url: "/Dashboard/NationWisePrimaryVsSecondaryJson",
                     data: { dt: pDate, channel: channel, area_id: areaId },
                     beforeSend: function () {
-                        showCardSpinner('.card:has(#nation-wise-mtd-pri-vs-sec-sales) .card-body');
+                        showCardSpinner(containerSelector);
                     },
                     success: function (result) {
                         $("#nation-wise-mtd-pri-vs-sec-sales").html(result);
@@ -892,7 +939,7 @@
                         $("#nation-wise-mtd-pri-vs-sec-sales").html('<div class="text-danger text-center py-4">Failed to load data.</div>');
                     },
                     complete: function () {
-                        hideCardSpinner();
+                        hideCardSpinner(containerSelector);
                     }
                 });
             }
@@ -948,35 +995,36 @@
             mom_business_progress_data();
 
             function mom_business_progress_data() {
+                const containerSelector = '.card:has(#mom_business_progress) .card-body';
 
                 var mom_date = $("#mom-business-progress-date").val();
                 var mom_channel = $("#mom-business-channel").val();
                 var mom_no_months = $("#mom-no-months").val();
 
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getMoMBusinessProgress',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#mom_business_progress) .card-body');
-                },
-                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
-                success: function (result) {
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getMoMBusinessProgress',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                    success: function (result) {
 
-                    if (result != null) {
-                        rawData = JSON.parse(result);
-                        console.log(rawData);
-                        mom_business_progress();
+                        if (result != null) {
+                            rawData = JSON.parse(result);
+                            console.log(rawData);
+                            mom_business_progress();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
             }
@@ -1112,38 +1160,40 @@
 
             function mom_focus_cat_business_progress_data() {
 
+                const containerSelector = '.card:has(#mom_focus_cat_business_progress) .card-body';
+
                 var mom_date = $("#mom-focus-cat-business-progress-date").val();
                 var mom_channel = $("#mom-focus-cat-business-channel").val();
                 var mom_no_months = "";
 
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getMoMFocusCatBusinessProgress',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#mom_focus_cat_business_progress) .card-body');
-                },
-                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
-                success: function (result) {
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getMoMFocusCatBusinessProgress',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                    success: function (result) {
 
-                    if (result != null) {
-                        focusCatBusinessTPData = JSON.parse(result);
-                        //console.log("Focus Category Business Progress")
-                        //console.log(focusCatBusinessTPData);
-                        mom_focus_cat_business_progress(focusCatBusinessTPData);
+                        if (result != null) {
+                            focusCatBusinessTPData = JSON.parse(result);
+                            //console.log("Focus Category Business Progress")
+                            //console.log(focusCatBusinessTPData);
+                            mom_focus_cat_business_progress(focusCatBusinessTPData);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
-        }
+            }
 
 
             var momCatChart = null;
@@ -1241,36 +1291,38 @@
 
             function mom_eco_memo_business_progress_data() {
 
+                const containerSelector = '.card:has(#mom_eco_memo_business_progress) .card-body';
+
                 var mom_date = $("#mom-eco-memo-business-progress-date").val();
                 var mom_channel = $("#mom-eco-memo-business-channel").val();
                 var mom_no_months = "";
 
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getMoMEcoMemoBusinessProgress',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#mom_eco_memo_business_progress) .card-body');
-                },
-                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
-                success: function (result) {
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getMoMEcoMemoBusinessProgress',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                    success: function (result) {
 
-                    if (result != null) {
-                      var  momEcoMemoData = JSON.parse(result);
-                        console.log("Eco Memo Business Progress")
-                        console.log(momEcoMemoData);
-                        //mom_business_progress();
-                        mom_eco_memo_business_progress(momEcoMemoData);
+                        if (result != null) {
+                          var  momEcoMemoData = JSON.parse(result);
+                            console.log("Eco Memo Business Progress")
+                            console.log(momEcoMemoData);
+                            //mom_business_progress();
+                            mom_eco_memo_business_progress(momEcoMemoData);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
             }
@@ -1377,6 +1429,8 @@
 
             function cd_mom_business_progress_data() {
 
+                const containerSelector = '.card:has(#cd_mom_business_progress) .card-body';
+
                 var mom_date = $("#mom-business-progress-date").val();
                 var mom_channel = $("#mom-business-channel").val();
                 var mom_no_months = $("#mom-no-months").val();
@@ -1386,7 +1440,7 @@
                 url: baseUrl + 'dashboard/getMoMBusinessProgress',
                 type: 'GET',
                 beforeSend: function () {
-                    showCardSpinner('.card:has(#cd_mom_business_progress) .card-body');
+                    showCardSpinner(containerSelector);
                 },
                 data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, p_cd:'1015' },
                 success: function (result) {
@@ -1402,7 +1456,7 @@
                     alert("Failed to fetch business progress data.");
                 },
                 complete: function () {
-                    hideCardSpinner();
+                    hideCardSpinner(containerSelector);
                 }
             });
 
@@ -1527,36 +1581,38 @@
 
             function mom_region_eco_memo_business_progress_data() {
 
+                const containerSelector = '.card:has(#mom_region_eco_memo_business_progress) .card-body';
+
                 var mom_date = $("#mom-region-echo-memo-business-progress-date").val();
                 var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
                 var mom_no_months = "";
 
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getMoMRegionEcoMemoBusinessProgress',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#mom_region_eco_memo_business_progress) .card-body');
-                },
-                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
-                success: function (result) {
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getMoMRegionEcoMemoBusinessProgress',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                    success: function (result) {
 
-                    if (result != null) {
-                      var  momRegionEcoMemoData = JSON.parse(result);
-                        console.log("Eco Region Memo Business Progress")
-                        console.log(momRegionEcoMemoData);
-                        //mom_business_progress();
-                        mom_region_eco_memo_business_progress(momRegionEcoMemoData);
+                        if (result != null) {
+                          var  momRegionEcoMemoData = JSON.parse(result);
+                            console.log("Eco Region Memo Business Progress")
+                            console.log(momRegionEcoMemoData);
+                            //mom_business_progress();
+                            mom_region_eco_memo_business_progress(momRegionEcoMemoData);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
             }
@@ -1671,36 +1727,38 @@
 
             function quarterly_business_trend_data() {
 
+                const containerSelector = '.card:has(#quarterly-business-trend-progress-date) .card-body';
+
                 var mom_date = $("#quarterly-business-trend-progress-date").val();
                 var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
                 var mom_no_months = "";
 
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getQuarterlyBusinessTrend',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#quarterly-business-trend-progress-date) .card-body');
-                },
-                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
-                success: function (result) {
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getQuarterlyBusinessTrend',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months },
+                    success: function (result) {
 
-                    if (result != null) {
-                      var  qbtData = JSON.parse(result);
-                        console.log("Quarterly Business Trend")
-                        console.log(qbtData);
-                        //mom_business_progress();
-                        quarterly_business_trend(qbtData);
+                        if (result != null) {
+                          var  qbtData = JSON.parse(result);
+                            console.log("Quarterly Business Trend")
+                            console.log(qbtData);
+                            //mom_business_progress();
+                            quarterly_business_trend(qbtData);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
             }
@@ -1830,40 +1888,42 @@
 
             function getFieldStructureSalesInTP_data() {
 
+                const containerSelector = '.card:has(#field_strudcture_wise_sales) .card-body';
+
                 var mom_date = $("#quarterly-business-trend-progress-date").val();
                 var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
                 var mom_no_months = "";
                 var dealer_id = "18";
                 var limit = "0";
                 //getSalesStatusRouteWise(string p_date_to, string mom_channel, string p_no_months, string dealer_id, string limit)
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getFieldStructureSalesInTP',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#field_strudcture_wise_sales) .card-body');
-                },
-                //data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, dealer_id:dealer_id, limit:limit },
-                success: function (result) {
-                    console.log("fieldStructureSalesInTPData");
-                    console.log(result);
-                    if (result != null) {
-                        var  fieldStructureSalesInTPData = JSON.parse(result);
-                        console.log(fieldStructureSalesInTPData);
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getFieldStructureSalesInTP',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    //data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, dealer_id:dealer_id, limit:limit },
+                    success: function (result) {
+                        console.log("fieldStructureSalesInTPData");
+                        console.log(result);
+                        if (result != null) {
+                            var  fieldStructureSalesInTPData = JSON.parse(result);
+                            console.log(fieldStructureSalesInTPData);
 
-                        renderTableFieldStructureSalesInTP(fieldStructureSalesInTPData);
+                            renderTableFieldStructureSalesInTP(fieldStructureSalesInTPData);
 
 
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
             }
@@ -2014,7 +2074,9 @@
 
         //getSalesStatusRouteWise_data("18");
 
-            function getSalesStatusRouteWise_data(dealer_id, limit="0") {
+            function getSalesStatusRouteWise_data(dealer_id, limit = "0") {
+
+                const containerSelector = '.card:has(#routeSalesStatusTable) .card-body';
 
                 var mom_date = $("#quarterly-business-trend-progress-date").val();
                 var mom_channel = $("#mom-region-echo-memo-focus-cat-business-channel").val();
@@ -2022,34 +2084,34 @@
                // var dealer_id = "18";
                // var limit = "0";
                 //getSalesStatusRouteWise(string p_date_to, string mom_channel, string p_no_months, string dealer_id, string limit)
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getSalesStatusRouteWise',
-                type: 'GET',
-                beforeSend: function () {
-                    showCardSpinner('.card:has(#routeSalesStatusTable) .card-body');
-                },
-                data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, dealer_id:dealer_id, limit:limit },
-                success: function (result) {
-                    console.log(result);
-                    if (result != null) {
-                      var  routeSalesData = JSON.parse(result);
-                        console.log("getSalesStatusRouteWise")
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getSalesStatusRouteWise',
+                    type: 'GET',
+                    beforeSend: function () {
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date, mom_channel: mom_channel, p_no_months: mom_no_months, dealer_id:dealer_id, limit:limit },
+                    success: function (result) {
+                        console.log(result);
+                        if (result != null) {
+                          var  routeSalesData = JSON.parse(result);
+                            console.log("getSalesStatusRouteWise")
 
 
-                        renderGroupedData(routeSalesData);
+                            renderGroupedData(routeSalesData);
 
 
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
 
             }
@@ -2138,49 +2200,49 @@
                 areaId = $('#national-sku-kpi-area').val()
 
 
-              var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/ProductSalesComparison',
-                type: 'GET',
-                data: {
-                    p_date_to: "2025-07-30",
-                    region_id: "",
-                    area_id: "",
-                    territory_id: "",
-                    dealer_id:"",
-                    outlet_id: outletId,
-                    category_id: "",
-                    focus_category_id:""
-                },
-                beforeSend: function () {
-                    $('#productDeatilModal').modal('show');
-                    $('#productDeatilModal .modal-title').html(`Product Sales detail - Outlet :[${outletName}]`);
-                    $('#productDeatilModal .modal-body').empty();
-                    showCardSpinner('#productDeatilModal .modal-body');
-                },
-
-                success: function (result) {
-                    console.log("proudct detial data");
-                    console.log(result);
-
-
-                    if (result != null) {
-
-                        $('#productDeatilModal .modal-title').html(`Product Sales detail - Outlet :[${outletName}]`);
-                        $('#productDeatilModal .modal-body').html(result);
-                        // show modal
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/ProductSalesComparison',
+                    type: 'GET',
+                    data: {
+                        p_date_to: "2025-07-30",
+                        region_id: "",
+                        area_id: "",
+                        territory_id: "",
+                        dealer_id:"",
+                        outlet_id: outletId,
+                        category_id: "",
+                        focus_category_id:""
+                    },
+                    beforeSend: function () {
                         $('#productDeatilModal').modal('show');
+                        $('#productDeatilModal .modal-title').html(`Product Sales detail - Outlet :[${outletName}]`);
+                        $('#productDeatilModal .modal-body').empty();
+                        showCardSpinner('#productDeatilModal .modal-body');
+                    },
 
+                    success: function (result) {
+                        console.log("proudct detial data");
+                        console.log(result);
+
+
+                        if (result != null) {
+
+                            $('#productDeatilModal .modal-title').html(`Product Sales detail - Outlet :[${outletName}]`);
+                            $('#productDeatilModal .modal-body').html(result);
+                            // show modal
+                            $('#productDeatilModal').modal('show');
+
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner();
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
             })
 
