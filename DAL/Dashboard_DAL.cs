@@ -87,6 +87,36 @@ namespace IMPLDashboard.DAL
             return dt;
         }
 
+        public DataTable GetFocusKpi(string report_type, string p_as_on_date, string p_region_id, string p_area_id)
+        {
+
+            DataTable dt = new DataTable("focusKpiUpdate");
+
+            try
+            {
+                OracleCommand com = GetSPCommand("PROC_GET_IMPL_FOCUS_KPI_UPDATE");
+                com.Parameters.Add("P_REPORT_TYPE", OracleType.VarChar).Value = report_type;
+                com.Parameters.Add("P_AS_ON_DATE", OracleType.VarChar).Value = p_as_on_date;
+                com.Parameters.Add("P_REGION_ID", OracleType.VarChar).Value = p_region_id;
+                com.Parameters.Add("P_AREA_ID", OracleType.VarChar).Value = p_area_id;
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+                oraData.Fill(dt);
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
+
         public DataSet GetNationalFocusKpi(string p_as_on_date, string region_id, string area_id)
         {
 
@@ -798,6 +828,63 @@ namespace IMPLDashboard.DAL
 
             return dt;
         }
+
+
+        internal DataTable GetBestSellingProducts(string p_date_from, string p_date_to)
+        {
+
+            DataTable dt = new DataTable("best_selling_products");
+
+            try
+            {
+
+                OracleCommand com = GetSPCommand("PROC_IMPL_BEST_SELLING_PRODUCTS");
+                com.Parameters.Add("p_date_from", OracleType.VarChar).Value = p_date_from;
+                com.Parameters.Add("p_date_to", OracleType.VarChar).Value = p_date_to;
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+                oraData.Fill(dt);
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
+        internal DataTable GetTopSellers(string p_date_from, string p_date_to)
+        {
+
+            DataTable dt = new DataTable("top_sellers");
+
+            try
+            {
+                OracleCommand com = GetSPCommand("PROC_IMPL_TOP_SELLERS");
+                com.Parameters.Add("p_date_from", OracleType.VarChar).Value = p_date_from;
+                com.Parameters.Add("p_date_to", OracleType.VarChar).Value = p_date_to;
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+                oraData.Fill(dt);
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
 
 
 

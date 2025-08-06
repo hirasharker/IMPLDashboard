@@ -117,6 +117,48 @@ namespace IMPLDashboard.Controllers
         }
 
 
+        public string GetFocusSkuKpiJson(string report_type, string p_as_on_date, string region_id, string area_id)
+        {
+            string date;
+            if (p_as_on_date == "" || p_as_on_date == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_as_on_date;
+            }
+
+
+            if (region_id == "" || region_id == null)
+            {
+                region_id = "";
+            }
+
+            if (area_id == "" || area_id == null)
+            {
+                area_id = "";
+            }
+
+            DataTable tableData = new Dashboard_DAL().GetFocusKpi(report_type, date, region_id, area_id);
+
+            if (tableData == null || tableData.Rows.Count == 0)
+            {
+                return "";
+            }
+
+            DataTable tableData2 = new DataTable();
+
+            tableData.AsEnumerable();
+
+            string x = "Not Found";
+
+            x = RenderPartialViewToStringMultipleData("FocusKpiPartial", tableData, tableData2);
+
+            return x;
+        }
+
         [HttpGet]
         public string NationWiseSkuKpiJson(String dt, string region_id, string area_id)
         {
@@ -739,6 +781,50 @@ namespace IMPLDashboard.Controllers
             var result = JsonConvert.SerializeObject(dt);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpGet]
+        public JsonResult GetBestSellingProducts(string p_date_from, string p_date_to)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            var dt = new Dashboard_DAL().GetBestSellingProducts(p_date_from, p_date_to);
+
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+       
+
+        [HttpGet]
+        public JsonResult GetTopSellers(string p_date_from, string p_date_to)
+        {
+            string date;
+            if (p_date_to == "" || p_date_to == null)
+            {
+                DateTime dateTime = DateTime.Now;
+                date = dateTime.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                date = p_date_to + "-01";
+            }
+
+            var dt = new Dashboard_DAL().GetTopSellers(p_date_from, p_date_to);
+
+            var result = JsonConvert.SerializeObject(dt);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
 
 
 

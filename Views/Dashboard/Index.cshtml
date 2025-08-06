@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "IMPL Dashboard";
-    var dt = DateTime.Now.AddDays(-1);
+    var dt = DateTime.Now.AddDays(-10);
 }
 
 @section css{
@@ -652,6 +652,71 @@
                     </div> <!-- end row-->
 
 
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Best Selling Products</h4>
+                                    <div class="flex-shrink-0">
+                                        <select id="best_selling_products_date" class="form-select">
+                                            @*<option value="today">Today</option>*@
+                                            <option value="yesterday">Yesterday</option>
+                                            <option value="last7">Last 7 Days</option>
+                                            <option value="last30">Last 30 Days</option>
+                                            <option value="thisMonth">This Month</option>
+                                            <option value="lastMonth">Last Month</option>
+                                        </select>
+
+
+                                    </div>
+                                </div><!-- end card header -->
+
+                                <div class="card-body">
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-hover table-centered align-middle table-nowrap mb-0">
+                                            <tbody id="best-selling-products-body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <div class="card card-height-100">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Top Sellers</h4>
+                                    <div class="flex-shrink-0">
+                                        <span class="text-muted">
+                                            <select id="top_sellters_date" class="form-select">
+                                                @*<option value="today">Today</option>*@
+                                                <option value="yesterday">Yesterday</option>
+                                                <option value="last7">Last 7 Days</option>
+                                                <option value="last30">Last 30 Days</option>
+                                                <option value="thisMonth">This Month</option>
+                                                <option value="lastMonth">Last Month</option>
+                                            </select>
+                                        </span>
+
+
+                                    </div>
+                                </div><!-- end card header -->
+
+                                <div class="card-body">
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-centered table-hover align-middle table-nowrap mb-0">
+                                            <tbody id="top-sellers-body">
+                                            </tbody>
+                                        </table><!-- end table -->
+                                    </div>
+                                </div> <!-- .card-body-->
+                            </div> <!-- .card-->
+                        </div> <!-- .col-->
+                    </div> <!-- end row-->
+
+
+
 
 
                 </div> <!-- end .h-100-->
@@ -775,8 +840,6 @@
 
                 dashboardHeader(dt);
 
-                alert(dt)
-
             })
 
             /*Dashboard Header ends*/
@@ -788,8 +851,8 @@
                 const containerSelector = '.card:has(#nation-wise-sku-kpi) .card-body';
 
                 $.ajax({
-                    url: "/Dashboard/NationWiseSkuKpiJson",
-                    data: { dt: pDate, region_id : regionId, area_id : areaId },
+                    url: "/Dashboard/GetFocusSkuKpiJson",
+                    data: { report_type: "NATIONAL", p_as_on_date: pDate, region_id : regionId, area_id : areaId },
                     beforeSend: function () {
                         showCardSpinner(containerSelector);
                     },
@@ -819,8 +882,6 @@
 
                 nationWiseSkuKpi(dt, regionId, areaId);
 
-                alert(dt)
-
             })
 
             // Populate area dropdown on region change
@@ -845,7 +906,6 @@
 
                             if (data && data.length > 0) {
                                 $.each(data, function (i, item) {
-                                    console.log(item)
                                     areaDropdown.append(`<option value="${item.AREA_ID}">${item.AREA_NAME}</option>`);
                                 });
                             } else {
@@ -890,8 +950,8 @@
                 const containerSelector = '.card:has(#owndb-wise-sku-kpi) .card-body';
 
                 $.ajax({
-                    url: "/Dashboard/OwnDbWiseSkuKpiJson",
-                    data: { dt: pDate, region_id: regionId, area_id: areaId },
+                    url: "/Dashboard/GetFocusSkuKpiJson",
+                    data: { report_type: "OWN DB", p_as_on_date: pDate, region_id: regionId, area_id: areaId },
                     beforeSend: function () {
                         showCardSpinner(containerSelector);
                     },
@@ -1577,7 +1637,7 @@
 
                 /** MoM Eco Memo Business Progress **/
 
-            mom_region_eco_memo_business_progress_data();
+            /*mom_region_eco_memo_business_progress_data();*/
 
             function mom_region_eco_memo_business_progress_data() {
 
@@ -2261,55 +2321,263 @@
 
             function getRegionSalesTargetAchieveData() {
 
+                const containerSelector = '.card:has(#RegionSalesTargetAchieve) .card-body';
+
                 var mom_date = $("#RegionSalesTargetAchieve_date").val();
 
-            var baseUrl = '@Url.Content("~/")';
-            $.ajax({
-                url: baseUrl + 'dashboard/getRegionSalesTargetAchieve',
-                type: 'GET',
-                beforeSend: function () {
-                    $("#RegionSalesTargetAchieve").empty();
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/getRegionSalesTargetAchieve',
+                    type: 'GET',
+                    beforeSend: function () {
+                        $("#RegionSalesTargetAchieve").empty();
 
-                    showCardSpinner('.card:has(#RegionSalesTargetAchieve) .card-body');
-                },
-                data: { p_date_to: mom_date },
-                success: function (result) {
-                    console.log(result);
-                    if (result != null) {
-                      var  regionSalesData = JSON.parse(result);
-                        console.log("RegionSalesTargetAchieve")
-
-
-                        var achieveData
-                        regionSalesData.forEach(row => {
-
-                            $("#RegionSalesTargetAchieve").append(` <p class="mt-3 mb-1">
-                                                    ${row.REGION_NAME} <span class="float-end">${row.ACHIEVE}%</span>
-                                                </p>
-                                                <div class="progress mt-2" style="height: 6px;">
-                                                    <div class="progress-bar progress-bar-striped bg-primary"
-                                                         role="progressbar" style="width: ${row.ACHIEVE}%" aria-valuenow="${row.ACHIEVE}"
-                                                         aria-valuemin="0" aria-valuemax="47"></div>
-                                                </div>`);
-
-                        });
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_to: mom_date },
+                    success: function (result) {
+                        console.log(result);
+                        if (result != null) {
+                          var  regionSalesData = JSON.parse(result);
+                            console.log("RegionSalesTargetAchieve")
 
 
+                            var achieveData
+                            regionSalesData.forEach(row => {
+
+                                $("#RegionSalesTargetAchieve").append(` <p class="mt-3 mb-1">
+                                                        ${row.REGION_NAME} <span class="float-end">${row.ACHIEVE}%</span>
+                                                    </p>
+                                                    <div class="progress mt-2" style="height: 6px;">
+                                                        <div class="progress-bar progress-bar-striped bg-primary"
+                                                             role="progressbar" style="width: ${row.ACHIEVE}%" aria-valuenow="${row.ACHIEVE}"
+                                                             aria-valuemin="0" aria-valuemax="47"></div>
+                                                    </div>`);
+
+                            });
+
+
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                    alert("Failed to fetch business progress data.");
-                },
-                complete: function () {
-                    hideCardSpinner();
-                }
-            });
+                });
 
             }
 
 
             /* Region wise Target vs Achievement bar progress bar END*/
+
+
+            /**** Best Selling Products ***/
+
+            function getDateRange(range) {
+                const today = new Date();
+                let p_date_from, p_date_to;
+
+                switch (range) {
+                    case 'today':
+                        p_date_from = p_date_to = formatDate(today);
+                        break;
+
+                    case 'yesterday':
+                        const yest = new Date(today);
+                        yest.setDate(today.getDate() - 1);
+                        p_date_from = p_date_to = formatDate(yest);
+                        break;
+
+                    case 'last7':
+                        const last7 = new Date(today);
+                        last7.setDate(today.getDate() - 6);
+                        p_date_from = formatDate(last7);
+                        p_date_to = formatDate(today);
+                        break;
+
+                    case 'last30':
+                        const last30 = new Date(today);
+                        last30.setDate(today.getDate() - 29);
+                        p_date_from = formatDate(last30);
+                        p_date_to = formatDate(today);
+                        break;
+
+                    case 'thisMonth':
+                        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                        p_date_from = formatDate(startOfMonth);
+                        p_date_to = formatDate(today);
+                        break;
+
+                    case 'lastMonth':
+                        const firstLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                        const endLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                        p_date_from = formatDate(firstLastMonth);
+                        p_date_to = formatDate(endLastMonth);
+                        break;
+                }
+
+                return { p_date_from, p_date_to };
+            }
+
+            function formatDate(date) {
+                const y = date.getFullYear();
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const d = String(date.getDate()).padStart(2, '0');
+                return `${y}-${m}-${d}`;
+            }
+
+
+
+
+
+
+            $("body").on("change", "#best_selling_products_date", function () {
+
+                getBestSellingProductsData();
+            });
+
+
+            getBestSellingProductsData();
+
+            function getBestSellingProductsData() {
+
+                const containerSelector = '.card:has(#best-selling-products-body) .card-body';
+
+                var val = $("#best_selling_products_date").val();
+
+                const { p_date_from, p_date_to } = getDateRange(val);
+
+
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/GetBestSellingProducts',
+                    type: 'GET',
+                    beforeSend: function () {
+                        $("#best-selling-products-body").empty();
+
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_from: p_date_from, p_date_to: p_date_to },
+                    success: function (result) {
+                        console.log("best-selling-products-body");
+                        console.log(result);
+                        if (result != null) {
+                          var  data = JSON.parse(result);
+                            let rows = '';
+
+
+                            data.forEach(p => {
+                                rows += `
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h5 class="fs-14 my-1">
+                                                <a href="#" class="text-reset">${p.PRODUCT_NAME}</a>
+                                            </h5>
+                                            <span class="text-muted">${p.CATEGORY_NAME}</span> - <span class="text-muted">${p.BRAND_NAME}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><h5 class="fs-14 my-1 fw-normal">${p.PRICE}</h5><span class="text-muted">Price</span></td>
+                                <td><h5 class="fs-14 my-1 fw-normal">${p.ORDERS}</h5><span class="text-muted">Quantity</span></td>
+
+                                <td><h5 class="fs-14 my-1 fw-normal">${p.AMOUNT}</h5><span class="text-muted">Amount</span></td>
+                            </tr>`;
+                            });
+                            $('#best-selling-products-body').html(rows);
+
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
+                    }
+                });
+
+            }
+
+
+            /**** Best Selling Products END ***/
+
+            /*** Top Seller ***/
+
+
+            $("body").on("change", "#top_sellters_date", function () {
+
+                getTopSellersData();
+            });
+
+
+            getTopSellersData();
+
+            function getTopSellersData() {
+
+                const containerSelector = '.card:has(#top-sellers-body) .card-body';
+
+                var val = $("#top_sellters_date").val();
+
+                const { p_date_from, p_date_to } = getDateRange(val);
+
+
+                var baseUrl = '@Url.Content("~/")';
+                $.ajax({
+                    url: baseUrl + 'dashboard/GetTopSellers',
+                    type: 'GET',
+                    beforeSend: function () {
+                        $("#top-sellers-body").empty();
+
+                        showCardSpinner(containerSelector);
+                    },
+                    data: { p_date_from: p_date_from, p_date_to: p_date_to },
+                    success: function (result) {
+                        console.log("top-sellers-body");
+                        console.log(result);
+                        if (result != null) {
+                          var  data = JSON.parse(result);
+                            let rows = '';
+
+                            data.forEach(s => {
+
+                                rows += `
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+
+                                        <div>
+                                            <h5 class="fs-14 my-1"><a href="#" class="text-reset">${s.SO_NAME}</a></h5>
+                                            <span class="text-muted">${s.DEALER_NAME}, </span>
+                                            <span class="text-muted">${s.AREA_NAME}, </span>
+                                            <span class="text-muted">${s.REGION_NAME}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                               <td><span class="text-muted">${s.CURRENT_TOTAL_SALES}</span></td>
+                                <td><h5 class="fs-14 mb-0">${s.GROWTH_PERCENT ?? 0}%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i></h5></td>
+                            </tr>`;
+                            });
+                            $('#top-sellers-body').html(rows);
+
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                        alert("Failed to fetch business progress data.");
+                    },
+                    complete: function () {
+                        hideCardSpinner(containerSelector);
+                    }
+                });
+
+            }
+
+            /*** Top Seller END***/
 
 
 

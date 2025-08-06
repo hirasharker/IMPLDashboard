@@ -1,0 +1,85 @@
+﻿
+@{
+    System.Data.DataTable dt = ViewBag.dataTable;
+
+    string formattedDateReportDate = dt.Rows[0]["REPORT_DATE"].ToString();
+
+}
+<style>
+
+    #national-sku-kpi-tbl tr {
+        line-height: 10px !important;
+    }
+
+    #national-sku-kpi-tbl td {
+        vertical-align: middle;
+    }
+</style>
+
+<table class="table table-bordered table-centered align-middle table-nowrap mb-0" id="national-sku-kpi-tbl">
+    <thead class="text-muted table-light">
+        <tr>
+            <!-- Using colspan=1 for a single column, as it's not spanning multiple columns. -->
+            <th scope="col" rowspan="2">Key Areas</th>
+            <th scope="col" colspan="3" style="text-align: center;">@formattedDateReportDate</th>
+            <th scope="col" colspan="3" style="text-align: center;">Month to Date</th>
+        </tr>
+        <tr>
+            <th scope="col" style="text-align: center;">Last Month Ach.</th>
+            <th scope="col" style="text-align: center;">Today's Target</th>
+            <th scope="col" style="text-align: center;">Today's Ach.</th>
+            <th scope="col" style="text-align: center;">Last MTD Ach.</th>
+            <th scope="col" style="text-align: center;">This Month MTD Tar.</th>
+            <th scope="col" style="text-align: center;">This Month MTD Ach.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+
+            string previousKeyArea = "";
+        }
+
+        @foreach (System.Data.DataRow row in dt.Rows)
+        {
+            string currentKeyArea = row["KEY_AREA"].ToString();
+
+
+            if (currentKeyArea != previousKeyArea)
+            {
+                <tr class="table-info">
+                    <td colspan="7">
+                        <a href="#" class="fw-medium text-reset">@currentKeyArea</a>
+                    </td>
+                </tr>
+
+                previousKeyArea = currentKeyArea;
+            }
+
+
+            <tr>
+                <td>
+                    <a href="apps-ecommerce-order-details.html"
+                       class="fw-medium text-reset">@row["FOCUS_CATEGORY_NAME"]</a>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@row["LAST_MONTH_DAY_ACHIEVEMENT"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@row["DAY_TARGET"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@row["DAY_ACHIEVEMENT"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@row["LAST_MONTH_MTD_ACHIEVEMENT"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@row["MTD_TARGET"]</span>
+                </td>
+                <td style="text-align: center;">
+                    <span class="text-primary">@row["MTD_ACHIEVEMENT"]</span>
+                </td>
+            </tr>
+        }
+    </tbody><!-- end tbody -->
+</table><!-- end table -->
