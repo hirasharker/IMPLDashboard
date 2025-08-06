@@ -1,9 +1,9 @@
-﻿
-@{
+﻿@{
     System.Data.DataTable dt = ViewBag.dataTable;
 
-    string formattedDateReportDate = dt.Rows[0]["REPORT_DATE"].ToString();
-
+    DateTime date = DateTime.ParseExact(dt.Rows[0]["REPORT_DATE"].ToString(), "dd-MM-yyyy hh:mm:ss tt",  System.Globalization.CultureInfo.InvariantCulture);
+    string formattedDateReportDate = date.ToString("dd MMMM, yyyy");
+   
 }
 <style>
 
@@ -55,14 +55,11 @@
                 previousKeyArea = currentKeyArea;
             }
 
-
+   
             <tr>
                 <td>
-                   
-                    <a href="~/Dashboard/RegionWiseSkuKpi?dt=@row["P_AS_ON_DATE"]&region_id=&area_id=&focus_category_id=@row["FOCUS_CATEGORY_ID"]"
-                       class="text-decoration-underline" target="_blank" id="@row["FOCUS_CATEGORY_ID"]">
-                        @row["FOCUS_CATEGORY_NAME"]
-                    </a>
+                    <a href="apps-ecommerce-order-details.html"
+                       class="fw-medium text-reset">@row["FOCUS_CATEGORY_NAME"]</a>
                 </td>
                 <td style="text-align: center;">
                     <span class="text-primary">@row["LAST_MONTH_DAY_ACHIEVEMENT"]</span>

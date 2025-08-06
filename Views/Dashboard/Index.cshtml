@@ -402,14 +402,14 @@
                                             <h4 class="card-title mb-0 flex-grow-1">Commission Dealer (CD)  MoM Business Progress</h4>
                                             <div class="flex-shrink-0" style="margin-right: 2em">
                                                 <div class="input-group">
-                                                    <input type="month" id="mom-business-progress-date"
+                                                    <input type="month" id="cd-mom-business-progress-date"
                                                            class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
                                                 </div>
                                             </div>
                                             <div class="flex-shrink-0" style="margin-right: 2em">
                                                 <div class="flex-shrink-0" style="margin-right: 2em">
                                                     <div class="input-group">
-                                                        <select class="form-control border-0 shadow" id="mom-business-channel">
+                                                        <select class="form-control border-0 shadow" id="cd-mom-business-channel">
                                                             <option value="">National</option>
                                                             <option value="GT">GT</option>
                                                             <option value="MT">Modern Trade</option>
@@ -420,18 +420,18 @@
                                                 </div>
                                             </div>
 
-                                            @*<div class="flex-shrink-0" style="margin-right: 2em">
-                                    <div class="flex-shrink-0" style="margin-right: 2em">
-                                        <div class="input-group">
-                                            <select class="form-control border-0 shadow" id="mom-no-months">
-                                                <option value="12">12</option>
-                                                <option value="18">18</option>
-                                                <option value="24">24</option>
+                                            <div class="flex-shrink-0" style="margin-right: 2em">
+                                                <div class="flex-shrink-0" style="margin-right: 2em">
+                                                    <div class="input-group">
+                                                        <select class="form-control border-0 shadow" id="cd-mom-no-months">
+                                                            <option value="12">12</option>
+                                                            <option value="18">18</option>
+                                                            <option value="24">24</option>
 
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>*@
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
                                         </div><!-- end card header -->
@@ -523,13 +523,13 @@
                                     <div class="w-100">
 
 
-                                        <div id="mom_region_eco_memo_business_progress" style="height:400"
+                                        <div id="mom_region_eco_memo_business_progress" style="height:400px"
                                              data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
                                              class="apex-charts" dir="ltr">
 
                                         </div>
 
-                                        <div id="quarterly_business_trend" style="height:400"
+                                        <div id="quarterly_business_trend" style="height:400px"
                                              data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
                                              class="apex-charts" dir="ltr"></div>
 
@@ -550,31 +550,11 @@
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Field Structure wise Sales</h4>
-                                    <div class="flex-shrink-0">
-                                        <div class="dropdown card-header-dropdown">
-                                            <a class="text-reset dropdown-btn" href="#"
-                                               data-bs-toggle="dropdown" aria-haspopup="true"
-                                               aria-expanded="false">
-                                                <span class="fw-semibold text-uppercase fs-12">
-                                                    Sort by:
-                                                </span><span class="text-muted">
-                                                    Today<i class="mdi mdi-chevron-down ms-1"></i>
-                                                </span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Today</a>
-                                                <a class="dropdown-item" href="#">Yesterday</a>
-                                                <a class="dropdown-item" href="#">Last 7 Days</a>
-                                                <a class="dropdown-item" href="#">Last 30 Days</a>
-                                                <a class="dropdown-item" href="#">This Month</a>
-                                                <a class="dropdown-item" href="#">Last Month</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                 </div><!-- end card header -->
 
                                 <div class="card-body">
-                                    <div class="table-responsive table-card">
+                                    <div class="table-responsive table-card" style="min-height:350px;">
 
                                         <table id="field_strudcture_wise_sales" class="table table-bordered table-centered align-middle table-nowrap mb-0">
                                             <thead>
@@ -603,31 +583,11 @@
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Route wise Outlet wise Sales [<span id="dealer_info"></span>]</h4>
 
-                                    <div class="flex-shrink-0">
-                                        <div class="dropdown card-header-dropdown">
-                                            <a class="text-reset dropdown-btn" href="#"
-                                               data-bs-toggle="dropdown" aria-haspopup="true"
-                                               aria-expanded="false">
-                                                <span class="fw-semibold text-uppercase fs-12">
-                                                    Sort by:
-                                                </span><span class="text-muted">
-                                                    Today<i class="mdi mdi-chevron-down ms-1"></i>
-                                                </span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Today</a>
-                                                <a class="dropdown-item" href="#">Yesterday</a>
-                                                <a class="dropdown-item" href="#">Last 7 Days</a>
-                                                <a class="dropdown-item" href="#">Last 30 Days</a>
-                                                <a class="dropdown-item" href="#">This Month</a>
-                                                <a class="dropdown-item" href="#">Last Month</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                 </div><!-- end card header -->
 
                                 <div class="card-body">
-                                    <div class="table-responsive table-card">
+                                    <div class="table-responsive table-card"  style="min-height:350px;">
 
                                         <table id="routeSalesStatusTable" class="table table-hover table-centered align-middle table-nowrap mb-0">
                                             <thead>
