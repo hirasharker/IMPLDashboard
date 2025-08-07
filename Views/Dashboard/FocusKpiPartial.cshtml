@@ -58,8 +58,12 @@
 
             <tr>
                 <td>
-                    <a href="apps-ecommerce-order-details.html"
-                       class="fw-medium text-reset">@row["FOCUS_CATEGORY_NAME"]</a>
+                    <a href="~/Dashboard/RegionWiseSkuKpi?dt=@row["P_AS_ON_DATE"]&region_id=&area_id=&focus_category_id=@row["FOCUS_CATEGORY_ID"]"
+                       class="text-decoration-underline" target="_blank" id="@row["FOCUS_CATEGORY_ID"]">
+                        @row["FOCUS_CATEGORY_NAME"]
+                    </a>
+                    @*<a href="apps-ecommerce-order-details.html"
+                       class="fw-medium text-reset">@row["FOCUS_CATEGORY_NAME"]</a>*@
                 </td>
                 <td style="text-align: center;">
                     <span class="text-primary">@row["LAST_MONTH_DAY_ACHIEVEMENT"]</span>
