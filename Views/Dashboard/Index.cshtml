@@ -234,7 +234,7 @@
                     </div> <!-- end row-->
 
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-header border-0 align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">MoM Business Progress</h4>
@@ -259,17 +259,17 @@
                                     </div>
 
                                     @*<div class="flex-shrink-0" style="margin-right: 2em">
-                                            <div class="flex-shrink-0" style="margin-right: 2em">
-                                                <div class="input-group">
-                                                    <select class="form-control border-0 shadow" id="mom-no-months">
-                                                        <option value="12">12</option>
-                                                        <option value="18">18</option>
-                                                        <option value="24">24</option>
+                        <div class="flex-shrink-0" style="margin-right: 2em">
+                            <div class="input-group">
+                                <select class="form-control border-0 shadow" id="mom-no-months">
+                                    <option value="12">12</option>
+                                    <option value="18">18</option>
+                                    <option value="24">24</option>
 
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>*@
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
 
 
                                 </div><!-- end card header -->
@@ -278,10 +278,10 @@
 
                                 <div class="card-body p-0 pb-2">
                                     @*<div class="w-100">
-                                            <div id="customer_impression_charts"
-                                                 data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                                 class="apex-charts" dir="ltr"></div>
-                                        </div>*@
+                        <div id="customer_impression_charts"
+                             data-colors='["--vz-light", "--vz-primary", "--vz-secondary"]'
+                             class="apex-charts" dir="ltr"></div>
+                    </div>*@
                                     <div class="w-100">
                                         <div id="mom_business_progress" style="height:400px"
                                              data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
@@ -293,6 +293,34 @@
                                 </div><!-- end card body -->
                             </div><!-- end card -->
                         </div><!-- end col -->
+                        <!-- end col -->
+
+                        <div class="col-xl-4">
+                            <!-- card -->
+                            <div class="card card-height-100">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Sales Acheive by Region</h4>
+                                    <div class="flex-shrink-0" style="margin-right: 2em">
+                                        <div class="input-group">
+                                            <input type="month" id="RegionSalesTargetAchieve_date"
+                                                   class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
+                                        </div>
+                                    </div>
+
+                                </div><!-- end card header -->
+                                <!-- card body -->
+                                <div class="card-body">
+
+
+
+                                    <div class="px-2 py-2 mt-1" id="RegionSalesTargetAchieve">
+
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+                        </div>
                         <!-- end col -->
                     </div>
 
@@ -396,10 +424,10 @@
 
 
                             <div class="row">
-                                <div class="col-xl-8">
+                                <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-header border-0 align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Commission Dealer (CD)  MoM Business Progress</h4>
+                                            <h4 class="card-title mb-0 flex-grow-1">MoM Business Progress (CD)</h4>
                                             <div class="flex-shrink-0" style="margin-right: 2em">
                                                 <div class="input-group">
                                                     <input type="month" id="cd-mom-business-progress-date"
@@ -424,6 +452,7 @@
                                                 <div class="flex-shrink-0" style="margin-right: 2em">
                                                     <div class="input-group">
                                                         <select class="form-control border-0 shadow" id="cd-mom-no-months">
+                                                            <option value="12">No. of Month</option>
                                                             <option value="12">12</option>
                                                             <option value="18">18</option>
                                                             <option value="24">24</option>
@@ -456,33 +485,7 @@
                                     </div><!-- end card -->
                                 </div><!-- end col -->
 
-                                <div class="col-xl-4">
-                                    <!-- card -->
-                                    <div class="card card-height-100">
-                                        <div class="card-header align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Sales Acheive by Region</h4>
-                                            <div class="flex-shrink-0" style="margin-right: 2em">
-                                                <div class="input-group">
-                                                    <input type="month" id="RegionSalesTargetAchieve_date"
-                                                           class="form-control border-0 dash-filter-picker shadow" value="@dt.ToString("yyyy-MM")" />
-                                                </div>
-                                            </div>
-
-                                        </div><!-- end card header -->
-                                        <!-- card body -->
-                                        <div class="card-body">
-
-
-
-                                            <div class="px-2 py-2 mt-1" id="RegionSalesTargetAchieve">
-
-                                            </div>
-                                        </div>
-                                        <!-- end card body -->
-                                    </div>
-                                    <!-- end card -->
-                                </div>
-                                <!-- end col -->
+                                
                             </div>
 
 
@@ -510,18 +513,11 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div><!-- end card header -->
-
-
 
                                 <div class="card-body p-0 pb-2">
 
                                     <div class="w-100">
-
 
                                         <div id="mom_region_eco_memo_business_progress" style="height:400px"
                                              data-colors='["--vz-primary","--vz-light",  "--vz-secondary"]'
@@ -767,7 +763,7 @@
             const momEcoMemoBusinessId = '.card:has(#mom_eco_memo_business_progress) .card-body';
             const cdMomBusinessId = '.card:has(#cd_mom_business_progress) .card-body';
             const momRegionEcoMemoId = '.card:has(#mom_region_eco_memo_business_progress) .card-body';
-            const quarterlyTrendId = '.card:has(#quarterly_business_trend) .card-body';
+            /*const quarterlyTrendId = '.card:has(#quarterly_business_trend) .card-body';*/
             const fieldStructureSalesId = '.card:has(#field_strudcture_wise_sales) .card-body';
             const routeSalesStatusId = '.card:has(#routeSalesStatusTable) .card-body';
             const regionSalesTargetAchieveId = '.card:has(#RegionSalesTargetAchieve) .card-body';
@@ -784,9 +780,9 @@
             showCardSpinner(momEcoMemoBusinessId);
             showCardSpinner(cdMomBusinessId);
             showCardSpinner(momRegionEcoMemoId);
-            showCardSpinner(quarterlyTrendId);
+            /*showCardSpinner(quarterlyTrendId);*/
             showCardSpinner(fieldStructureSalesId);
-            showCardSpinner(routeSalesStatusId);
+            /*showCardSpinner(routeSalesStatusId);*/
             showCardSpinner(regionSalesTargetAchieveId);
             showCardSpinner(bestSellingProductsId);
             showCardSpinner(topSellersId);
@@ -800,9 +796,6 @@
             var regionId = "";
 
             var areaId = "";
-
-
-
 
             /*Dashboard Header start*/
 
@@ -2630,10 +2623,9 @@
                 .then(() => hideCardSpinner(cdMomBusinessId))
                 .then(() => delay(200))
                 .then(() => mom_region_eco_memo_business_progress_data())
-                .then(() => hideCardSpinner(momRegionEcoMemoId))
                 .then(() => delay(200))
                 .then(() => quarterly_business_trend_data())
-                .then(() => hideCardSpinner(quarterlyTrendId))
+                .then(() => hideCardSpinner(momRegionEcoMemoId))
                 .then(() => delay(200))
                 .then(() => getFieldStructureSalesInTP_data())
                 .then(() => hideCardSpinner(fieldStructureSalesId))
